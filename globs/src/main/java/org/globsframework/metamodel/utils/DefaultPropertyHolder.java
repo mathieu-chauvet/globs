@@ -8,7 +8,7 @@ public abstract class DefaultPropertyHolder<T> implements PropertyHolder<T> {
   private static Object NULL_OBJECT = new Object();
   private Object properties[] = new Object[]{NULL_OBJECT, NULL_OBJECT};
 
-  public <D> void updateProperty(Property<T, D> key, D value) {
+  synchronized public <D> void updateProperty(Property<T, D> key, D value) {
     if (properties.length < key.getId()) {
       Object[] tmp = properties;
       properties = new Object[key.getId() + 2];
@@ -24,7 +24,7 @@ public abstract class DefaultPropertyHolder<T> implements PropertyHolder<T> {
     properties[key.getId()] = value;
   }
 
-  public <D> D getProperty(Property<T, D> key) throws ItemNotFound {
+  synchronized public <D> D getProperty(Property<T, D> key) throws ItemNotFound {
     Object value = properties[key.getId()];
     if (value == NULL_OBJECT) {
       throw new ItemNotFound("No property '" + key.getName() + "' on " + getName());
@@ -32,7 +32,7 @@ public abstract class DefaultPropertyHolder<T> implements PropertyHolder<T> {
     return (D)value;
   }
 
-  public <D> D getProperty(Property<T, D> key, D returnValueIfUnset) {
+  synchronized public <D> D getProperty(Property<T, D> key, D returnValueIfUnset) {
     Object value = properties[key.getId()];
     if (value == NULL_OBJECT) {
       return returnValueIfUnset;

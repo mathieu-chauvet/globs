@@ -34,9 +34,9 @@ public class ReplicationGlobRepositoryTest extends TestCase {
                       value(DummyObject.ID, 3),
                       value(DummyObject.NAME, "obj3"));
 
-    repository.update(Key.create(DummyObject.TYPE, 1), DummyObject.NAME, "newName");
+    repository.update(DefaultKey.create(DummyObject.TYPE, 1), DummyObject.NAME, "newName");
 
-    repository.delete(Key.create(DummyObject.TYPE, 2));
+    repository.delete(DefaultKey.create(DummyObject.TYPE, 2));
 
     repository.create(DummyObject2.TYPE,
                       value(DummyObject2.ID, 1),
@@ -60,8 +60,8 @@ public class ReplicationGlobRepositoryTest extends TestCase {
                     "<dummyObject2 id='1' label='label 1'/>" +
                     "<dummyObject2 id='2' label='label 2'/>");
 
-    repository.update(Key.create(DummyObject2.TYPE, 1), DummyObject2.LABEL, "new label 1");
-    repository.delete(Key.create(DummyObject2.TYPE, 2));
+    repository.update(DefaultKey.create(DummyObject2.TYPE, 1), DummyObject2.LABEL, "new label 1");
+    repository.delete(DefaultKey.create(DummyObject2.TYPE, 2));
     new GlobChecker()
       .assertEquals(repository,
                     "<dummyObject id='0' name='name'/>" +

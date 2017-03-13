@@ -3,6 +3,7 @@ package org.globsframework.metamodel.utils;
 import org.globsframework.metamodel.Field;
 import org.globsframework.metamodel.GlobType;
 import org.globsframework.metamodel.annotations.NamingField;
+import org.globsframework.metamodel.annotations.NamingFieldAnnotationType;
 import org.globsframework.metamodel.fields.StringField;
 import org.globsframework.utils.exceptions.InvalidParameter;
 import org.globsframework.utils.exceptions.ItemAmbiguity;
@@ -25,7 +26,7 @@ public class GlobTypeUtils {
   }
 
   public static StringField findNamingField(GlobType type) {
-    Field[] fields = type.getFieldsWithAnnotation(NamingField.class);
+    Field[] fields = type.getFieldsWithAnnotation(NamingFieldAnnotationType.UNIQUE_KEY);
     if (fields.length == 1) {
       return stringField(fields, type);
     }

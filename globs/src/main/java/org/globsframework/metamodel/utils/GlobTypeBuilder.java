@@ -1,89 +1,24 @@
 package org.globsframework.metamodel.utils;
 
 import org.globsframework.metamodel.GlobType;
-import org.globsframework.metamodel.annotations.NamingField;
+import org.globsframework.model.Glob;
 
-import java.lang.annotation.Annotation;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
+public interface GlobTypeBuilder {
+    GlobTypeBuilder addIntegerKey(String fieldName, Glob... annotations);
 
-public class GlobTypeBuilder {
-  private DefaultGlobType type;
-  private DefaultFieldFactory factory;
+    GlobTypeBuilder addStringField(String fieldName, Glob... annotations);
 
-  public static GlobTypeBuilder init(String typeName) {
-    return new GlobTypeBuilder(typeName);
-  }
+    GlobTypeBuilder addIntegerField(String fieldName, Glob... annotations);
 
-  public GlobTypeBuilder(String typeName) {
-    type = new DefaultGlobType(typeName, Collections.EMPTY_MAP);
-    factory = new DefaultFieldFactory(type);
-  }
+    GlobTypeBuilder addDoubleField(String fieldName, Glob... annotations);
 
-  public GlobTypeBuilder addIntegerKey(String fieldName) {
-    factory.addInteger(fieldName, true, Collections.EMPTY_MAP);
-    return this;
-  }
+    GlobTypeBuilder addLongField(String fieldName, Glob... annotations);
 
-  public GlobTypeBuilder addNamingField(String fieldName) {
-    Map<Class<? extends Annotation>, Annotation> annotations = new HashMap<Class<? extends Annotation>, Annotation>();
-    annotations.put(NamingField.class, new NamingField() {
-      public Class<? extends Annotation> annotationType() {
-        return NamingField.class;
-      }
-    });
-    factory.addString(fieldName, false, annotations);
-    return this;
-  }
+    GlobTypeBuilder addBooleanField(String fieldName, Glob... annotations);
 
-  public GlobTypeBuilder addStringField(String fieldName) {
-    factory.addString(fieldName, false, Collections.EMPTY_MAP);
-    return this;
-  }
+    GlobTypeBuilder addBlobField(String fieldName, Glob... annotations);
 
-  public GlobTypeBuilder addIntegerField(String fieldName) {
-    factory.addInteger(fieldName, false, Collections.EMPTY_MAP);
-    return this;
-  }
+    GlobTypeBuilder addLinkField(String fieldName, Glob... annotations);
 
-  public GlobTypeBuilder addDoubleField(String fieldName) {
-    factory.addDouble(fieldName, false, Collections.EMPTY_MAP);
-    return this;
-  }
-
-  public GlobTypeBuilder addLongField(String fieldName) {
-    factory.addLong(fieldName, false, Collections.EMPTY_MAP);
-    return this;
-  }
-
-  public GlobTypeBuilder addBooleanField(String fieldName) {
-    factory.addBoolean(fieldName, false, Collections.EMPTY_MAP);
-    return this;
-  }
-
-  public GlobTypeBuilder addBlobField(String fieldName) {
-    factory.addBlob(fieldName, false, Collections.EMPTY_MAP);
-    return this;
-  }
-
-  public GlobTypeBuilder addTimestampField(String fieldName) {
-    factory.addTimestamp(fieldName, false, Collections.EMPTY_MAP);
-    return this;
-  }
-
-  public GlobTypeBuilder addDateField(String fieldName) {
-    factory.addDate(fieldName, false, Collections.EMPTY_MAP);
-    return this;
-  }
-
-  public GlobTypeBuilder addLinkField(String fieldName) {
-    factory.addLink(fieldName, false, Collections.EMPTY_MAP);
-    return this;
-  }
-
-  public GlobType get() {
-    type.completeInit();
-    return type;
-  }
+    GlobType get();
 }

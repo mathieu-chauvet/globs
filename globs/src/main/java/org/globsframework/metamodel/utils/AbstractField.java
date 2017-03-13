@@ -3,6 +3,9 @@ package org.globsframework.metamodel.utils;
 import org.globsframework.metamodel.Field;
 import org.globsframework.metamodel.GlobType;
 import org.globsframework.metamodel.annotations.Required;
+import org.globsframework.metamodel.annotations.RequiredAnnotationType;
+import org.globsframework.model.Glob;
+import org.globsframework.model.Key;
 import org.globsframework.utils.Utils;
 import org.globsframework.utils.exceptions.InvalidParameter;
 
@@ -21,12 +24,12 @@ abstract class AbstractField extends AnnotatedPropertyHolder<Field> implements F
   protected AbstractField(String name,
                           GlobType globType,
                           Class valueClass,
-                          Map<Class<? extends Annotation>, Annotation> annotations) {
+                          Annotations annotations) {
     super(annotations);
     this.name = name;
     this.globType = globType;
     this.valueClass = valueClass;
-    this.required = annotations.containsKey(Required.class);
+    this.required = annotations.hasAnnotation(RequiredAnnotationType.UNIQUE_KEY);
   }
 
   public Object normalize(Object value) {

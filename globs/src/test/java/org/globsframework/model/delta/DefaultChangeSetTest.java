@@ -313,9 +313,9 @@ public class DefaultChangeSetTest extends TestCase {
 
   public void testClear() throws Exception {
     changeSet.processUpdate(key1, DummyObject.VALUE, 1.1, null);
-    changeSet.processDeletion(Key.create(DummyObject.TYPE, 10), FieldValues.EMPTY);
-    changeSet.processCreation(Key.create(DummyObject2.TYPE, 11), FieldValues.EMPTY);
-    changeSet.processCreation(Key.create(DummyObjectWithLinks.TYPE, 12), FieldValues.EMPTY);
+    changeSet.processDeletion(DefaultKey.create(DummyObject.TYPE, 10), FieldValues.EMPTY);
+    changeSet.processCreation(DefaultKey.create(DummyObject2.TYPE, 11), FieldValues.EMPTY);
+    changeSet.processCreation(DefaultKey.create(DummyObjectWithLinks.TYPE, 12), FieldValues.EMPTY);
     changeSet.clear(Arrays.asList(DummyObject.TYPE, DummyObject2.TYPE));
     checker.assertChangesEqual(changeSet,
                                "<create type='dummyObjectWithLinks' id='12'/>");

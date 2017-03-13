@@ -1,7 +1,7 @@
 package org.globsframework.metamodel;
 
 import org.globsframework.metamodel.annotations.ContainmentLink;
-import org.globsframework.metamodel.annotations.Key;
+import org.globsframework.metamodel.annotations.KeyField;
 import org.globsframework.metamodel.fields.IntegerField;
 import org.globsframework.metamodel.utils.GlobTypeLoader;
 
@@ -9,7 +9,7 @@ public class DummyObjectWithLinks {
 
   public static GlobType TYPE;
 
-  @Key
+  @KeyField
   public static IntegerField ID;
 
   public static IntegerField TARGET_ID_1;

@@ -7,5 +7,5 @@ import java.lang.annotation.Target;
 
 @Retention(RUNTIME)
 @Target({ElementType.FIELD})
-public @interface Key {
+public @interface KeyField {
 }

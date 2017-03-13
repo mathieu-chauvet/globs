@@ -20,9 +20,9 @@ public class GlobsPanelBuilderTest extends UISpecTestCase {
 
   public void testRepeatListensToChangeSets() throws Exception {
     GlobRepository repository = GlobRepositoryBuilder.createEmpty();
-    Key key1 = Key.create(DummyObject.TYPE, 1);
+    Key key1 = DefaultKey.create(DummyObject.TYPE, 1);
     repository.create(key1, FieldValue.value(DummyObject.NAME, "a"));
-    repository.create(Key.create(DummyObject.TYPE, 2), FieldValue.value(DummyObject.NAME, "c"));
+    repository.create(DefaultKey.create(DummyObject.TYPE, 2), FieldValue.value(DummyObject.NAME, "c"));
 
     Directory directory = new DefaultDirectory();
     directory.add(new ColorService());
@@ -53,7 +53,7 @@ public class GlobsPanelBuilderTest extends UISpecTestCase {
     SplitsRepeatTest.checkPanel(component, "label:a\n" +
                                            "label:c\n");
 
-    repository.create(Key.create(DummyObject.TYPE, 3), FieldValue.value(DummyObject.NAME, "b"));
+    repository.create(DefaultKey.create(DummyObject.TYPE, 3), FieldValue.value(DummyObject.NAME, "b"));
     SplitsRepeatTest.checkPanel(component, "label:a\n" +
                                            "label:b\n" +
                                            "label:c\n");

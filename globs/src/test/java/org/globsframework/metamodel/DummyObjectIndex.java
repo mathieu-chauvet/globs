@@ -1,6 +1,6 @@
 package org.globsframework.metamodel;
 
-import org.globsframework.metamodel.annotations.Key;
+import org.globsframework.metamodel.annotations.KeyField;
 import org.globsframework.metamodel.annotations.NamingField;
 import org.globsframework.metamodel.fields.DateField;
 import org.globsframework.metamodel.fields.DoubleField;
@@ -16,7 +16,7 @@ public class DummyObjectIndex {
 
   public static GlobType TYPE;
 
-  @Key
+  @KeyField
   public static IntegerField ID;
 
   public static DoubleField VALUE;

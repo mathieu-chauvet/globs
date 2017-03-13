@@ -4,6 +4,7 @@ import org.globsframework.gui.utils.GuiComponentTestCase;
 import org.globsframework.gui.utils.GlobSelectionBuilder;
 import org.globsframework.metamodel.DummyObject;
 import org.globsframework.metamodel.fields.StringField;
+import org.globsframework.model.DefaultKey;
 import org.globsframework.model.Glob;
 import org.globsframework.model.GlobList;
 import static org.globsframework.model.FieldValue.value;
@@ -151,7 +152,7 @@ public abstract class AbstractGlobTextEditorTestCase extends GuiComponentTestCas
 
   public void testForceSelectionAndCreate() throws Exception {
     TextBox textBox = init(DummyObject.NAME, "...", false, false);
-    org.globsframework.model.Key key = org.globsframework.model.Key.create(DummyObject.TYPE, 10);
+    org.globsframework.model.Key key = DefaultKey.create(DummyObject.TYPE, 10);
     forceEdition(key);
     assertFalse(textBox.isEnabled());
     repository.create(key, value(DummyObject.NAME, "name 100"));
@@ -160,7 +161,7 @@ public abstract class AbstractGlobTextEditorTestCase extends GuiComponentTestCas
 
   public void testForceSelectionAndReset() throws Exception {
     TextBox textBox = init(DummyObject.NAME, "...", false, false);
-    org.globsframework.model.Key key = org.globsframework.model.Key.create(DummyObject.TYPE, 10);
+    org.globsframework.model.Key key = DefaultKey.create(DummyObject.TYPE, 10);
     forceEdition(key);
     assertFalse(textBox.isEnabled());
     Glob glob = GlobBuilder.init(key, value(DummyObject.NAME, "name 100")).get();

@@ -6,5 +6,5 @@ import java.lang.annotation.RetentionPolicy;
 
 @Retention(RetentionPolicy.RUNTIME)
 @java.lang.annotation.Target({ElementType.FIELD})
-public @interface DefaultDate {
+public @interface InitUniqueKey {
 }

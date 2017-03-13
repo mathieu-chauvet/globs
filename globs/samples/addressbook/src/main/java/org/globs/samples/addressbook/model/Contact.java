@@ -2,14 +2,14 @@ package org.globs.samples.addressbook.model;
 
 import org.globsframework.metamodel.fields.IntegerField;
 import org.globsframework.metamodel.fields.StringField;
-import org.globsframework.metamodel.annotations.Key;
+import org.globsframework.metamodel.annotations.KeyField;
 import org.globsframework.metamodel.GlobType;
 import org.globsframework.metamodel.utils.GlobTypeLoader;
 
 public class Contact {
   public static GlobType TYPE;
 
-  @Key
+  @KeyField
   public static IntegerField ID;
 
   public static StringField FIRST_NAME;

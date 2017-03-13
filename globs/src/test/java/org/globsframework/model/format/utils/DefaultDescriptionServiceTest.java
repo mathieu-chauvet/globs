@@ -67,9 +67,9 @@ public class DefaultDescriptionServiceTest extends TestCase {
 
   public void testLinkListStringifier() throws Exception {
     GlobListStringifier stringifier = descriptionService.getListStringifier(DummyObjectWithLinks.PARENT_LINK);
-    Glob source1 = repository.create(Key.create(DummyObjectWithLinks.TYPE, 1),
+    Glob source1 = repository.create(DefaultKey.create(DummyObjectWithLinks.TYPE, 1),
                                      value(DummyObjectWithLinks.PARENT_ID, emptyObject.get(DummyObject.ID)));
-    Glob source2 = repository.create(Key.create(DummyObjectWithLinks.TYPE, 2),
+    Glob source2 = repository.create(DefaultKey.create(DummyObjectWithLinks.TYPE, 2),
                                      value(DummyObjectWithLinks.PARENT_ID, dummyObject.get(DummyObject.ID)));
     GlobList list = new GlobList(source1, source2);
     checkListStringification(stringifier, list);

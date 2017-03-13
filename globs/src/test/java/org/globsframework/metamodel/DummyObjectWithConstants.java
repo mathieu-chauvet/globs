@@ -1,9 +1,8 @@
 package org.globsframework.metamodel;
 
-import org.globsframework.metamodel.annotations.Key;
+import org.globsframework.metamodel.annotations.KeyField;
 import org.globsframework.metamodel.fields.IntegerField;
 import org.globsframework.metamodel.utils.GlobTypeLoader;
-import org.globsframework.model.FieldValuesBuilder;
 import org.globsframework.model.FieldValue;
 import org.globsframework.model.impl.ReadOnlyGlob;
 import org.globsframework.model.utils.GlobConstantContainer;
@@ -14,7 +13,7 @@ public enum DummyObjectWithConstants implements GlobConstantContainer {
 
   public static GlobType TYPE;
 
-  @Key
+  @KeyField
   public static IntegerField ID;
 
   private ReadOnlyGlob glob;

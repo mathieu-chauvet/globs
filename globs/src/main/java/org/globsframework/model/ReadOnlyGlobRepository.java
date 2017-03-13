@@ -1,6 +1,7 @@
 package org.globsframework.model;
 
 import org.globsframework.metamodel.Field;
+import org.globsframework.metamodel.GlobModel;
 import org.globsframework.metamodel.GlobType;
 import org.globsframework.metamodel.Link;
 import org.globsframework.metamodel.index.Index;
@@ -12,56 +13,57 @@ import org.globsframework.utils.exceptions.ItemNotFound;
 
 import java.util.Comparator;
 import java.util.Set;
-import java.util.SortedSet;
 
 public interface ReadOnlyGlobRepository {
 
-  boolean contains(Key key);
+//    GlobModel getModel();
 
-  boolean contains(GlobType type);
+    boolean contains(Key key);
 
-  boolean contains(GlobType type, GlobMatcher matcher);
-  
-  Glob find(Key key);
+    boolean contains(GlobType type);
 
-  Glob get(Key key)
-    throws ItemNotFound;
+    boolean contains(GlobType type, GlobMatcher matcher);
 
-  GlobList getAll(GlobType... type);
+    Glob find(Key key);
 
-  GlobList getAll(GlobType type, GlobMatcher matcher);
+    Glob get(Key key)
+            throws ItemNotFound;
 
-  void apply(GlobType type, GlobMatcher matcher, GlobFunctor callback) throws Exception;
+    GlobList getAll(GlobType... type);
 
-  void safeApply(GlobType type, GlobMatcher matcher, GlobFunctor callback);
+    GlobList getAll(GlobType type, GlobMatcher matcher);
 
-  Glob findUnique(GlobType type, FieldValue... values)
-    throws ItemAmbiguity;
+    void apply(GlobType type, GlobMatcher matcher, GlobFunctor callback) throws Exception;
 
-  Glob findUnique(GlobType type, GlobMatcher matcher)
-    throws ItemAmbiguity;
+    void safeApply(GlobType type, GlobMatcher matcher, GlobFunctor callback);
 
-  Glob[] getSorted(GlobType type, Comparator<Glob> comparator, GlobMatcher matcher);
+    Glob findUnique(GlobType type, FieldValue... values)
+            throws ItemAmbiguity;
 
-  GlobList findByIndex(Index index, Object value);
+    Glob findUnique(GlobType type, GlobMatcher matcher)
+            throws ItemAmbiguity;
 
-  MultiFieldIndexed findByIndex(MultiFieldIndex uniqueIndex, Field field, Object value);
+    Glob[] getSorted(GlobType type, Comparator<Glob> comparator, GlobMatcher matcher);
 
-  Set<GlobType> getTypes();
+    GlobList findByIndex(Index index, Object value);
 
-  Glob findLinkTarget(Glob source, Link link);
+    MultiFieldIndexed findByIndex(MultiFieldIndex uniqueIndex, Field field, Object value);
 
-  GlobList findLinkedTo(Key target, Link link);
+    Set<GlobType> getTypes();
 
-  GlobList findLinkedTo(Glob target, Link link);
+    Glob findLinkTarget(Glob source, Link link);
 
-  interface MultiFieldIndexed {
-    GlobList getGlobs();
+    GlobList findLinkedTo(Key target, Link link);
 
-    GlobList findByIndex(Object value);
+    GlobList findLinkedTo(Glob target, Link link);
 
-    MultiFieldIndexed findByIndex(Field field, Object value);
+    interface MultiFieldIndexed {
+        GlobList getGlobs();
 
-    void saveApply(GlobFunctor functor, GlobRepository repository);
-  }
+        GlobList findByIndex(Object value);
+
+        MultiFieldIndexed findByIndex(Field field, Object value);
+
+        void saveApply(GlobFunctor functor, GlobRepository repository);
+    }
 }

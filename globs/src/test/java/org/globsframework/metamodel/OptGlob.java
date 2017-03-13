@@ -1,5 +1,6 @@
 package org.globsframework.metamodel;
 
+import org.globsframework.model.MutableGlob;
 import org.globsframework.utils.exceptions.ItemNotFound;
 
 import java.util.Date;
@@ -32,7 +33,7 @@ public class OptGlob extends AbstractOptGlob {
     return null;
   }
 
-  public Object setObject(Field field, Object value) {
+  public MutableGlob setObject(Field field, Object value) {
     if (value != null) {
       switch (field.getIndex()) {
         case 0:

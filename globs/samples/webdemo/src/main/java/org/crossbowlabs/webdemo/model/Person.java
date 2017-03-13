@@ -1,7 +1,7 @@
 package org.crossbowlabs.webdemo.model;
 
 import org.globsframework.metamodel.GlobType;
-import org.globsframework.metamodel.annotations.Key;
+import org.globsframework.metamodel.annotations.KeyField;
 import org.globsframework.metamodel.annotations.MultiLineText;
 import org.globsframework.metamodel.annotations.Required;
 import org.globsframework.metamodel.fields.*;
@@ -10,7 +10,7 @@ import org.globsframework.metamodel.utils.GlobTypeLoader;
 public class Person {
   public static GlobType TYPE;
 
-  @Key
+  @KeyField
   public static IntegerField ID;
 
   @Required

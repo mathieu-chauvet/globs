@@ -2,7 +2,7 @@ package org.globsframework.metamodel.utils;
 
 import junit.framework.TestCase;
 import org.globsframework.metamodel.*;
-import org.globsframework.metamodel.annotations.Key;
+import org.globsframework.metamodel.annotations.KeyField;
 import org.globsframework.metamodel.annotations.Required;
 import org.globsframework.metamodel.annotations.Target;
 import org.globsframework.metamodel.fields.IntegerField;
@@ -46,7 +46,7 @@ public class DefaultGlobModelTest extends TestCase {
   public static class LargeLinkCycle1 {
     public static GlobType TYPE;
 
-    @Key
+    @KeyField
     public static IntegerField ID;
 
     @Target(LargeLinkCycle2.class)
@@ -60,7 +60,7 @@ public class DefaultGlobModelTest extends TestCase {
   public static class LargeLinkCycle2 {
     public static GlobType TYPE;
 
-    @Key
+    @KeyField
     public static IntegerField ID;
 
     @Target(LargeLinkCycle3.class)
@@ -74,7 +74,7 @@ public class DefaultGlobModelTest extends TestCase {
   public static class LargeLinkCycle3 {
     public static GlobType TYPE;
 
-    @Key
+    @KeyField
     public static IntegerField ID;
 
     @Target(LargeLinkCycle1.class)
@@ -121,7 +121,7 @@ public class DefaultGlobModelTest extends TestCase {
   public static class LargeLinkCycleWithRequiredFieldError1 {
     public static GlobType TYPE;
 
-    @Key
+    @KeyField
     public static IntegerField ID;
 
     @Required
@@ -136,7 +136,7 @@ public class DefaultGlobModelTest extends TestCase {
   public static class LargeLinkCycleWithRequiredFieldError2 {
     public static GlobType TYPE;
 
-    @Key
+    @KeyField
     public static IntegerField ID;
 
     @Required
@@ -151,7 +151,7 @@ public class DefaultGlobModelTest extends TestCase {
   public static class LargeLinkCycleWithRequiredFieldError3 {
     public static GlobType TYPE;
 
-    @Key
+    @KeyField
     public static IntegerField ID;
 
     @Required

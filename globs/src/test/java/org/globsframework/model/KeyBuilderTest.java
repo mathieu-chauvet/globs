@@ -76,10 +76,10 @@ public class KeyBuilderTest extends TestCase {
   }
 
   public void testEqualsAndHashCodeWithSingleFieldKey() throws Exception {
-    Key key1a = Key.create(DummyObject.TYPE, 1);
-    Key key1b = Key.create(DummyObject.TYPE, 1);
-    Key key2 = Key.create(DummyObject.TYPE, 2);
-    Key key1_obj2 = Key.create(DummyObject2.TYPE, 1);
+    Key key1a = DefaultKey.create(DummyObject.TYPE, 1);
+    Key key1b = DefaultKey.create(DummyObject.TYPE, 1);
+    Key key2 = DefaultKey.create(DummyObject.TYPE, 2);
+    Key key1_obj2 = DefaultKey.create(DummyObject2.TYPE, 1);
 
     assertEquals(key1a, key1a);
     assertEquals(key1a, key1b);

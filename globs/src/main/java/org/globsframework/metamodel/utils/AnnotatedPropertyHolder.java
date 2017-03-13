@@ -1,31 +1,34 @@
 package org.globsframework.metamodel.utils;
 
+import org.globsframework.model.Glob;
+import org.globsframework.model.Key;
+import org.globsframework.model.format.GlobPrinter;
 import org.globsframework.utils.exceptions.ItemNotFound;
 
 import java.lang.annotation.Annotation;
+import java.util.List;
 import java.util.Map;
 
-public abstract class AnnotatedPropertyHolder<T> extends DefaultPropertyHolder<T> implements Annotable {
-  private Map<Class<? extends Annotation>, Annotation> annotations;
+public abstract class AnnotatedPropertyHolder<T> extends DefaultPropertyHolder<T> implements Annotations {
+  private Annotations annotations;
 
-  public AnnotatedPropertyHolder(Map<Class<? extends Annotation>, Annotation> annotations) {
+  public AnnotatedPropertyHolder(Annotations annotations) {
     this.annotations = annotations;
   }
 
-  public boolean hasAnnotation(Class<? extends Annotation> annotationClass) {
-    return annotations.get(annotationClass) != null;
+  public boolean hasAnnotation(Key annotation) {
+    return annotations.hasAnnotation(annotation);
   }
 
-  public <A extends Annotation> A getAnnotation(Class<A> annotationClass) {
-    Annotation annotation = annotations.get(annotationClass);
-    if (annotation != null) {
-      return (A)annotation;
-    }
-    throw new ItemNotFound("Annotation '" + annotationClass.getName() + "' not registered on field " + this);
+  public Glob getAnnotation(Key key) {
+    return annotations.getAnnotation(key);
   }
 
-  public <A extends Annotation> A findAnnotation(Class<A> annotationClass) {
-    return (A)annotations.get(annotationClass);
+  public List<Glob> list() {
+    return annotations.list();
   }
 
+  public Glob findAnnotation(Key key) {
+    return annotations.findAnnotation(key);
+  }
 }

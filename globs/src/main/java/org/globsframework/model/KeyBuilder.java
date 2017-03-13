@@ -46,11 +46,11 @@ public class KeyBuilder {
     return this;
   }
 
-  public Key get() {
+  public DefaultKey get() {
     return createFromValues(globType, fieldValuesBuilder.get());
   }
 
-  public static Key newKey(GlobType type, Object value) throws InvalidParameter {
+  public static DefaultKey newKey(GlobType type, Object value) throws InvalidParameter {
     return new SingleFieldKey(type, value);
   }
 
@@ -94,7 +94,7 @@ public class KeyBuilder {
     });
   }
 
-  public static Key createFromValues(GlobType type, final FieldValues values) {
+  public static DefaultKey createFromValues(GlobType type, final FieldValues values) {
     Field[] keyFields = type.getKeyFields();
     if (keyFields.length == 1) {
       Field field = keyFields[0];
@@ -189,7 +189,7 @@ public class KeyBuilder {
     });
   }
 
-  private static Key createSingle(GlobType type, Field field, boolean present, Object value)
+  private static DefaultKey createSingle(GlobType type, Field field, boolean present, Object value)
     throws MissingInfo {
     if (!present) {
       throw new MissingInfo("Field '" + field.getName() +
@@ -198,7 +198,7 @@ public class KeyBuilder {
     return newKey(type, value);
   }
 
-  private static Key createKey(GlobType type, FieldValueGetter getter) throws MissingInfo {
+  private static DefaultKey createKey(GlobType type, FieldValueGetter getter) throws MissingInfo {
     return new CompositeKey(type, getter);
   }
 }

@@ -3,16 +3,16 @@ package org.globsframework.model.impl;
 import org.globsframework.metamodel.Field;
 import org.globsframework.metamodel.GlobType;
 import org.globsframework.metamodel.fields.*;
+import org.globsframework.model.DefaultKey;
 import org.globsframework.model.FieldValue;
 import org.globsframework.model.Key;
 import org.globsframework.utils.exceptions.InvalidParameter;
-import org.globsframework.utils.exceptions.ItemNotFound;
 import org.globsframework.utils.exceptions.MissingInfo;
 
 import java.util.Arrays;
 import java.util.Date;
 
-public class ThreeFieldKey extends Key {
+public class ThreeFieldKey extends DefaultKey {
   private Field keyField1;
   private Object value1;
   private Field keyField2;
@@ -230,7 +230,7 @@ public class ThreeFieldKey extends Key {
         otherSingleFieldKey.value3.equals(value3);
     }
 
-    if (!Key.class.isAssignableFrom(o.getClass())) {
+    if (!DefaultKey.class.isAssignableFrom(o.getClass())) {
       return false;
     }
     Key otherKey = (Key)o;

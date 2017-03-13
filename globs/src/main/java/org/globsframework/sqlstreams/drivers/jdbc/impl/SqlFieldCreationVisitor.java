@@ -4,6 +4,7 @@ import org.globsframework.metamodel.Field;
 import org.globsframework.metamodel.fields.*;
 import org.globsframework.sqlstreams.SqlService;
 import org.globsframework.sqlstreams.annotations.AutoIncrement;
+import org.globsframework.sqlstreams.annotations.AutoIncrementAnnotationType;
 import org.globsframework.sqlstreams.utils.StringPrettyWriter;
 
 public abstract class SqlFieldCreationVisitor implements FieldVisitor {
@@ -58,7 +59,7 @@ public abstract class SqlFieldCreationVisitor implements FieldVisitor {
   }
 
   protected void add(String param, Field field) {
-    boolean isAutoIncrementField = field.hasAnnotation(AutoIncrement.class);
+    boolean isAutoIncrementField = field.hasAnnotation(AutoIncrementAnnotationType.KEY);
     String columnName = sqlService.getColumnName(field);
     if (columnName != null) {
       prettyWriter

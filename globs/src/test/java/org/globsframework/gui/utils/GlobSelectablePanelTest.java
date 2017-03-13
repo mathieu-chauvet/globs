@@ -5,8 +5,8 @@ import org.globsframework.gui.components.GlobSelectablePanel;
 import org.globsframework.gui.splits.DummySplitsNode;
 import org.globsframework.metamodel.DummyObject;
 import org.globsframework.metamodel.DummyObject2;
+import org.globsframework.model.DefaultKey;
 import org.globsframework.model.Glob;
-import org.globsframework.model.Key;
 import org.globsframework.model.repository.DefaultGlobRepository;
 import org.globsframework.utils.exceptions.InvalidParameter;
 import org.uispec4j.Mouse;
@@ -280,8 +280,8 @@ public class GlobSelectablePanelTest extends GuiComponentTestCase {
                               "selected", "unselected",
                               "selectedRollover", "unselectedRollover",
                               repository, directory,
-                              Key.create(DummyObject.TYPE, 1),
-                              Key.create(DummyObject2.TYPE, 2));
+                              DefaultKey.create(DummyObject.TYPE, 1),
+                              DefaultKey.create(DummyObject2.TYPE, 2));
     }
     catch (InvalidParameter e) {
       assertEquals("Keys should be of type 'dummyObject' - unexpected key: dummyObject2[id=2]",

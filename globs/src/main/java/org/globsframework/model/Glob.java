@@ -5,7 +5,7 @@ import org.globsframework.metamodel.Link;
 
 import java.io.Serializable;
 
-public interface Glob extends FieldValues, Serializable {
+public interface Glob extends FieldValues {
   GlobType getType();
 
   Key getKey();

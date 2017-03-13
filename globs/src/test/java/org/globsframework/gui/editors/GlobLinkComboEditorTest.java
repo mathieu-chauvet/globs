@@ -5,10 +5,7 @@ import org.globsframework.gui.utils.GuiComponentTestCase;
 import org.globsframework.metamodel.DummyObject;
 import org.globsframework.metamodel.DummyObject2;
 import org.globsframework.metamodel.DummyObjectWithLinks;
-import org.globsframework.model.FieldValue;
-import org.globsframework.model.Glob;
-import org.globsframework.model.GlobList;
-import org.globsframework.model.Key;
+import org.globsframework.model.*;
 import org.globsframework.model.repository.LocalGlobRepository;
 import org.globsframework.model.repository.LocalGlobRepositoryBuilder;
 import org.globsframework.model.utils.GlobBuilder;
@@ -88,7 +85,7 @@ public class GlobLinkComboEditorTest extends GuiComponentTestCase {
                     "<dummyObjectWithLinks id='3' parentLink='name2'/>" +
                     "");
     repository.addChangeListener(changeListener);
-    Glob glob1 = repository.get(Key.create(DummyObjectWithLinks.TYPE, 1));
+    Glob glob1 = repository.get(DefaultKey.create(DummyObjectWithLinks.TYPE, 1));
     GlobLinkComboEditor editor = GlobLinkComboEditor.init(DummyObjectWithLinks.PARENT_LINK, repository, directory);
     ComboBox combo = new ComboBox(editor.getComponent());
 
@@ -114,7 +111,7 @@ public class GlobLinkComboEditorTest extends GuiComponentTestCase {
       GlobLinkComboEditor.init(DummyObjectWithLinks.PARENT_LINK, repository, directory);
     ComboBox combo = new ComboBox(editor.getComponent());
 
-    Glob glob1 = repository.get(Key.create(DummyObjectWithLinks.TYPE, 1));
+    Glob glob1 = repository.get(DefaultKey.create(DummyObjectWithLinks.TYPE, 1));
     selectionService.select(glob1);
     changeListener.assertNoChanges();
     assertTrue(combo.contentEquals("", "name1", "name2", "name3"));
@@ -403,7 +400,7 @@ public class GlobLinkComboEditorTest extends GuiComponentTestCase {
     LocalGlobRepository localGlobRepository = LocalGlobRepositoryBuilder.init(repository)
       .copy(DummyObject.TYPE, DummyObject2.TYPE).get();
     GlobLinkComboEditor editor = GlobLinkComboEditor.init(DummyObject.LINK2, localGlobRepository, directory)
-      .forceSelection(Key.create(DummyObject.TYPE, 1));
+      .forceSelection(DefaultKey.create(DummyObject.TYPE, 1));
     ComboBox combo = new ComboBox(editor.getComponent());
 
     repository.create(key1, FieldValue.value(DummyObject.LINK2, 1));

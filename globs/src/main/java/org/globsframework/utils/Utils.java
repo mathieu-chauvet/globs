@@ -1,5 +1,7 @@
 package org.globsframework.utils;
 
+import org.globsframework.model.Glob;
+import org.globsframework.model.Key;
 import org.globsframework.utils.exceptions.InvalidParameter;
 import org.globsframework.utils.exceptions.ItemNotFound;
 
@@ -410,5 +412,20 @@ public class Utils {
       result[i] = array[i];
     }
     return result;
+  }
+
+  public interface MapAdapter<KEY, VALUE, D> {
+
+    KEY getKey(D d);
+
+    VALUE getValue(D d);
+  }
+
+  public static <KEY, VALUE, D> Map<KEY, VALUE> adapt(D[] ds, MapAdapter<KEY, VALUE, D> mapAdapter) {
+     Map<KEY, VALUE> map = new HashMap<KEY, VALUE>(ds.length);
+    for (D d : ds) {
+      map.put(mapAdapter.getKey(d), mapAdapter.getValue(d));
+    }
+    return map;
   }
 }

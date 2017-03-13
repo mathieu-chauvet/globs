@@ -6,6 +6,8 @@ import org.globsframework.metamodel.Link;
 import org.globsframework.metamodel.index.Index;
 import org.globsframework.metamodel.index.MultiFieldIndex;
 import org.globsframework.model.GlobList;
+import org.globsframework.model.MutableGlob;
+import org.globsframework.model.impl.DefaultGlob;
 import org.globsframework.model.impl.ReadOnlyGlob;
 import org.globsframework.utils.exceptions.InvalidParameter;
 import org.globsframework.utils.exceptions.ItemAlreadyExists;
@@ -25,7 +27,7 @@ public class DefaultGlobType extends AnnotatedPropertyHolder<GlobType> implement
   private Map<String, Index> indices = new HashMap<String, Index>(2, 1);
   private Map<String, MultiFieldIndex> multiFieldIndices = new HashMap<String, MultiFieldIndex>(2, 1);
 
-  public DefaultGlobType(String name, Map<Class<? extends Annotation>, Annotation> annotationsByClass) {
+  public DefaultGlobType(String name, Annotations annotationsByClass) {
     super(annotationsByClass);
     this.name = name;
   }
@@ -80,15 +82,6 @@ public class DefaultGlobType extends AnnotatedPropertyHolder<GlobType> implement
 
   public Field[] getKeyFields() {
     return keyFields;
-  }
-
-  public boolean isKeyField(Field field) {
-    for (Field currentField : keyFields) {
-      if (currentField == field) {
-        return true;
-      }
-    }
-    return false;
   }
 
   public Field[] getFieldsWithAnnotation(Class<? extends Annotation> annotationClass) {
@@ -164,6 +157,10 @@ public class DefaultGlobType extends AnnotatedPropertyHolder<GlobType> implement
 
   public Collection<MultiFieldIndex> getMultiFieldIndices() {
     return multiFieldIndices.values();
+  }
+
+  public MutableGlob instantiate() {
+    return new DefaultGlob(this);
   }
 
   public Index getIndex(String name) {

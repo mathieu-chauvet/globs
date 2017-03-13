@@ -837,10 +837,11 @@ public class DefaultGlobRepository implements GlobRepository, IndexSource {
 
     public void process(Field sourceField, Field targetField) {
       Object value = targetKey != null ? targetKey.getValue(targetField) : null;
-      Object previousValue = sourceGlob.setObject(sourceField, value);
+      Object previousValue = sourceGlob.getValue(sourceField);
       if (Utils.equal(previousValue, value)) {
         return;
       }
+      sourceGlob.setObject(sourceField, value);
       hasChange = true;
       IndexTables indexTables = indexManager.getAssociatedTable(sourceField);
       if (indexTables != null) {

@@ -4,10 +4,8 @@ import junit.framework.TestCase;
 import org.globsframework.metamodel.DummyObject;
 import org.globsframework.metamodel.DummyObject2;
 import static org.globsframework.model.FieldValue.value;
-import org.globsframework.model.GlobChecker;
-import org.globsframework.model.GlobRepository;
-import org.globsframework.model.GlobRepositoryBuilder;
-import org.globsframework.model.Key;
+
+import org.globsframework.model.*;
 
 public class DebugTest extends TestCase {
   public void test() throws Exception {
@@ -30,8 +28,8 @@ public class DebugTest extends TestCase {
     repository.create(DummyObject2.TYPE,
                       value(DummyObject2.ID, 2),
                       value(DummyObject2.LABEL, "lbl"));
-    repository.update(Key.create(DummyObject.TYPE, 2), DummyObject.NAME, "newObj2");
-    repository.delete(Key.create(DummyObject.TYPE, 1));
+    repository.update(DefaultKey.create(DummyObject.TYPE, 2), DummyObject.NAME, "newObj2");
+    repository.delete(DefaultKey.create(DummyObject.TYPE, 1));
     repository.completeChangeSet();
 
     Debug.exit();

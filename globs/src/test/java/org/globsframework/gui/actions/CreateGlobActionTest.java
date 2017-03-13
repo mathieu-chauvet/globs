@@ -3,7 +3,7 @@ package org.globsframework.gui.actions;
 import org.globsframework.gui.utils.GuiComponentTestCase;
 import org.globsframework.metamodel.DummyObject;
 import org.globsframework.metamodel.GlobType;
-import org.globsframework.metamodel.utils.GlobTypeBuilder;
+import org.globsframework.metamodel.utils.DefaultGlobTypeBuilder;
 import org.globsframework.model.DummyChangeSetListener;
 import static org.globsframework.model.FieldValue.value;
 import org.globsframework.model.GlobRepositoryBuilder;
@@ -27,7 +27,7 @@ public class CreateGlobActionTest extends GuiComponentTestCase {
   }
 
   public void testNoNameRequestedForTypesWithNoNamingField() throws Exception {
-    initAction(GlobTypeBuilder.init("type").addIntegerKey("id").get());
+    initAction(DefaultGlobTypeBuilder.init("type").addIntegerKey("id").get());
 
     action.actionPerformed(null);
 

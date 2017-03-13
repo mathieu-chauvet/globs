@@ -50,7 +50,7 @@ public class GlobListViewTest extends GuiComponentTestCase {
     repository.update(key1, NAME, "newName1");
     assertTrue(list.contentEquals("name2", "name3", "newName1"));
 
-    repository.delete(Key.create(TYPE, 2));
+    repository.delete(DefaultKey.create(TYPE, 2));
     assertTrue(list.contentEquals("name3", "newName1"));
   }
 
@@ -111,7 +111,7 @@ public class GlobListViewTest extends GuiComponentTestCase {
     GlobRepository repository =
       checker.parse("<dummyObject id='1' name='name1'/>");
     ListBox list = createList(repository);
-    Key keyForDummy2 = Key.create(DummyObject2.TYPE, 1);
+    Key keyForDummy2 = DefaultKey.create(DummyObject2.TYPE, 1);
     repository.create(DummyObject2.TYPE, keyForDummy2.toArray());
     repository.update(keyForDummy2, DummyObject2.LABEL, "label");
     assertTrue(list.contentEquals("name1"));
@@ -550,10 +550,10 @@ public class GlobListViewTest extends GuiComponentTestCase {
     repository.update(key1, NAME, "name1_3");
     assertTrue(list.contentEquals("name1_3", "name3"));
 
-    repository.delete(Key.create(TYPE, 2));
+    repository.delete(DefaultKey.create(TYPE, 2));
     assertTrue(list.contentEquals("name1_3", "name3"));
 
-    repository.delete(Key.create(TYPE, 1));
+    repository.delete(DefaultKey.create(TYPE, 1));
     assertTrue(list.contentEquals("name3"));
   }
 

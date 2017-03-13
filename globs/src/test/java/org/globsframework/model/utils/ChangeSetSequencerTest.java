@@ -5,7 +5,7 @@ import junit.framework.TestCase;
 import org.globsframework.metamodel.GlobModel;
 import org.globsframework.metamodel.GlobType;
 import org.globsframework.metamodel.Link;
-import org.globsframework.metamodel.annotations.Key;
+import org.globsframework.metamodel.annotations.KeyField;
 import org.globsframework.metamodel.annotations.Target;
 import org.globsframework.metamodel.fields.IntegerField;
 import org.globsframework.metamodel.fields.LinkField;
@@ -25,10 +25,10 @@ public class ChangeSetSequencerTest extends TestCase {
   public static class ObjectWithCompositeKey {
     public static GlobType TYPE;
 
-    @Key
+    @KeyField
     public static IntegerField ID1;
 
-    @Key
+    @KeyField
     public static IntegerField ID2;
 
     public static StringField NAME;
@@ -41,7 +41,7 @@ public class ChangeSetSequencerTest extends TestCase {
   public static class LinkedToObjectWithCompositeKey {
     public static GlobType TYPE;
 
-    @Key
+    @KeyField
     public static IntegerField ID;
 
     @Target(ObjectWithCompositeKey.class)
@@ -86,7 +86,7 @@ public class ChangeSetSequencerTest extends TestCase {
   public static class ObjectWithSelfReference {
     public static GlobType TYPE;
 
-    @Key
+    @KeyField
     public static IntegerField ID;
 
     @Target(ObjectWithSelfReference.class)
@@ -128,10 +128,10 @@ public class ChangeSetSequencerTest extends TestCase {
   public static class LinkCycle1 {
     public static GlobType TYPE;
 
-    @Key
+    @KeyField
     public static IntegerField ID1;
 
-    @Key
+    @KeyField
     public static IntegerField ID2;
 
     @Target(ObjectWithCompositeKey.class)
@@ -153,10 +153,10 @@ public class ChangeSetSequencerTest extends TestCase {
   public static class LinkCycle2 {
     public static GlobType TYPE;
 
-    @Key
+    @KeyField
     public static IntegerField ID1;
 
-    @Key
+    @KeyField
     public static IntegerField ID2;
 
     @Target(ObjectWithCompositeKey.class)
@@ -215,7 +215,7 @@ public class ChangeSetSequencerTest extends TestCase {
   public static class LargeLinkCycle1 {
     public static GlobType TYPE;
 
-    @Key
+    @KeyField
     public static IntegerField ID;
 
     @Target(LargeLinkCycle2.class)
@@ -229,7 +229,7 @@ public class ChangeSetSequencerTest extends TestCase {
   public static class LargeLinkCycle2 {
     public static GlobType TYPE;
 
-    @Key
+    @KeyField
     public static IntegerField ID;
 
     @Target(LargeLinkCycle3.class)
@@ -243,7 +243,7 @@ public class ChangeSetSequencerTest extends TestCase {
   public static class LargeLinkCycle3 {
     public static GlobType TYPE;
 
-    @Key
+    @KeyField
     public static IntegerField ID;
 
     @Target(LargeLinkCycle1.class)

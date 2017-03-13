@@ -186,7 +186,7 @@ public class GlobNumericEditor extends AbstractGlobTextFieldEditor<GlobNumericEd
     });
   }
 
-  private static class StringParserVisitor implements FieldVisitor {
+  private static class StringParserVisitor extends FieldVisitor.AbstractFieldVisitor {
     private String text;
     private Object value;
     private DescriptionService descriptionService;
@@ -224,9 +224,6 @@ public class GlobNumericEditor extends AbstractGlobTextFieldEditor<GlobNumericEd
       }
     }
 
-    public void visitBoolean(BooleanField field) throws Exception {
-    }
-
     public void visitTimeStamp(TimeStampField field) throws Exception {
       value = valueForNull;
       if (!"".equals(text)) {
@@ -234,21 +231,12 @@ public class GlobNumericEditor extends AbstractGlobTextFieldEditor<GlobNumericEd
       }
     }
 
-    public void visitBlob(BlobField field) throws Exception {
-    }
-
-    public void visitLong(LongField field) throws Exception {
-    }
-
-    public void visitLink(LinkField field) throws Exception {
-    }
-
     public Object getValue() {
       return value;
     }
   }
 
-  private static class StringifierFieldValueVisitor implements FieldValueVisitor {
+  private static class StringifierFieldValueVisitor extends FieldValueVisitor.AbstractFieldValueVisitor {
     private String text;
     private DescriptionService descriptionService;
 
@@ -284,25 +272,16 @@ public class GlobNumericEditor extends AbstractGlobTextFieldEditor<GlobNumericEd
       }
     }
 
-    public void visitBoolean(BooleanField field, Boolean value) throws Exception {
-    }
-
     public void visitTimeStamp(TimeStampField field, Date value) throws Exception {
       if (value != null) {
         text = descriptionService.getFormats().getTimestampFormat().format(value);
       }
     }
 
-    public void visitBlob(BlobField field, byte[] value) throws Exception {
-    }
-
     public void visitLong(LongField field, Long value) throws Exception {
       if (value != null) {
         text = value.toString();
       }
-    }
-
-    public void visitLink(LinkField field, Integer value) throws Exception {
     }
   }
 

@@ -18,31 +18,42 @@ public abstract class AbstractMutableGlob extends AbstractGlob implements Mutabl
     super(type, values);
   }
 
-  public void set(IntegerField field, Integer value) {
+  public MutableGlob set(IntegerField field, Integer value) {
     setObject(field, value);
+    return this;
   }
 
-  public void set(DoubleField field, Double value) {
+  public MutableGlob set(DoubleField field, Double value) {
     setObject(field, value);
+    return this;
   }
 
-  public void set(StringField field, String value) {
+  public MutableGlob set(StringField field, String value) {
     setObject(field, value);
+    return this;
   }
 
-  public void set(DateField field, Date value) {
+  public MutableGlob set(DateField field, Date value) {
     setObject(field, value);
+    return this;
   }
 
-  public void set(BooleanField field, Boolean value) {
+  public MutableGlob set(LongField field, Long value) {
     setObject(field, value);
+    return this;
   }
 
-  public void set(BlobField field, byte[] value) {
+  public MutableGlob set(BooleanField field, Boolean value) {
     setObject(field, value);
+    return this;
   }
 
-  public void setValues(FieldValues values) {
+  public MutableGlob set(BlobField field, byte[] value) {
+    setObject(field, value);
+    return this;
+  }
+
+  public MutableGlob setValues(FieldValues values) {
     values.safeApply(new FieldValues.Functor() {
       public void process(Field field, Object value) throws IOException {
         setObject(field, value);
@@ -50,10 +61,9 @@ public abstract class AbstractMutableGlob extends AbstractGlob implements Mutabl
     });
   }
 
-  public Object setObject(Field field, Object value) {
+  public MutableGlob setObject(Field field, Object value) {
     final int index = field.getIndex();
-    Object previousValue = values[index];
     values[index] = value;
-    return previousValue;
+    return this;
   }
 }

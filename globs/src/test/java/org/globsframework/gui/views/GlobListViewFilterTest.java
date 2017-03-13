@@ -4,6 +4,7 @@ import org.globsframework.gui.splits.utils.DummyAction;
 import org.globsframework.gui.utils.GuiComponentTestCase;
 import org.globsframework.metamodel.DummyObject;
 import org.globsframework.metamodel.DummyObject2;
+import org.globsframework.model.DefaultKey;
 import org.globsframework.model.GlobRepository;
 import org.globsframework.model.utils.GlobMatchers;
 import org.globsframework.utils.exceptions.InvalidParameter;
@@ -178,7 +179,7 @@ public class GlobListViewFilterTest extends GuiComponentTestCase {
                     "<dummyObject id='3' name='name3'/>");
     GlobListView view = createList(repository);
     try {
-      GlobListViewFilter.init(view).setDefaultValue(org.globsframework.model.Key.create(DummyObject2.TYPE, 2));
+      GlobListViewFilter.init(view).setDefaultValue(DefaultKey.create(DummyObject2.TYPE, 2));
       fail();
     }
     catch (InvalidParameter e) {
@@ -216,7 +217,7 @@ public class GlobListViewFilterTest extends GuiComponentTestCase {
     GlobListView view = createList(repository);
 
     viewFilter = GlobListViewFilter.init(view)
-      .setDefaultValue(org.globsframework.model.Key.create(DummyObject.TYPE, id));
+      .setDefaultValue(DefaultKey.create(DummyObject.TYPE, id));
     filter = new TextBox(viewFilter.getComponent());
   }
 

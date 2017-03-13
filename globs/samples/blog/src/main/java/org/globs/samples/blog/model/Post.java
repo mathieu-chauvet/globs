@@ -8,7 +8,7 @@ import org.globsframework.metamodel.annotations.*;
 public class Post {
   public static GlobType TYPE;
 
-  @Key
+  @KeyField
   public static IntegerField ID;
 
   @NamingField
@@ -17,14 +17,13 @@ public class Post {
   @MultiLineText
   public static StringField CONTENT;
 
-  @DefaultDate()
   public static DateField PUBLICATION_DATE;
 
   @DefaultBoolean(false)
   public static BooleanField PUBLISHED;
 
   @Target(Category.class)
-  public static LinkField CATEGORY;
+  public static IntegerField CATEGORY;
 
   static {
     GlobTypeLoader.init(Post.class);

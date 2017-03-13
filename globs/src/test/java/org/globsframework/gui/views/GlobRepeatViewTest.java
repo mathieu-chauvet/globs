@@ -108,7 +108,7 @@ public class GlobRepeatViewTest extends GuiComponentTestCase {
   }
 
   private void update(int id, String name) {
-    repository.update(Key.create(DummyObject.TYPE, id), DummyObject.NAME, name);
+    repository.update(DefaultKey.create(DummyObject.TYPE, id), DummyObject.NAME, name);
   }
 
   private Panel initComponent() {

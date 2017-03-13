@@ -137,7 +137,7 @@ public abstract class AbstractGlobTextEditor<COMPONENT_TYPE extends JTextCompone
       SelectionService service = directory.get(SelectionService.class);
       service.removeListener(this);
     }
-    this.forcedSelection = new ArrayList<Key>();
+    this.forcedSelection = new ArrayList<DefaultKey>();
     forcedSelection.add(key);
     if (isInitialized) {
       GlobList elements = getForceSelectedGlob();

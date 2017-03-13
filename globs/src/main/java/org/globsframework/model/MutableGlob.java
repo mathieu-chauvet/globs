@@ -7,19 +7,21 @@ import java.util.Date;
 
 public interface MutableGlob extends Glob {
 
-  void set(IntegerField field, Integer value);
+  MutableGlob set(IntegerField field, Integer value);
 
-  void set(DoubleField field, Double value);
+  MutableGlob set(LongField field, Long value);
 
-  void set(StringField field, String value);
+  MutableGlob set(DoubleField field, Double value);
 
-  void set(DateField field, Date value);
+  MutableGlob set(StringField field, String value);
 
-  void set(BooleanField field, Boolean value);
+  MutableGlob set(DateField field, Date value);
 
-  void set(BlobField field, byte[] value);
+  MutableGlob set(BooleanField field, Boolean value);
 
-  Object setObject(Field field, Object value);
+  MutableGlob set(BlobField field, byte[] value);
 
-  void setValues(FieldValues values);
+  MutableGlob setObject(Field field, Object value);
+
+  MutableGlob setValues(FieldValues values);
 }

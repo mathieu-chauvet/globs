@@ -11,10 +11,7 @@ import org.globsframework.metamodel.DummyObject;
 import org.globsframework.metamodel.DummyObject2;
 import org.globsframework.metamodel.DummyObjectWithLinks;
 import org.globsframework.metamodel.Field;
-import org.globsframework.model.Glob;
-import org.globsframework.model.GlobList;
-import org.globsframework.model.GlobRepository;
-import org.globsframework.model.Key;
+import org.globsframework.model.*;
 import org.globsframework.model.format.GlobStringifier;
 import org.globsframework.model.format.GlobStringifiers;
 import org.globsframework.model.format.utils.AbstractGlobStringifier;
@@ -556,9 +553,9 @@ public class GlobTableViewTest extends GuiComponentTestCase {
 
     DummySelectionListener listener = DummySelectionListener.register(directory, TYPE);
     repository.startChangeSet();
-    repository.update(Key.create(DummyObject.TYPE, 1), DummyObject.NAME, "newName");
-    repository.update(Key.create(DummyObject.TYPE, 2), DummyObject.NAME, "newName");
-    repository.update(Key.create(DummyObject.TYPE, 3), DummyObject.NAME, "newName");
+    repository.update(DefaultKey.create(DummyObject.TYPE, 1), DummyObject.NAME, "newName");
+    repository.update(DefaultKey.create(DummyObject.TYPE, 2), DummyObject.NAME, "newName");
+    repository.update(DefaultKey.create(DummyObject.TYPE, 3), DummyObject.NAME, "newName");
     repository.completeChangeSet();
 
     listener.assertEquals("<log>" +

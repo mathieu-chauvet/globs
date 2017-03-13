@@ -3,13 +3,15 @@ package org.globsframework.metamodel.utils;
 import junit.framework.TestCase;
 import org.globsframework.metamodel.Field;
 import org.globsframework.metamodel.GlobType;
+import org.globsframework.metamodel.annotations.DefaultDoubleAnnotationType;
+import org.globsframework.metamodel.annotations.NamingFieldAnnotationType;
 import org.globsframework.metamodel.fields.*;
 import org.globsframework.utils.exceptions.InvalidParameter;
 import org.globsframework.utils.exceptions.ItemAlreadyExists;
 
 public class GlobTypeBuilderTest extends TestCase {
   public void test() throws Exception {
-    GlobType type = GlobTypeBuilder.init("aType")
+    GlobType type = DefaultGlobTypeBuilder.init("aType")
       .addIntegerKey("id")
       .addStringField("string")
       .addIntegerField("int")
@@ -17,8 +19,6 @@ public class GlobTypeBuilderTest extends TestCase {
       .addDoubleField("double")
       .addBlobField("blob")
       .addBooleanField("boolean")
-      .addDateField("date")
-      .addTimestampField("timestamp")
       .get();
 
     assertEquals("aType", type.getName());
@@ -46,7 +46,7 @@ public class GlobTypeBuilderTest extends TestCase {
 
   public void testCannotUseTheSameNameTwice() throws Exception {
     try {
-      GlobTypeBuilder.init("aType")
+      DefaultGlobTypeBuilder.init("aType")
         .addIntegerKey("id")
         .addStringField("field")
         .addIntegerField("field");
@@ -59,7 +59,7 @@ public class GlobTypeBuilderTest extends TestCase {
 
   public void testAtLeastOneKeyMustBeDefined() throws Exception {
     try {
-      GlobTypeBuilder.init("type").get();
+      DefaultGlobTypeBuilder.init("type").get();
       fail();
     }
     catch (InvalidParameter e) {
@@ -68,9 +68,9 @@ public class GlobTypeBuilderTest extends TestCase {
   }
 
   public void testNamingField() throws Exception {
-    GlobType type = GlobTypeBuilder.init("aType")
+    GlobType type = DefaultGlobTypeBuilder.init("aType")
       .addIntegerKey("id")
-      .addNamingField("name")
+      .addStringField("name", NamingFieldAnnotationType.create())
       .get();
 
     StringField field = GlobTypeUtils.findNamingField(type);
@@ -78,4 +78,9 @@ public class GlobTypeBuilderTest extends TestCase {
     assertEquals("name", field.getName());
   }
 
+  public void testWithAnnotations() throws Exception {
+    DefaultGlobTypeBuilder.init("aType")
+            .addDoubleField("aDouble", DefaultDoubleAnnotationType.create(2.2));
+
+  }
 }

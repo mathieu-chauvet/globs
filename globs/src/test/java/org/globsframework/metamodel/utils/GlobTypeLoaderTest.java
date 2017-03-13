@@ -3,7 +3,7 @@ package org.globsframework.metamodel.utils;
 import junit.framework.TestCase;
 import org.globsframework.metamodel.*;
 import org.globsframework.metamodel.annotations.DefaultBoolean;
-import org.globsframework.metamodel.annotations.Key;
+import org.globsframework.metamodel.annotations.KeyField;
 import org.globsframework.metamodel.annotations.Required;
 import org.globsframework.metamodel.annotations.Target;
 import org.globsframework.metamodel.fields.*;
@@ -31,7 +31,7 @@ public class GlobTypeLoaderTest extends TestCase {
 
     public static GlobType TYPE;
 
-    @Key
+    @KeyField
     public static IntegerField ID;
 
     public static StringField STRING;
@@ -117,7 +117,7 @@ public class GlobTypeLoaderTest extends TestCase {
 
   public static class AnObjectForDoubleInit {
     public static GlobType TYPE;
-    @Key
+    @KeyField
     public static IntegerField ID;
   }
 
@@ -148,9 +148,9 @@ public class GlobTypeLoaderTest extends TestCase {
 
   private static class AnObjectWithACompositeKey {
     public static GlobType TYPE;
-    @Key
+    @KeyField
     public static IntegerField ID1;
-    @Key
+    @KeyField
     public static IntegerField ID2;
 
     static {
@@ -165,7 +165,7 @@ public class GlobTypeLoaderTest extends TestCase {
 
   private static class AnObjectWithALinkField {
     public static GlobType TYPE;
-    @Key
+    @KeyField
     public static IntegerField ID;
     @Target(AnObject.class)
     public static LinkField LINK;
@@ -192,7 +192,7 @@ public class GlobTypeLoaderTest extends TestCase {
 
   private static class AnObjectWithALinkFieldWithoutTheTargetAnnotation {
     public static GlobType TYPE;
-    @Key
+    @KeyField
     public static IntegerField ID;
     public static LinkField LINK;
   }
@@ -212,7 +212,7 @@ public class GlobTypeLoaderTest extends TestCase {
 
   private static class AnObjectWithALinkFieldTargettingAMultiKeyObject {
     public static GlobType TYPE;
-    @Key
+    @KeyField
     public static IntegerField ID;
     @Target(AnObjectWithACompositeKey.class)
     public static LinkField LINK;
@@ -234,7 +234,7 @@ public class GlobTypeLoaderTest extends TestCase {
 
   private static class AnObjectWithALinkFieldTargettingANonGlobsObject {
     public static GlobType TYPE;
-    @Key
+    @KeyField
     public static IntegerField ID;
     @Target(String.class)
     public static LinkField LINK;
@@ -256,7 +256,7 @@ public class GlobTypeLoaderTest extends TestCase {
 
   private static class AnObjectWithAStringId {
     public static GlobType TYPE;
-    @Key
+    @KeyField
     public static StringField ID;
 
     static {
@@ -266,7 +266,7 @@ public class GlobTypeLoaderTest extends TestCase {
 
   private static class AnObjectWithALinkFieldTargettingAnObjectWithAStringId {
     public static GlobType TYPE;
-    @Key
+    @KeyField
     public static IntegerField ID;
     @Target(AnObjectWithAStringId.class)
     public static LinkField LINK;
@@ -288,7 +288,7 @@ public class GlobTypeLoaderTest extends TestCase {
 
   private static class AnObjectWithASingleIntegerFieldUsedAsALink {
     public static GlobType TYPE;
-    @Key
+    @KeyField
     public static IntegerField ID;
     public static IntegerField LINK_ID;
     public static Link LINK;
@@ -320,7 +320,7 @@ public class GlobTypeLoaderTest extends TestCase {
 
     @MyAnnotation("class annotations")
     public static GlobType TYPE;
-    @Key
+    @KeyField
     @MyAnnotation("field annotations")
     public static IntegerField ID;
 
@@ -345,7 +345,7 @@ public class GlobTypeLoaderTest extends TestCase {
   public static class AnObjectWithCustomLinkAnnotations {
     public static GlobType TYPE;
 
-    @Key
+    @KeyField
     public static IntegerField ID;
 
     @MyAnnotation("link annotation")
@@ -374,7 +374,7 @@ public class GlobTypeLoaderTest extends TestCase {
 
     public static GlobType TYPE;
 
-    @Key
+    @KeyField
     public static IntegerField ID;
 
     public ReadOnlyGlob getGlob() {
@@ -398,7 +398,7 @@ public class GlobTypeLoaderTest extends TestCase {
 
     public static GlobType TYPE;
 
-    @Key
+    @KeyField
     public static IntegerField ID;
   }
 
@@ -417,7 +417,7 @@ public class GlobTypeLoaderTest extends TestCase {
 
     public static GlobType TYPE;
 
-    @Key
+    @KeyField
     public static IntegerField ID;
 
     @Required
@@ -449,7 +449,7 @@ public class GlobTypeLoaderTest extends TestCase {
 
   private static class AnObjectWithADefaultValueTypeError {
     public static GlobType TYPE;
-    @Key
+    @KeyField
     public static IntegerField ID;
     @DefaultBoolean(true)
     public static IntegerField COUNT;
@@ -471,7 +471,7 @@ public class GlobTypeLoaderTest extends TestCase {
 
     public static GlobType TYPE;
 
-    @Key
+    @KeyField
     public static IntegerField ID;
 
     public static IntegerField LINK_ID;
@@ -493,7 +493,7 @@ public class GlobTypeLoaderTest extends TestCase {
 
     public static GlobType TYPE;
 
-    @Key
+    @KeyField
     public static IntegerField ID;
 
     @Target(DummyObject.class)

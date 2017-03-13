@@ -8,7 +8,7 @@ import org.globsframework.sqlstreams.annotations.AutoIncrement;
 public class DummyObjectWithDefaultValues {
   public static GlobType TYPE;
 
-  @Key
+  @KeyField
   @AutoIncrement
   public static IntegerField ID;
 
@@ -24,10 +24,8 @@ public class DummyObjectWithDefaultValues {
   @DefaultBoolean(true)
   public static BooleanField BOOLEAN;
 
-  @DefaultDate()
   public static DateField DATE;
 
-  @DefaultDate()
   public static TimeStampField TIMESTAMP;
 
   @Target(DummyObject.class)

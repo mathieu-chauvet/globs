@@ -4,18 +4,16 @@ import org.globsframework.metamodel.Field;
 import org.globsframework.metamodel.GlobType;
 import org.globsframework.metamodel.Link;
 import org.globsframework.metamodel.utils.AnnotatedPropertyHolder;
+import org.globsframework.metamodel.utils.Annotations;
 import org.globsframework.metamodel.utils.MutableGlobType;
-import org.globsframework.model.FieldValues;
-import org.globsframework.model.Key;
-import org.globsframework.model.KeyBuilder;
 import org.globsframework.utils.exceptions.InvalidParameter;
 import org.globsframework.utils.exceptions.UnexpectedApplicationState;
 
-import java.lang.annotation.Annotation;
 import java.util.HashMap;
 import java.util.Map;
 
 public class DefaultLink extends AnnotatedPropertyHolder<Link> implements Link {
+  public static final String DEFAULT_MODEL_NAME = "DEFAULT";
   private String name;
   private MutableGlobType sourceType;
   private GlobType targetType;
@@ -24,7 +22,7 @@ public class DefaultLink extends AnnotatedPropertyHolder<Link> implements Link {
   private boolean required;
 
   public DefaultLink(MutableGlobType type, String name, boolean required,
-                     Map<Class<? extends Annotation>, Annotation> annotations) {
+                     Annotations annotations) {
     super(annotations);
     this.name = name;
     this.sourceType = type;
@@ -71,23 +69,7 @@ public class DefaultLink extends AnnotatedPropertyHolder<Link> implements Link {
     }
   }
 
-  public Key getTargetKey(FieldValues values) {
-    if (fieldsMap.isEmpty()) {
-      throw new UnexpectedApplicationState("At least one source must be registered for link: " + name);
-    }
-    final KeyBuilder builder = KeyBuilder.init(targetType);
-    for (Map.Entry<Field, Field> entry : fieldsMap.entrySet()) {
-      Field targetField = entry.getKey();
-      Object targetValue = values.getValue(entry.getValue());
-      if (targetValue == null) {
-        return null;
-      }
-      builder.set(targetField, targetValue);
-    }
-    return builder.get();
-  }
-
-  public GlobType getSourceType() {
+    public GlobType getSourceType() {
     return sourceType;
   }
 
@@ -95,7 +77,11 @@ public class DefaultLink extends AnnotatedPropertyHolder<Link> implements Link {
     return targetType;
   }
 
-  public String getName() {
+    public String getLinkModelName() {
+        return DEFAULT_MODEL_NAME;
+    }
+
+    public String getName() {
     return name;
   }
 

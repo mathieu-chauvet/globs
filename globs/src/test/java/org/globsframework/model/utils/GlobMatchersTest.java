@@ -26,10 +26,10 @@ public class GlobMatchersTest extends TestCase {
       "<dummyObject id='3' name='obj_d' value='2'/>"
     );
 
-    a = repository.get(Key.create(DummyObject.TYPE, 0));
-    b = repository.get(Key.create(DummyObject.TYPE, 1));
-    c = repository.get(Key.create(DummyObject.TYPE, 2));
-    d = repository.get(Key.create(DummyObject.TYPE, 3));
+    a = repository.get(DefaultKey.create(DummyObject.TYPE, 0));
+    b = repository.get(DefaultKey.create(DummyObject.TYPE, 1));
+    c = repository.get(DefaultKey.create(DummyObject.TYPE, 2));
+    d = repository.get(DefaultKey.create(DummyObject.TYPE, 3));
 
     list = new GlobList(a, b, c, d);
   }
@@ -100,14 +100,14 @@ public class GlobMatchersTest extends TestCase {
       "<dummyObjectWithCompositeKey id1='1' id2='2'/>" +
       ""
     );
-    Glob a = repository.get(Key.create(DummyObjectWithLinks.TYPE, 0));
-    Glob b = repository.get(Key.create(DummyObjectWithLinks.TYPE, 1));
-    Glob c = repository.get(Key.create(DummyObjectWithLinks.TYPE, 2));
+    Glob a = repository.get(DefaultKey.create(DummyObjectWithLinks.TYPE, 0));
+    Glob b = repository.get(DefaultKey.create(DummyObjectWithLinks.TYPE, 1));
+    Glob c = repository.get(DefaultKey.create(DummyObjectWithLinks.TYPE, 2));
     list.clear();
     list.add(a);
     list.add(b);
     list.add(c);
-    check(GlobMatchers.linkedTo(repository.get(Key.create(DummyObjectWithCompositeKey.ID1, 1,
+    check(GlobMatchers.linkedTo(repository.get(DefaultKey.create(DummyObjectWithCompositeKey.ID1, 1,
                                                           DummyObjectWithCompositeKey.ID2, 2)),
                                 DummyObjectWithLinks.COMPOSITE_LINK), a, c);
   }
@@ -122,12 +122,12 @@ public class GlobMatchersTest extends TestCase {
       "<dummyObject id='4' link='2'/>" +
       ""
     );
-    a = repository.get(Key.create(DummyObject.TYPE, 0));
-    b = repository.get(Key.create(DummyObject.TYPE, 1));
-    c = repository.get(Key.create(DummyObject.TYPE, 2));
-    d = repository.get(Key.create(DummyObject.TYPE, 3));
+    a = repository.get(DefaultKey.create(DummyObject.TYPE, 0));
+    b = repository.get(DefaultKey.create(DummyObject.TYPE, 1));
+    c = repository.get(DefaultKey.create(DummyObject.TYPE, 2));
+    d = repository.get(DefaultKey.create(DummyObject.TYPE, 3));
 
-    Glob e = repository.get(Key.create(DummyObject.TYPE, 4));
+    Glob e = repository.get(DefaultKey.create(DummyObject.TYPE, 4));
     list = new GlobList(a, b, c, d, e);
     check(GlobMatchers.linkedTo(a, DummyObject.LINK), a, b, c);
     check(GlobMatchers.linkedTo(c, DummyObject.LINK), d, e);

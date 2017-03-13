@@ -4,7 +4,7 @@ import junit.framework.TestCase;
 import org.globsframework.metamodel.Field;
 import org.globsframework.metamodel.GlobModel;
 import org.globsframework.metamodel.GlobType;
-import org.globsframework.metamodel.annotations.Key;
+import org.globsframework.metamodel.annotations.KeyField;
 import org.globsframework.metamodel.fields.IntegerField;
 import org.globsframework.metamodel.properties.Property;
 import org.globsframework.utils.Functor;
@@ -61,7 +61,7 @@ public class DefaultGlobTypeTest extends TestCase {
 
   private static class Type {
     public static GlobType TYPE;
-    @Key
+    @KeyField
     public static IntegerField FIELD1;
   }
 

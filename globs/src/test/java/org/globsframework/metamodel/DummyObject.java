@@ -1,11 +1,10 @@
 package org.globsframework.metamodel;
 
-import org.globsframework.metamodel.annotations.Key;
+import org.globsframework.metamodel.annotations.KeyField;
 import org.globsframework.metamodel.annotations.NamingField;
 import org.globsframework.metamodel.annotations.Target;
 import org.globsframework.metamodel.fields.*;
 import org.globsframework.metamodel.index.NotUniqueIndex;
-import org.globsframework.metamodel.index.UniqueIndex;
 import org.globsframework.metamodel.utils.GlobTypeLoader;
 import org.globsframework.sqlstreams.annotations.AutoIncrement;
 
@@ -13,7 +12,7 @@ public class DummyObject {
 
   public static GlobType TYPE;
 
-  @Key
+  @KeyField
   @AutoIncrement
   public static IntegerField ID;
 

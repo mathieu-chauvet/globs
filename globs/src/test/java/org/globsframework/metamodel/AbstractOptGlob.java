@@ -6,10 +6,10 @@ import org.globsframework.metamodel.fields.*;
 
 import java.util.Date;
 
-public abstract class AbstractOptGlob extends Key implements Glob, MutableGlob {
+public abstract class AbstractOptGlob extends DefaultKey implements Glob, MutableGlob {
   public abstract GlobType getType();
 
-  public Key getKey() {
+  public DefaultKey getKey() {
     return this;
   }
 
@@ -122,30 +122,37 @@ public abstract class AbstractOptGlob extends Key implements Glob, MutableGlob {
     return new FieldValue[0];
   }
 
-  public void set(IntegerField field, Integer value) {
+  public MutableGlob set(IntegerField field, Integer value) {
     setObject(field, value);
+    return this;
   }
 
-  public void set(DoubleField field, Double value) {
+  public MutableGlob set(DoubleField field, Double value) {
     setObject(field, value);
+    return this;
   }
 
-  public void set(StringField field, String value) {
+  public MutableGlob set(StringField field, String value) {
     setObject(field, value);
+    return this;
   }
 
-  public void set(DateField field, Date value) {
+  public MutableGlob set(DateField field, Date value) {
+    return this;
   }
 
-  public void set(BooleanField field, Boolean value) {
+  public MutableGlob set(BooleanField field, Boolean value) {
+    return this;
   }
 
-  public void set(BlobField field, byte[] value) {
+  public MutableGlob set(BlobField field, byte[] value) {
+    return this;
   }
 
-  public abstract Object setObject(Field field, Object value);
+  public abstract MutableGlob setObject(Field field, Object value);
 
-  public void setValues(FieldValues values) {
+  public MutableGlob setValues(FieldValues values) {
+    return this;
   }
 
   public GlobType getGlobType() {

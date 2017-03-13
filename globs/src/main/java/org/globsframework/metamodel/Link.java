@@ -1,25 +1,24 @@
 package org.globsframework.metamodel;
 
 import org.globsframework.metamodel.links.FieldMappingFunctor;
-import org.globsframework.metamodel.utils.Annotable;
-import org.globsframework.model.FieldValues;
-import org.globsframework.model.Key;
+import org.globsframework.metamodel.utils.Annotations;
 
-import java.io.Serializable;
+// introduce typeded link => containmentLink, 1->1, 1->N, M->N, ... hierarchical.
+public interface Link extends Annotations {
 
-public interface Link extends Annotable, Serializable {
+    GlobType getSourceType();
 
-  GlobType getSourceType();
+    GlobType getTargetType();
 
-  GlobType getTargetType();
+    String getLinkModelName();
 
-  String getName();
+    String getName();
 
-  String getFullName();
+    String getFullName();
 
-  boolean isRequired();
+    boolean isRequired();
 
-  void apply(FieldMappingFunctor functor);
+    void apply(FieldMappingFunctor functor);
 
-  Key getTargetKey(FieldValues values);
+    boolean isContainment();
 }

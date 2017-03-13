@@ -5,12 +5,12 @@ import org.globsframework.metamodel.utils.GlobTypeLoader;
 import org.globsframework.metamodel.fields.IntegerField;
 import org.globsframework.metamodel.fields.StringField;
 import org.globsframework.metamodel.fields.DateField;
-import org.globsframework.metamodel.annotations.Key;
+import org.globsframework.metamodel.annotations.KeyField;
 
 public class Movie {
   public static GlobType TYPE;
 
-  @Key
+  @KeyField
   public static IntegerField ID;
 
   public static StringField TITLE;

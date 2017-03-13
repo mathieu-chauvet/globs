@@ -5,6 +5,8 @@ import org.globsframework.gui.utils.GuiComponentTestCase;
 import org.globsframework.metamodel.DummyObject;
 import org.globsframework.metamodel.Field;
 import static org.globsframework.model.FieldValue.value;
+
+import org.globsframework.model.DefaultKey;
 import org.globsframework.model.Glob;
 import org.uispec4j.Key;
 import org.uispec4j.TextBox;
@@ -203,8 +205,8 @@ public class GlobNumericEditorTest extends GuiComponentTestCase {
   }
 
   public void testMultiSelection() throws Exception {
-    Glob glob1 = repository.create(org.globsframework.model.Key.create(DummyObject.TYPE, 2), value(DummyObject.VALUE, 1.0));
-    Glob glob2 = repository.create(org.globsframework.model.Key.create(DummyObject.TYPE, 3), value(DummyObject.VALUE, 2.0));
+    Glob glob1 = repository.create(DefaultKey.create(DummyObject.TYPE, 2), value(DummyObject.VALUE, 1.0));
+    Glob glob2 = repository.create(DefaultKey.create(DummyObject.TYPE, 3), value(DummyObject.VALUE, 2.0));
     JTextField textField =
       GlobNumericEditor.init(DummyObject.VALUE, repository, directory)
         .setNotifyOnKeyPressed(true).getComponent();
@@ -226,8 +228,8 @@ public class GlobNumericEditorTest extends GuiComponentTestCase {
   }
 
   public void testSetValueForNullAndNotifyAtKeyPressed() throws Exception {
-    Glob glob1 = repository.create(org.globsframework.model.Key.create(DummyObject.TYPE, 2), value(DummyObject.VALUE, 1.0));
-    Glob glob2 = repository.create(org.globsframework.model.Key.create(DummyObject.TYPE, 3), value(DummyObject.VALUE, 2.0));
+    Glob glob1 = repository.create(DefaultKey.create(DummyObject.TYPE, 2), value(DummyObject.VALUE, 1.0));
+    Glob glob2 = repository.create(DefaultKey.create(DummyObject.TYPE, 3), value(DummyObject.VALUE, 2.0));
     JTextField textField =
       GlobNumericEditor.init(DummyObject.VALUE, repository, directory)
         .setNotifyOnKeyPressed(true)

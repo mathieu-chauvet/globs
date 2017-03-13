@@ -3,17 +3,17 @@ package org.globsframework.model.impl;
 import org.globsframework.metamodel.Field;
 import org.globsframework.metamodel.GlobType;
 import org.globsframework.metamodel.fields.*;
+import org.globsframework.model.DefaultKey;
 import org.globsframework.model.FieldValue;
 import org.globsframework.model.Key;
 import org.globsframework.model.utils.FieldValueGetter;
 import org.globsframework.utils.Utils;
 import org.globsframework.utils.exceptions.MissingInfo;
-import org.globsframework.utils.exceptions.ItemNotFound;
 
 import java.util.Arrays;
 import java.util.Date;
 
-public class CompositeKey extends Key {
+public class CompositeKey extends DefaultKey {
   private GlobType type;
   private Object[] values;
   private int hashCode = 0;
@@ -107,7 +107,7 @@ public class CompositeKey extends Key {
       return type.equals(other.type) && Arrays.equals(values, other.values);
     }
 
-    if (!Key.class.isAssignableFrom(o.getClass())) {
+    if (!DefaultKey.class.isAssignableFrom(o.getClass())) {
       return false;
     }
 

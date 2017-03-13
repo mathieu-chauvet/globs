@@ -2,10 +2,7 @@ package org.globsframework.model.utils;
 
 import junit.framework.TestCase;
 import org.globsframework.metamodel.DummyObject;
-import org.globsframework.model.Glob;
-import org.globsframework.model.GlobChecker;
-import org.globsframework.model.GlobRepository;
-import org.globsframework.model.Key;
+import org.globsframework.model.*;
 import org.globsframework.utils.TestUtils;
 
 import java.util.Arrays;
@@ -32,11 +29,11 @@ public class SortedGlobListTest extends TestCase {
       "<dummyObject id='4' name='unknown'/>"
     );
 
-    a = repository.get(Key.create(DummyObject.TYPE, 3));
-    b = repository.get(Key.create(DummyObject.TYPE, 2));
-    c = repository.get(Key.create(DummyObject.TYPE, 1));
-    d = repository.get(Key.create(DummyObject.TYPE, 0));
-    unknown = repository.get(Key.create(DummyObject.TYPE, 4));
+    a = repository.get(DefaultKey.create(DummyObject.TYPE, 3));
+    b = repository.get(DefaultKey.create(DummyObject.TYPE, 2));
+    c = repository.get(DefaultKey.create(DummyObject.TYPE, 1));
+    d = repository.get(DefaultKey.create(DummyObject.TYPE, 0));
+    unknown = repository.get(DefaultKey.create(DummyObject.TYPE, 4));
 
     list = new SortedGlobList(new GlobFieldComparator(DummyObject.NAME));
   }

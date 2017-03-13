@@ -17,7 +17,7 @@ public abstract class AbstractGlob extends AbstractFieldValues implements Glob {
   protected GlobType type;
   protected Object[] values;
   private boolean disposed = false;
-  private Key key;
+  private DefaultKey key;
 
   protected AbstractGlob(GlobType type) {
     this(type, new Object[type.getFieldCount()]);
@@ -80,7 +80,7 @@ public abstract class AbstractGlob extends AbstractFieldValues implements Glob {
       if (value == null) {
         return null;
       }
-      return Key.create(link.getTargetType(), value);
+      return DefaultKey.create(link.getTargetType(), value);
     }
 
     final FieldValuesBuilder valuesBuilder = FieldValuesBuilder.init();
@@ -151,7 +151,7 @@ public abstract class AbstractGlob extends AbstractFieldValues implements Glob {
     return true;
   }
 
-  public Key getKey() {
+  public DefaultKey getKey() {
     if (key == null) {
       Field[] keyFields = type.getKeyFields();
       switch (keyFields.length) {

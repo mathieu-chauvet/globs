@@ -3,12 +3,10 @@ package org.globsframework.metamodel;
 import org.globsframework.metamodel.fields.FieldValueVisitor;
 import org.globsframework.metamodel.fields.FieldVisitor;
 import org.globsframework.metamodel.properties.PropertyHolder;
-import org.globsframework.metamodel.utils.Annotable;
+import org.globsframework.metamodel.utils.Annotations;
 import org.globsframework.utils.exceptions.InvalidParameter;
 
-import java.io.Serializable;
-
-public interface Field extends PropertyHolder<Field>, Annotable, Serializable {
+public interface Field extends PropertyHolder<Field>, Annotations {
   String getName();
 
   String getFullName();
