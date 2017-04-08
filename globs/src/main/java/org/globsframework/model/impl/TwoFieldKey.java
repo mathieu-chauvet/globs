@@ -171,11 +171,7 @@ public class TwoFieldKey extends DefaultKey {
     return value;
   }
 
-  public Integer get(LinkField field) {
-    return get((IntegerField)field);
-  }
-
-  public Long get(LongField field) {
+   public Long get(LongField field) {
     checkIsKeyField(field);
     if (field == keyField1) {
       return (Long)value1;
@@ -224,7 +220,7 @@ public class TwoFieldKey extends DefaultKey {
              Utils.equal(twoFieldKey.value2, value2);
     }
 
-    if (!DefaultKey.class.isAssignableFrom(o.getClass())) {
+    if (!Key.class.isAssignableFrom(o.getClass())) {
       return false;
     }
     Key otherKey = (Key)o;
@@ -236,18 +232,17 @@ public class TwoFieldKey extends DefaultKey {
 
   // optimized - do not use generated code
   public int hashCode() {
-    if (hashCode != 0) {
-      return hashCode;
-    }
-    hashCode = keyField1.hashCode();
-    hashCode = 31 * hashCode + value1.hashCode();
-    hashCode = 31 * hashCode + keyField2.hashCode();
-    hashCode = 31 * hashCode + value2.hashCode();
-    hashCode = 31 * hashCode + hashCode;
-    if (hashCode == 0) {
-      hashCode = 23;
-    }
-    return hashCode;
+     if (hashCode != 0) {
+        return hashCode;
+     }
+     int h = keyField1.getGlobType().hashCode();
+     h = 31 * h + (value1 == null ? 31 : value1.hashCode());
+     h = 31 * h + (value2 == null ? 31 : value2.hashCode());
+     if (h == 0) {
+        h = 31;
+     }
+     hashCode = h;
+     return h;
   }
 
   public FieldValue[] toArray() {

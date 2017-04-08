@@ -42,7 +42,4 @@ public class FieldToSqlAccessorVisitor implements FieldVisitor {
     accessor = new BlobSqlAccessor();
   }
 
-  public void visitLink(LinkField field) throws Exception {
-    visitInteger(field);
-  }
 }

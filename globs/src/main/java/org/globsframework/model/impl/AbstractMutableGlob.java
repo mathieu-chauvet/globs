@@ -59,6 +59,7 @@ public abstract class AbstractMutableGlob extends AbstractGlob implements Mutabl
         setObject(field, value);
       }
     });
+    return this;
   }
 
   public MutableGlob setObject(Field field, Object value) {

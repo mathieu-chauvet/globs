@@ -3,16 +3,15 @@ package org.globsframework.xml;
 import org.globsframework.metamodel.EmptyGlobLinkModel;
 import org.globsframework.metamodel.Field;
 import org.globsframework.metamodel.GlobLinkModel;
-import org.globsframework.metamodel.Link;
-import org.globsframework.metamodel.annotations.ContainmentLink;
-import org.globsframework.metamodel.link.DefaultDirectLink;
+import org.globsframework.metamodel.links.Link;
+import org.globsframework.metamodel.links.impl.DefaultDirectSingleLink;
 import org.globsframework.metamodel.utils.GlobTypeUtils;
 import org.globsframework.model.Glob;
 import org.globsframework.model.GlobList;
 import org.globsframework.model.GlobRepository;
 import org.globsframework.utils.Strings;
 import org.globsframework.utils.exceptions.ResourceAccessFailed;
-import org.saxstack.utils.XmlUtils;
+import org.globsframework.saxstack.utils.XmlUtils;
 
 import java.io.IOException;
 import java.io.OutputStream;
@@ -75,7 +74,7 @@ public class XmlGlobWriter {
         writer.write("<");
         writer.write(glob.getType().getName());
         writeFields(glob, writer);
-        writeLinks(glob, repository, writer);
+        writeLinks(glob, repository, writer, globLinkModel);
         List<Glob> children = getChildren(glob, repository, globLinkModel);
         if (children.isEmpty()) {
             writer.write("/>");
@@ -128,8 +127,9 @@ public class XmlGlobWriter {
         writer.write("\"");
     }
 
-    private static void writeLinks(final Glob glob, final GlobRepository repository, final Writer writer) throws IOException {
-        for (Link link : glob.getType().getOutboundLinks()) {
+    private static void writeLinks(final Glob glob, final GlobRepository repository,
+                                   final Writer writer, GlobLinkModel globLinkModel) throws IOException {
+        for (Link link : globLinkModel.getLinks(glob.getType())) {
             Glob target = repository.findLinkTarget(glob, link);
             if (target != null) {
                 Field namingField = GlobTypeUtils.findNamingField(link.getTargetType());
@@ -151,7 +151,7 @@ public class XmlGlobWriter {
     }
 
     private static String getLinkName(Link link, Field targetNamingField) {
-        if (link instanceof DefaultDirectLink) {
+        if (link instanceof DefaultDirectSingleLink) {
             return link.getName() + Strings.capitalize(targetNamingField.getName());
         }
         return link.getName();

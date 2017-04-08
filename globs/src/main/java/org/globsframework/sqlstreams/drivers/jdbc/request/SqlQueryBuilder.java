@@ -202,11 +202,7 @@ public class SqlQueryBuilder implements SelectBuilder {
       accessor = retrieve(field);
     }
 
-    public void visitLink(LinkField field) throws Exception {
-      accessor = retrieve(field);
-    }
-
-    public Accessor get() {
+     public Accessor get() {
       return accessor;
     }
   }

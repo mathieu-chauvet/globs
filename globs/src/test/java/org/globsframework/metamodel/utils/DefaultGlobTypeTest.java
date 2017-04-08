@@ -67,7 +67,7 @@ public class DefaultGlobTypeTest extends TestCase {
 
   private void initGlobType() {
     Type.TYPE = null;
-    GlobTypeLoader loader = GlobTypeLoader.init(Type.class);
+     GlobTypeLoader loader = GlobTypeLoaderFactory.create(Type.class).load();
     globType = loader.getType();
     field = globType.getField("field1");
     globModel = new DefaultGlobModel(globType);

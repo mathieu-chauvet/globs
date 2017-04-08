@@ -6,14 +6,19 @@ import org.globsframework.metamodel.DummyObject2;
 import org.globsframework.model.*;
 
 import static org.globsframework.model.FieldValue.value;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 import org.globsframework.model.repository.LocalGlobRepository;
 import org.globsframework.model.repository.LocalGlobRepositoryBuilder;
 import org.globsframework.utils.exceptions.InvalidState;
+import org.junit.Test;
 
-public class LocalGlobRepositoryTest extends TestCase {
+public class LocalGlobRepositoryTest  {
   private GlobChecker checker = new GlobChecker();
 
+   @Test
   public void testStandardCase() throws Exception {
     GlobRepository source = checker.parse(
       "<dummyObject id='0' name='name'/>" +
@@ -57,6 +62,7 @@ public class LocalGlobRepositoryTest extends TestCase {
     assertTrue(local.getCurrentChanges().isEmpty());
   }
 
+   @Test
   public void testDispose() throws Exception {
     GlobRepository source = checker.parse("<dummyObject id='0' name='name'/>");
 
@@ -72,6 +78,7 @@ public class LocalGlobRepositoryTest extends TestCase {
     }
   }
 
+   @Test
   public void testIdGeneration() throws Exception {
     GlobRepository source = checker.parse(
       "<dummyObject name='name'/>" +
@@ -89,6 +96,7 @@ public class LocalGlobRepositoryTest extends TestCase {
                          "<dummyObject2 id='0'/>");
   }
 
+   @Test
   public void testRollback() throws Exception {
     GlobRepository source = checker.parse(
       "<dummyObject id='0' name='name'/>" +
@@ -154,6 +162,7 @@ public class LocalGlobRepositoryTest extends TestCase {
     assertTrue(local.getCurrentChanges().isEmpty());
   }
 
+   @Test
   public void testRollbackRemoveLocalyCreated() throws Exception {
     GlobRepository source = checker.parse(
       "<dummyObject id='0' name='name'/>" +

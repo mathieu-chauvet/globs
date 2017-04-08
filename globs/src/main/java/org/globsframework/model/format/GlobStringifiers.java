@@ -1,6 +1,6 @@
 package org.globsframework.model.format;
 
-import org.globsframework.metamodel.Link;
+import org.globsframework.metamodel.links.Link;
 import org.globsframework.metamodel.GlobType;
 import org.globsframework.metamodel.utils.GlobTypeUtils;
 import org.globsframework.metamodel.fields.IntegerField;

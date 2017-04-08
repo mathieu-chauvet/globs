@@ -2,7 +2,7 @@ package org.globsframework.model.format.utils;
 
 import org.globsframework.metamodel.Field;
 import org.globsframework.metamodel.GlobType;
-import org.globsframework.metamodel.Link;
+import org.globsframework.metamodel.links.Link;
 import org.globsframework.metamodel.fields.*;
 import org.globsframework.metamodel.utils.GlobTypeUtils;
 import org.globsframework.model.Glob;
@@ -105,11 +105,7 @@ public class DefaultDescriptionService implements DescriptionService {
         result.set(GlobStringifiers.get(field));
       }
 
-      public void visitLink(final LinkField field) throws Exception {
-        result.set(getStringifier((Link)field));
-      }
-
-      public void visitDouble(final DoubleField field) throws Exception {
+       public void visitDouble(final DoubleField field) throws Exception {
         result.set(new AbstractGlobFieldStringifier<DoubleField, Double>(field) {
           protected String valueToString(Double value) {
             return formats.getDecimalFormat().format(value);
@@ -175,13 +171,6 @@ public class DefaultDescriptionService implements DescriptionService {
     return new CompositeGlobListStringifier(stringifier, textForEmptySelection, textForMultipleValues);
   }
 
-  public GlobStringifier getStringifier(LinkField link) {
-    return getStringifier((Link)link);
-  }
-
-  public GlobListStringifier getListStringifier(LinkField link) {
-    return getListStringifier((Link)link);
-  }
 
   private static class CompositeGlobListStringifier implements GlobListStringifier {
     private final GlobStringifier stringifier;

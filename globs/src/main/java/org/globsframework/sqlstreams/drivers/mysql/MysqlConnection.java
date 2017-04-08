@@ -1,6 +1,8 @@
 package org.globsframework.sqlstreams.drivers.mysql;
 
+import org.globsframework.metamodel.annotations.MaxSizeType;
 import org.globsframework.metamodel.fields.StringField;
+import org.globsframework.model.Glob;
 import org.globsframework.sqlstreams.SqlService;
 import org.globsframework.sqlstreams.drivers.jdbc.BlobUpdater;
 import org.globsframework.sqlstreams.drivers.jdbc.JdbcConnection;
@@ -24,7 +26,12 @@ public class MysqlConnection extends JdbcConnection {
     return new SqlFieldCreationVisitor(sqlService, prettyWriter) {
 
       public void visitString(StringField field) throws Exception {
-        add("VARCHAR(" + field.getMaxSize() + ")", field);
+         Glob annotation = field.getAnnotation(MaxSizeType.KEY);
+         int maxSize = 255;
+         if (annotation != null){
+            maxSize = annotation.get(MaxSizeType.VALUE, 255);
+         }
+         add("VARCHAR(" + maxSize + ")", field);
       }
 
       public String getAutoIncrementKeyWord() {

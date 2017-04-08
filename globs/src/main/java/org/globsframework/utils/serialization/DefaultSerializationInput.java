@@ -162,9 +162,6 @@ public class DefaultSerializationInput implements SerializedInput {
       builder.set(field, input.readLong());
     }
 
-    public void visitLink(LinkField field) throws Exception {
-      builder.set(field, input.readInteger());
-    }
   }
 
   static class FieldWithPreviousReader implements FieldVisitor {
@@ -208,9 +205,6 @@ public class DefaultSerializationInput implements SerializedInput {
       builder.set(field, input.readLong(), input.readLong());
     }
 
-    public void visitLink(LinkField field) throws Exception {
-      builder.set(field, input.readInteger(), input.readInteger());
-    }
   }
 
 
@@ -379,11 +373,7 @@ public class DefaultSerializationInput implements SerializedInput {
       builder.set(field, readInteger());
     }
 
-    public void visitLink(LinkField field) throws Exception {
-      builder.set(field, readInteger());
-    }
-
-    public void visitDouble(DoubleField field) throws Exception {
+     public void visitDouble(DoubleField field) throws Exception {
       builder.set(field, readDouble());
     }
 

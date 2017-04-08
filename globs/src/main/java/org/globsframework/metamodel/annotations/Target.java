@@ -6,6 +6,7 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 
 @Retention(RUNTIME)
 @java.lang.annotation.Target({ElementType.FIELD})
+@NoType
 public @interface Target {
   Class value();
 }

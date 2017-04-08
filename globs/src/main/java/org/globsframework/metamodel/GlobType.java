@@ -2,54 +2,51 @@ package org.globsframework.metamodel;
 
 import org.globsframework.metamodel.index.Index;
 import org.globsframework.metamodel.index.MultiFieldIndex;
+import org.globsframework.metamodel.links.Link;
 import org.globsframework.metamodel.properties.PropertyHolder;
 import org.globsframework.metamodel.utils.Annotations;
+import org.globsframework.model.Glob;
 import org.globsframework.model.GlobList;
 import org.globsframework.model.Key;
 import org.globsframework.model.MutableGlob;
 import org.globsframework.utils.exceptions.ItemNotFound;
 
-import java.lang.annotation.Annotation;
 import java.util.Collection;
+import java.util.function.BiFunction;
 
 public interface GlobType extends PropertyHolder<GlobType>, Annotations {
 
-    String getName();
+   String getName();
 
-    Field getField(String name) throws ItemNotFound;
+   Field getField(String name) throws ItemNotFound;
 
-    Field findField(String name);
+   Field findField(String name);
 
-    boolean hasField(String name);
+   boolean hasField(String name);
 
-    Field[] getFields();
+   Field[] getFields();
 
-    Field getField(int index);
+   Field getField(int index);
 
-    int getFieldCount();
+   int getFieldCount();
 
-    Field[] getKeyFields();
+   Field[] getKeyFields();
 
-    Link getOutboundLink(String name);
+   Field findFieldWithAnnotation(Key key);
 
-    Link findOutboundLink(String name);
+   Field getFieldWithAnnotation(Key key) throws ItemNotFound;
 
-    Link[] getOutboundLinks();
+   Collection<Field> getFieldsWithAnnotation(Key key);
 
-    Link[] getInboundLinks();
+   void publishFieldWithAnnotations(Key key, BiFunction<Field, Glob, Void> function);
 
-    Field[] getFieldsWithAnnotation(Class<? extends Annotation> annotationClass);
+   GlobList getConstants();
 
-    Field getFieldWithAnnotation(Key key);
+   Collection<Index> getIndices();
 
-    Field[] getFieldsWithAnnotation(Key key);
+   Collection<MultiFieldIndex> getMultiFieldIndices();
 
-    GlobList getConstants();
+   MutableGlob instantiate();
 
-    Collection<Index> getIndices();
-
-    Collection<MultiFieldIndex> getMultiFieldIndices();
-
-    MutableGlob instantiate();
-
+   <T> T getRegistered(Class<T> klass);
 }

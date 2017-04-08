@@ -1,22 +1,31 @@
 package org.globsframework.metamodel.annotations;
 
 import org.globsframework.metamodel.GlobType;
+import org.globsframework.metamodel.utils.DefaultGlobTypeBuilder;
+import org.globsframework.metamodel.utils.GlobTypeBuilder;
 import org.globsframework.metamodel.utils.GlobTypeLoader;
+import org.globsframework.metamodel.utils.GlobTypeLoaderFactory;
 import org.globsframework.model.Glob;
 import org.globsframework.model.Key;
+import org.globsframework.model.KeyBuilder;
 
 public class RequiredAnnotationType {
-  public static GlobType TYPE;
+   public static GlobType TYPE;
 
-  @InitUniqueKey
-  public static Key UNIQUE_KEY;
+   @InitUniqueKey
+   public static Key UNIQUE_KEY;
 
-  public static Glob create(Required target){
-    return TYPE.instantiate();
-  }
+   @InitUniqueGlob
+   public static Glob UNIQUE_GLOB;
 
-  static {
-    GlobTypeLoader.init("globs", RequiredAnnotationType.class, "requiredAnnotation");
-  }
+   static {
+      GlobTypeLoaderFactory.create(RequiredAnnotationType.class)
+         .register(GlobCreateFromAnnotation.class, annotation -> UNIQUE_GLOB)
+         .load();
+//      GlobTypeBuilder globTypeBuilder = new DefaultGlobTypeBuilder("requiredAnnotation");
+//      globTypeBuilder.register(GlobCreateFromAnnotation.class, annotation -> create((Required)annotation));
+//      TYPE = globTypeBuilder.get();
+//      UNIQUE_KEY = KeyBuilder.newEmptyKey(TYPE);
+   }
 
 }

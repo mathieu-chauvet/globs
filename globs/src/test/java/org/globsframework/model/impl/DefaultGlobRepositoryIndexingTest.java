@@ -3,6 +3,7 @@ package org.globsframework.model.impl;
 import org.globsframework.metamodel.DummyObjectIndex;
 import org.globsframework.metamodel.Field;
 import static org.globsframework.model.FieldValue.value;
+import static org.junit.Assert.*;
 
 import org.globsframework.model.*;
 import org.globsframework.model.repository.LocalGlobRepository;
@@ -10,6 +11,8 @@ import org.globsframework.model.repository.LocalGlobRepositoryBuilder;
 import org.globsframework.model.utils.GlobFunctor;
 import org.globsframework.utils.Dates;
 import org.globsframework.utils.TestUtils;
+import org.junit.Assert;
+import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -17,6 +20,7 @@ import java.util.List;
 
 public class DefaultGlobRepositoryIndexingTest extends DefaultGlobRepositoryTestCase {
 
+    @Test
   public void testUniqueIndex() throws Exception {
     init("<dummyObjectIndex id='1' uniqueName='obj1' name='a'/>" +
          "<dummyObjectIndex id='2' uniqueName='obj3' name='b'/>");

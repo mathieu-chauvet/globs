@@ -40,9 +40,9 @@ public class GlobPrinterTest extends TestCase {
     createObj(1, "n2", "2006/02/21", "2005/12/24 23:59:59");
 
     checkOutput("===== dummyObject ======" + LINE_SEPARATOR +
-                "| id | name | value | count | present | date       | timestamp           | password | link | link2 |" + LINE_SEPARATOR +
-                "| 0  | n1   |       |       |         | 2006/02/23 | 2006/01/21 12:34:05 |          |      |       |" + LINE_SEPARATOR +
-                "| 1  | n2   |       |       |         | 2006/02/21 | 2005/12/24 23:59:59 |          |      |       |" + LINE_SEPARATOR +
+                "| id | name | value | count | present | date       | timestamp           | password | linkId | link2Id |" + LINE_SEPARATOR +
+                "| 0  | n1   |       |       |         | 2006/02/23 | 2006/01/21 12:34:05 |          |        |         |" + LINE_SEPARATOR +
+                "| 1  | n2   |       |       |         | 2006/02/21 | 2005/12/24 23:59:59 |          |        |         |" + LINE_SEPARATOR +
                 "" + LINE_SEPARATOR +
                 "===== dummyObject2 ======" + LINE_SEPARATOR +
                 "| id | label | value |" + LINE_SEPARATOR +
@@ -55,8 +55,8 @@ public class GlobPrinterTest extends TestCase {
     createObj(0, "n1", "2006/02/23", "2006/01/21 12:34:05");
 
     checkOutput("===== dummyObject ======" + LINE_SEPARATOR +
-                "| id | name | value | count | present | date       | timestamp           | password | link | link2 |" + LINE_SEPARATOR +
-                "| 0  | n1   |       |       |         | 2006/02/23 | 2006/01/21 12:34:05 |          |      |       |" + LINE_SEPARATOR +
+                "| id | name | value | count | present | date       | timestamp           | password | linkId | link2Id |" + LINE_SEPARATOR +
+                "| 0  | n1   |       |       |         | 2006/02/23 | 2006/01/21 12:34:05 |          |        |         |" + LINE_SEPARATOR +
                 "" + LINE_SEPARATOR,
                 DummyObject.TYPE);
 
@@ -86,15 +86,15 @@ public class GlobPrinterTest extends TestCase {
     repository.create(DummyObject.TYPE,
                       value(DummyObject.ID, 1),
                       value(DummyObject.NAME, "obj1"),
-                      value(DummyObject.LINK, 2));
+                      value(DummyObject.LINK_ID, 2));
     repository.create(DummyObject.TYPE,
                       value(DummyObject.ID, 2),
                       value(DummyObject.NAME, "obj2"));
 
     checkRepositoryOutput("===== dummyObject ======" + LINE_SEPARATOR +
-                          "| id | name | value | count | present | date | timestamp | password | link     | link2 |" + LINE_SEPARATOR +
-                          "| 1  | obj1 |       |       |         |      |           |          | [2] obj2 |       |" + LINE_SEPARATOR +
-                          "| 2  | obj2 |       |       |         |      |           |          |          |       |" + LINE_SEPARATOR +
+                          "| id | name | value | count | present | date | timestamp | password | linkId | link2Id |" + LINE_SEPARATOR +
+                          "| 1  | obj1 |       |       |         |      |           |          | 2      |         |" + LINE_SEPARATOR +
+                          "| 2  | obj2 |       |       |         |      |           |          |        |         |" + LINE_SEPARATOR +
                           "" + LINE_SEPARATOR, DummyObject.TYPE);
   }
 
@@ -102,7 +102,7 @@ public class GlobPrinterTest extends TestCase {
     Glob glob = repository.create(DummyObject.TYPE,
                                   value(DummyObject.ID, 1),
                                   value(DummyObject.NAME, "obj1"),
-                                  value(DummyObject.LINK, 2));
+                                  value(DummyObject.LINK_ID, 2));
 
     checkOutput(glob,
                 "===== dummyObject[id=1] ======\n" +
@@ -110,8 +110,8 @@ public class GlobPrinterTest extends TestCase {
                 "| count     |       |\n" +
                 "| date      |       |\n" +
                 "| id        | 1     |\n" +
-                "| link      | 2     |\n" +
-                "| link2     |       |\n" +
+                "| link2Id   |       |\n" +
+                "| linkId    | 2     |\n" +
                 "| name      | obj1  |\n" +
                 "| password  |       |\n" +
                 "| present   |       |\n" +

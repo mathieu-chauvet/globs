@@ -1,25 +1,25 @@
 package org.globsframework.metamodel;
 
-import org.globsframework.metamodel.annotations.KeyField;
 import org.globsframework.metamodel.annotations.DoublePrecision;
+import org.globsframework.metamodel.annotations.KeyField;
+import org.globsframework.metamodel.fields.DoubleField;
 import org.globsframework.metamodel.fields.IntegerField;
 import org.globsframework.metamodel.fields.StringField;
-import org.globsframework.metamodel.fields.DoubleField;
-import org.globsframework.metamodel.utils.GlobTypeLoader;
+import org.globsframework.metamodel.utils.GlobTypeLoaderFactory;
 
 public class DummyObject2 {
 
-  public static GlobType TYPE;
+   public static GlobType TYPE;
 
-  @KeyField
-  public static IntegerField ID;
+   @KeyField
+   public static IntegerField ID;
 
-  public static StringField LABEL;
+   public static StringField LABEL;
 
-  @DoublePrecision(4)
-  public static DoubleField VALUE;
+   @DoublePrecision(4)
+   public static DoubleField VALUE;
 
-  static {
-    GlobTypeLoader.init(DummyObject2.class);
-  }
+   static {
+      GlobTypeLoaderFactory.create(DummyObject2.class).load();
+   }
 }

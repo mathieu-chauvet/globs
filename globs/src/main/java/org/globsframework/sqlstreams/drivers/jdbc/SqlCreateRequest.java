@@ -155,8 +155,5 @@ public class SqlCreateRequest implements SqlRequest {
       convertValue = value.toString();
     }
 
-    public void visitLink(LinkField field) throws Exception {
-      convertValue = value.toString();
-    }
   }
 }

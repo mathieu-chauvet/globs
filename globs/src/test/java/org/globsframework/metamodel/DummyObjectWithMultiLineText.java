@@ -5,6 +5,7 @@ import org.globsframework.metamodel.annotations.MultiLineText;
 import org.globsframework.metamodel.fields.IntegerField;
 import org.globsframework.metamodel.fields.StringField;
 import org.globsframework.metamodel.utils.GlobTypeLoader;
+import org.globsframework.metamodel.utils.GlobTypeLoaderFactory;
 
 public class DummyObjectWithMultiLineText {
   public static GlobType TYPE;
@@ -16,6 +17,6 @@ public class DummyObjectWithMultiLineText {
   public static StringField COMMENT;
 
   static {
-    GlobTypeLoader.init(DummyObjectWithMultiLineText.class);
+     GlobTypeLoaderFactory.create(DummyObjectWithMultiLineText.class).load();
   }
 }

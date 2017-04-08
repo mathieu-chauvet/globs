@@ -3,6 +3,7 @@ package org.globsframework.metamodel.annotations;
 import org.globsframework.metamodel.GlobType;
 import org.globsframework.metamodel.fields.DoubleField;
 import org.globsframework.metamodel.utils.GlobTypeLoader;
+import org.globsframework.metamodel.utils.GlobTypeLoaderFactory;
 import org.globsframework.model.Glob;
 import org.globsframework.model.Key;
 
@@ -15,11 +16,13 @@ public class DefaultDoubleAnnotationType {
     @InitUniqueKey
     public static Key UNIQUE_KEY;
 
-    public static Glob create(DefaultDouble defaultDouble) {
-        return DESC.instantiate().set(DEFAULT_VALUE, defaultDouble.value());
+    public static Glob create(double defaultDouble) {
+        return DESC.instantiate().set(DEFAULT_VALUE, defaultDouble);
     }
 
     static {
-        GlobTypeLoader.init(DefaultDoubleAnnotationType.class);
+       GlobTypeLoader loader = GlobTypeLoaderFactory.create(DefaultDoubleAnnotationType.class);
+       loader.register(GlobCreateFromAnnotation.class, annotation -> create(((DefaultDouble)annotation).value()))
+       .load();
     }
 }

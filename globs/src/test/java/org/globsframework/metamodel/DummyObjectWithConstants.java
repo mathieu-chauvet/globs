@@ -3,6 +3,7 @@ package org.globsframework.metamodel;
 import org.globsframework.metamodel.annotations.KeyField;
 import org.globsframework.metamodel.fields.IntegerField;
 import org.globsframework.metamodel.utils.GlobTypeLoader;
+import org.globsframework.metamodel.utils.GlobTypeLoaderFactory;
 import org.globsframework.model.FieldValue;
 import org.globsframework.model.impl.ReadOnlyGlob;
 import org.globsframework.model.utils.GlobConstantContainer;
@@ -31,6 +32,6 @@ public enum DummyObjectWithConstants implements GlobConstantContainer {
   }
 
   static {
-    GlobTypeLoader.init(DummyObjectWithConstants.class);
+     GlobTypeLoaderFactory.create(DummyObjectWithConstants.class).load();
   }
 }

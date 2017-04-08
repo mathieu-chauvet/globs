@@ -158,9 +158,6 @@ public class ConstraintSerializer {
       output.write((Integer)value);
     }
 
-    public void visitLink(LinkField field) throws Exception {
-      output.write((Integer)value);
-    }
   }
 
   static enum ConstraintId {

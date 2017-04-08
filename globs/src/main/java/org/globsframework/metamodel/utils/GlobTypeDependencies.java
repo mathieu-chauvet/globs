@@ -2,8 +2,9 @@ package org.globsframework.metamodel.utils;
 
 import org.globsframework.metamodel.Field;
 import org.globsframework.metamodel.GlobType;
-import org.globsframework.metamodel.Link;
-import org.globsframework.metamodel.links.FieldMappingFunctor;
+import org.globsframework.metamodel.links.Link;
+import org.globsframework.metamodel.links.FieldMappingFunction;
+import org.globsframework.metamodel.links.impl.DefaultMutableGlobLinkModel;
 import org.globsframework.utils.Strings;
 import org.globsframework.utils.exceptions.InvalidData;
 
@@ -15,8 +16,8 @@ public class GlobTypeDependencies {
   private List<GlobType> deleteSequence = new ArrayList<GlobType>();
   private Set<GlobType> postUpdate = new HashSet<GlobType>();
 
-  public GlobTypeDependencies(Collection<GlobType> types) {
-    dispatch(types);
+  public GlobTypeDependencies(Collection<GlobType> types, DefaultMutableGlobLinkModel globLinkModel) {
+    dispatch(globLinkModel, types);
 
     deleteSequence = new ArrayList<GlobType>(createSequence);
     Collections.reverse(deleteSequence);
@@ -38,13 +39,13 @@ public class GlobTypeDependencies {
     return postUpdate.contains(type);
   }
 
-  private void dispatch(Collection<GlobType> types) {
+  private void dispatch(DefaultMutableGlobLinkModel globLinkModel, Collection<GlobType> types) {
     Set<GlobType> done = new HashSet<GlobType>();
     List<GlobType> typeList = new ArrayList<GlobType>(types);
     Collections.sort(typeList, GlobTypeComparator.INSTANCE);
     for (GlobType type : typeList) {
       Map<GlobType, Field> hasCycle = new HashMap<GlobType, Field>();
-      if (!processLinks(type, hasCycle, createSequence, done, postUpdate)) {
+      if (!processLinks(type, hasCycle, createSequence, done, postUpdate, globLinkModel)) {
         throwCycleException(hasCycle);
       }
     }
@@ -54,7 +55,7 @@ public class GlobTypeDependencies {
                                       final Map<GlobType, Field> hasCycle,
                                       final List<GlobType> order,
                                       final Set<GlobType> done,
-                                      final Set<GlobType> postUpdate) {
+                                      final Set<GlobType> postUpdate, DefaultMutableGlobLinkModel globLinkModel) {
     if (done.contains(objectType)) {
       return true;
     }
@@ -62,19 +63,18 @@ public class GlobTypeDependencies {
       return false;
     }
 
-    for (Link link : objectType.getOutboundLinks()) {
-      link.apply(new FieldMappingFunctor() {
-        public void process(Field sourceField, Field targetField) {
-          hasCycle.remove(objectType);
-          hasCycle.put(objectType, sourceField);
-          if (!processLinks(targetField.getGlobType(), hasCycle, order, done, postUpdate)) {
-            if (sourceField.isRequired()) {
-              hasCycle.remove(objectType);
-              throwCycleException(hasCycle);
-            }
-            else {
-              postUpdate.add(objectType);
-            }
+     Link[] links = globLinkModel.getLinks(objectType);
+    for (Link link : links) {
+      link.apply((sourceField, targetField) -> {
+        hasCycle.remove(objectType);
+        hasCycle.put(objectType, sourceField);
+        if (!processLinks(targetField.getGlobType(), hasCycle, order, done, postUpdate, globLinkModel)) {
+          if (sourceField.isRequired()) {
+            hasCycle.remove(objectType);
+            throwCycleException(hasCycle);
+          }
+          else {
+            postUpdate.add(objectType);
           }
         }
       });

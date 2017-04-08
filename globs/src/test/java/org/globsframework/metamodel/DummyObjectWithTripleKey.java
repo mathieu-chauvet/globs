@@ -4,7 +4,7 @@ import org.globsframework.metamodel.annotations.KeyField;
 import org.globsframework.metamodel.annotations.NamingField;
 import org.globsframework.metamodel.fields.IntegerField;
 import org.globsframework.metamodel.fields.StringField;
-import org.globsframework.metamodel.utils.GlobTypeLoader;
+import org.globsframework.metamodel.utils.GlobTypeLoaderFactory;
 
 public class DummyObjectWithTripleKey {
 
@@ -21,6 +21,6 @@ public class DummyObjectWithTripleKey {
   public static StringField NAME;
 
   static {
-    GlobTypeLoader.init(DummyObjectWithTripleKey.class);
+     GlobTypeLoaderFactory.create(DummyObjectWithTripleKey.class).load();
   }
 }

@@ -1,5 +1,6 @@
 package org.globsframework.metamodel;
 
+import org.globsframework.metamodel.fields.LongField;
 import org.globsframework.model.MutableGlob;
 import org.globsframework.utils.exceptions.ItemNotFound;
 
@@ -33,7 +34,11 @@ public class OptGlob extends AbstractOptGlob {
     return null;
   }
 
-  public MutableGlob setObject(Field field, Object value) {
+   public MutableGlob set(LongField field, Long value) {
+      return setObject(field, value);
+   }
+
+   public MutableGlob setObject(Field field, Object value) {
     if (value != null) {
       switch (field.getIndex()) {
         case 0:

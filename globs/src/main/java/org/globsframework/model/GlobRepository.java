@@ -2,8 +2,7 @@ package org.globsframework.model;
 
 import org.globsframework.metamodel.Field;
 import org.globsframework.metamodel.GlobType;
-import org.globsframework.metamodel.Link;
-import org.globsframework.metamodel.fields.IntegerField;
+import org.globsframework.metamodel.links.Link;
 import org.globsframework.model.repository.GlobIdGenerator;
 import org.globsframework.model.utils.GlobMatcher;
 import org.globsframework.utils.exceptions.*;

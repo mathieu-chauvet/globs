@@ -26,7 +26,7 @@ public class GlobTypeUtilsTest extends TestCase {
       fail();
     }
     catch (ItemNotFound e) {
-      assertEquals("Type 'dummyObject2' has no naming field", e.getMessage());
+      assertEquals("no field found with EmptyKey/namingFieldAnnotationType under dummyObject2", e.getMessage());
     }
   }
 

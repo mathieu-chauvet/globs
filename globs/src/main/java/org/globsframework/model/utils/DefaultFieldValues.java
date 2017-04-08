@@ -74,12 +74,7 @@ public class DefaultFieldValues extends AbstractFieldValues implements MutableFi
     return this;
   }
 
-  public DefaultFieldValues set(LinkField field, Integer value) throws ItemNotFound {
-    setValue(field, value);
-    return this;
-  }
-
-  public DefaultFieldValues set(DoubleField field, Double value) {
+   public DefaultFieldValues set(DoubleField field, Double value) {
     setValue(field, value);
     return this;
   }

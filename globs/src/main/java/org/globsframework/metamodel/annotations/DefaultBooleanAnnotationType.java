@@ -4,6 +4,7 @@ import org.globsframework.metamodel.GlobType;
 import org.globsframework.metamodel.fields.BooleanField;
 import org.globsframework.metamodel.fields.DoubleField;
 import org.globsframework.metamodel.utils.GlobTypeLoader;
+import org.globsframework.metamodel.utils.GlobTypeLoaderFactory;
 import org.globsframework.model.Glob;
 import org.globsframework.model.Key;
 
@@ -21,6 +22,8 @@ public class DefaultBooleanAnnotationType {
     }
 
     static {
-        GlobTypeLoader.init(DefaultBooleanAnnotationType.class);
+       GlobTypeLoader loader = GlobTypeLoaderFactory.create(DefaultBooleanAnnotationType.class);
+       loader.register(GlobCreateFromAnnotation.class, annotation -> create((DefaultBoolean)annotation))
+       .load();
     }
 }

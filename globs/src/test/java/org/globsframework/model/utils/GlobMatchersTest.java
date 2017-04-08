@@ -115,11 +115,11 @@ public class GlobMatchersTest extends TestCase {
   public void testLinkField() throws Exception {
     GlobChecker checker = new GlobChecker();
     repository = checker.parse(
-      "<dummyObject id='0' link='0'/>" +
-      "<dummyObject id='1' link='0'/>" +
-      "<dummyObject id='2' link='0'/>" +
-      "<dummyObject id='3' link='2'/>" +
-      "<dummyObject id='4' link='2'/>" +
+      "<dummyObject id='0' linkId='0'/>" +
+      "<dummyObject id='1' linkId='0'/>" +
+      "<dummyObject id='2' linkId='0'/>" +
+      "<dummyObject id='3' linkId='2'/>" +
+      "<dummyObject id='4' linkId='2'/>" +
       ""
     );
     a = repository.get(DefaultKey.create(DummyObject.TYPE, 0));

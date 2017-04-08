@@ -1,6 +1,5 @@
 package org.globsframework.model.impl;
 
-import junit.framework.TestCase;
 import org.globsframework.metamodel.DummyObject;
 import org.globsframework.metamodel.DummyObject2;
 import org.globsframework.metamodel.DummyObjectWithLinks;
@@ -8,7 +7,7 @@ import org.globsframework.model.*;
 import static org.globsframework.model.FieldValue.value;
 import static org.globsframework.model.KeyBuilder.newKey;
 
-public abstract class DefaultGlobRepositoryTestCase extends TestCase {
+public abstract class DefaultGlobRepositoryTestCase  {
   protected GlobChecker checker = new GlobChecker();
   protected DummyChangeSetListener changeListener = new DummyChangeSetListener();
   protected GlobRepository repository;

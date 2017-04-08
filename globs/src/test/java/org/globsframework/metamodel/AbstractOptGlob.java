@@ -1,5 +1,6 @@
 package org.globsframework.metamodel;
 
+import org.globsframework.metamodel.links.Link;
 import org.globsframework.model.*;
 import org.globsframework.utils.exceptions.ItemNotFound;
 import org.globsframework.metamodel.fields.*;
@@ -65,11 +66,7 @@ public abstract class AbstractOptGlob extends DefaultKey implements Glob, Mutabl
     return (Integer)getValue(field);
   }
 
-  public Integer get(LinkField field) throws ItemNotFound {
-    return (Integer)getValue(field);
-  }
-
-  public String get(StringField field) throws ItemNotFound {
+   public String get(StringField field) throws ItemNotFound {
     return (String)getValue(field);
   }
 

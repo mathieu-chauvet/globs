@@ -1,6 +1,6 @@
 package org.globsframework.model.utils;
 
-import org.globsframework.metamodel.Link;
+import org.globsframework.metamodel.links.Link;
 import org.globsframework.model.Glob;
 import org.globsframework.model.GlobRepository;
 

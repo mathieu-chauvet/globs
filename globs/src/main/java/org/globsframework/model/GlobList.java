@@ -2,7 +2,7 @@ package org.globsframework.model;
 
 import org.globsframework.metamodel.Field;
 import org.globsframework.metamodel.GlobType;
-import org.globsframework.metamodel.Link;
+import org.globsframework.metamodel.links.Link;
 import org.globsframework.metamodel.fields.*;
 import org.globsframework.model.utils.*;
 import org.globsframework.utils.Utils;

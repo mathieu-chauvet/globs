@@ -108,11 +108,7 @@ public class SerializedRemoteAccess {
       output.writeLong((Long)value);
     }
 
-    public void visitLink(LinkField field) throws Exception {
-      visitInteger(field);
-    }
-
-    public void complete() {
+     public void complete() {
       output.writeByte(RemoteExecutor.TAG.NO_MORE.getId());
     }
   }

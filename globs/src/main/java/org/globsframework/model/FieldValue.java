@@ -25,10 +25,6 @@ public class FieldValue {
     return new FieldValue(field, value);
   }
 
-  public static FieldValue value(LinkField field, Integer value) {
-    return new FieldValue(field, value);
-  }
-
   public static FieldValue value(StringField field, String value) {
     return new FieldValue(field, value);
   }

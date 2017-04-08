@@ -6,6 +6,7 @@ import org.globsframework.metamodel.annotations.NamingField;
 import org.globsframework.metamodel.fields.IntegerField;
 import org.globsframework.metamodel.fields.StringField;
 import org.globsframework.metamodel.utils.GlobTypeLoader;
+import org.globsframework.metamodel.utils.GlobTypeLoaderFactory;
 
 public class DummyObjectWithMaxSizeString {
   public static GlobType TYPE;
@@ -18,6 +19,6 @@ public class DummyObjectWithMaxSizeString {
   public static StringField TEXT;
 
   static {
-    GlobTypeLoader.init(DummyObjectWithMaxSizeString.class);
+     GlobTypeLoaderFactory.create(DummyObjectWithMaxSizeString.class).load();
   }
 }

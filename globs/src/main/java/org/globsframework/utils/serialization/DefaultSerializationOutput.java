@@ -261,9 +261,6 @@ public class DefaultSerializationOutput implements SerializedOutput, ChangeSetVi
       writeLong(value);
     }
 
-    public void visitLink(LinkField field, Integer value) throws Exception {
-      writeInteger(value);
-    }
   }
 
   private void writeValues(FieldValuesWithPrevious values) {
@@ -311,10 +308,6 @@ public class DefaultSerializationOutput implements SerializedOutput, ChangeSetVi
       writeLong(value);
     }
 
-    public void visitLink(LinkField field, Integer value) throws Exception {
-      writeInteger(value);
-    }
-
   }
 
   private class OutputStreamFieldVisitor implements FieldVisitor {
@@ -356,8 +349,5 @@ public class DefaultSerializationOutput implements SerializedOutput, ChangeSetVi
       writeLong(glob.get(field));
     }
 
-    public void visitLink(LinkField field) throws Exception {
-      visitInteger(field);
-    }
   }
 }

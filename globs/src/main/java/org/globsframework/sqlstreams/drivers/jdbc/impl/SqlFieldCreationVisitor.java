@@ -3,7 +3,6 @@ package org.globsframework.sqlstreams.drivers.jdbc.impl;
 import org.globsframework.metamodel.Field;
 import org.globsframework.metamodel.fields.*;
 import org.globsframework.sqlstreams.SqlService;
-import org.globsframework.sqlstreams.annotations.AutoIncrement;
 import org.globsframework.sqlstreams.annotations.AutoIncrementAnnotationType;
 import org.globsframework.sqlstreams.utils.StringPrettyWriter;
 
@@ -54,11 +53,7 @@ public abstract class SqlFieldCreationVisitor implements FieldVisitor {
     add("BLOB", field);
   }
 
-  public void visitLink(LinkField field) throws Exception {
-    visitInteger(field);
-  }
-
-  protected void add(String param, Field field) {
+   protected void add(String param, Field field) {
     boolean isAutoIncrementField = field.hasAnnotation(AutoIncrementAnnotationType.KEY);
     String columnName = sqlService.getColumnName(field);
     if (columnName != null) {

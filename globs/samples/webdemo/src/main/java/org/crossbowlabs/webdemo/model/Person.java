@@ -29,6 +29,6 @@ public class Person {
   public static StringField COMMENT;
 
   static {
-    GlobTypeLoader.init(Person.class);
+     GlobTypeLoaderFactory.create(Person.class);
   }
 }

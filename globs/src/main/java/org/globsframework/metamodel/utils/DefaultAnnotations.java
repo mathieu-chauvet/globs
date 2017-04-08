@@ -2,31 +2,54 @@ package org.globsframework.metamodel.utils;
 
 import org.globsframework.model.Glob;
 import org.globsframework.model.Key;
+import org.globsframework.utils.exceptions.ItemNotFound;
 
+import java.util.Collection;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
-public class DefaultAnnotations implements Annotations {
+public class DefaultAnnotations implements MutableAnnotations {
     Map<Key, Glob> annotations = new HashMap<Key, Glob>();
 
-    public void add(Glob glob){
-        annotations.put(glob.getKey(), glob);
+   public DefaultAnnotations() {
+   }
+
+   public DefaultAnnotations(Glob[] annotations) {
+      for (Glob annotation : annotations) {
+         addAnnotation(annotation);
+      }
+   }
+
+   public DefaultAnnotations(Annotations annotations) {
+      for (Glob annotation : annotations.list()) {
+         this.annotations.put(annotation.getKey(), annotation);
+      }
+   }
+
+   public MutableAnnotations addAnnotation(Glob glob) {
+       if (glob != null){
+          annotations.put(glob.getKey(), glob);
+       }
+      return this;
     }
 
     public boolean hasAnnotation(Key key) {
-        return false;
+        return annotations.containsKey(key);
     }
 
     public Glob getAnnotation(Key key) {
-        return null;
+      Glob annotation = annotations.get(key);
+      if (annotation == null) {
+        throw new ItemNotFound(key == null ? "null" : key.toString());
+      }
+      return annotation;
     }
 
     public Glob findAnnotation(Key key) {
-        return null;
+        return annotations.get(key);
     }
 
-    public List<Glob> list() {
-        return null;
+    public Collection<Glob> list() {
+        return annotations.values();
     }
 }

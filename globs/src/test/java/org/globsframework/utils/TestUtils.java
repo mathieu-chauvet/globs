@@ -5,8 +5,8 @@ import junit.framework.AssertionFailedError;
 import junit.framework.TestCase;
 import org.globsframework.metamodel.GlobType;
 import org.uispec4j.Window;
-import org.saxstack.writer.XmlTag;
-import org.saxstack.writer.PrettyPrintRootXmlTag;
+import org.globsframework.saxstack.writer.XmlTag;
+import org.globsframework.saxstack.writer.PrettyPrintRootXmlTag;
 
 import java.io.*;
 import java.util.*;

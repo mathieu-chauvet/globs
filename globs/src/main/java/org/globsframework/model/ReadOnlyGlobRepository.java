@@ -1,9 +1,8 @@
 package org.globsframework.model;
 
 import org.globsframework.metamodel.Field;
-import org.globsframework.metamodel.GlobModel;
 import org.globsframework.metamodel.GlobType;
-import org.globsframework.metamodel.Link;
+import org.globsframework.metamodel.links.Link;
 import org.globsframework.metamodel.index.Index;
 import org.globsframework.metamodel.index.MultiFieldIndex;
 import org.globsframework.model.utils.GlobFunctor;

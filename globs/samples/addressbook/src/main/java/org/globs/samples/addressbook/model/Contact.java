@@ -5,6 +5,7 @@ import org.globsframework.metamodel.fields.StringField;
 import org.globsframework.metamodel.annotations.KeyField;
 import org.globsframework.metamodel.GlobType;
 import org.globsframework.metamodel.utils.GlobTypeLoader;
+import org.globsframework.metamodel.utils.GlobTypeLoaderFactory;
 
 public class Contact {
   public static GlobType TYPE;
@@ -18,6 +19,6 @@ public class Contact {
   public static StringField EMAIL;
 
   static {
-    GlobTypeLoader.init(Contact.class);
+    GlobTypeLoaderFactory.create(Contact.class).load();
   }
 }

@@ -13,7 +13,7 @@ public class DebugTest extends TestCase {
     GlobRepository repository = GlobRepositoryBuilder.createEmpty();
     checker.parse(repository,
                   "<dummyObject id='1' name='obj1'/>" +
-                  "<dummyObject id='2' name='obj2' link='1'/>" +
+                  "<dummyObject id='2' name='obj2' linkId='1'/>" +
                   "<dummyObject2 id='1' label='otherObj1'/>");
 
     Debug.printChanges(repository);

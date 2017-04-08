@@ -68,9 +68,6 @@ public class SqlUpdateBuilder implements UpdateBuilder {
         update(field, (byte[])value);
       }
 
-      public void visitLink(LinkField field) throws Exception {
-        update(field, (Integer)value);
-      }
     });
     return this;
   }
@@ -152,16 +149,7 @@ public class SqlUpdateBuilder implements UpdateBuilder {
     return this;
   }
 
-  public UpdateBuilder update(LinkField field, IntegerAccessor accessor) {
-    values.put(field, accessor);
-    return this;
-  }
-
-  public UpdateBuilder update(LinkField field, Integer value) {
-    return update(field, new ValueIntegerAccessor(value));
-  }
-
-  public SqlRequest getRequest() {
+   public SqlRequest getRequest() {
     try {
       return new SqlUpdateRequest(globType, constraint, values, connection, sqlService, blobUpdater);
     }

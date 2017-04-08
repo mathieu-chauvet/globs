@@ -2,19 +2,11 @@ package org.globsframework.metamodel.utils;
 
 import org.globsframework.model.Glob;
 import org.globsframework.model.Key;
-import org.globsframework.model.format.GlobPrinter;
-import org.globsframework.utils.exceptions.ItemNotFound;
 
-import java.lang.annotation.Annotation;
-import java.util.List;
-import java.util.Map;
+import java.util.Collection;
 
 public abstract class AnnotatedPropertyHolder<T> extends DefaultPropertyHolder<T> implements Annotations {
-  private Annotations annotations;
-
-  public AnnotatedPropertyHolder(Annotations annotations) {
-    this.annotations = annotations;
-  }
+  private Annotations annotations = new DefaultAnnotations();
 
   public boolean hasAnnotation(Key annotation) {
     return annotations.hasAnnotation(annotation);
@@ -24,7 +16,7 @@ public abstract class AnnotatedPropertyHolder<T> extends DefaultPropertyHolder<T
     return annotations.getAnnotation(key);
   }
 
-  public List<Glob> list() {
+  public Collection<Glob> list() {
     return annotations.list();
   }
 

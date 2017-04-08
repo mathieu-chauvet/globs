@@ -48,10 +48,6 @@ public abstract class AbstractFieldValues implements FieldValues {
     return value;
   }
 
-  public Integer get(LinkField field) {
-    return (Integer)doGet(field);
-  }
-
   public String get(StringField field) {
     return (String)doGet(field);
   }

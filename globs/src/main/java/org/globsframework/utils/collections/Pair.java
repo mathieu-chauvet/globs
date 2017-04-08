@@ -45,4 +45,16 @@ public class Pair<T, D> implements Serializable {
     result = 31 * result + second.hashCode();
     return result;
   }
+
+   public String toString() {
+      return "Pair{" +
+             "first=" + first +
+             ", second=" + second +
+             '}';
+   }
+
+   static public <T, D> Pair<T, D> makePair(T first, D second){
+      return new Pair<>(first, second);
+   }
+
 }

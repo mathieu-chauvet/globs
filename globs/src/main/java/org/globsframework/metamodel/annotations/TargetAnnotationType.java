@@ -2,6 +2,7 @@ package org.globsframework.metamodel.annotations;
 
 import org.globsframework.metamodel.GlobType;
 import org.globsframework.metamodel.utils.GlobTypeLoader;
+import org.globsframework.metamodel.utils.GlobTypeLoaderFactory;
 import org.globsframework.model.Glob;
 
 import java.lang.annotation.ElementType;
@@ -17,7 +18,7 @@ public class TargetAnnotationType {
   }
 
   static {
-    GlobTypeLoader.init("globs", TargetAnnotationType.class, "targetAnnotation");
+     GlobTypeLoaderFactory.create(TargetAnnotationType.class, "globs", "targetAnnotation");
   }
 
 }

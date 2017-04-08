@@ -134,11 +134,7 @@ public class FieldConverter {
       value = Long.parseLong(stringValue);
     }
 
-    public void visitLink(LinkField field) throws Exception {
-      visitInteger(field);
-    }
-
-    public Object getValue() {
+     public Object getValue() {
       return value;
     }
   }
@@ -199,8 +195,5 @@ public class FieldConverter {
       stringValue = Long.toString(((Long)value));
     }
 
-    public void visitLink(LinkField field) throws Exception {
-      visitInteger(field);
-    }
   }
 }

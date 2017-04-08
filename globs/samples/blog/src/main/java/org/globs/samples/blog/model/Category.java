@@ -6,6 +6,7 @@ import org.globsframework.metamodel.fields.IntegerField;
 import org.globsframework.metamodel.fields.StringField;
 import org.globsframework.metamodel.annotations.KeyField;
 import org.globsframework.metamodel.annotations.NamingField;
+import org.globsframework.metamodel.utils.GlobTypeLoaderFactory;
 
 public class Category {
   public static GlobType TYPE;
@@ -17,6 +18,6 @@ public class Category {
   public static StringField NAME;
 
   static {
-    GlobTypeLoader.init(Category.class);
+    GlobTypeLoaderFactory.create(Category.class).load();
   }
 }

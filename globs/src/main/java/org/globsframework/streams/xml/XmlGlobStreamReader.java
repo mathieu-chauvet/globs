@@ -11,11 +11,11 @@ import org.globsframework.streams.GlobStream;
 import org.globsframework.streams.accessors.*;
 import org.globsframework.utils.directory.Directory;
 import org.globsframework.xml.XmlSingleGlobParser;
-import org.saxstack.parser.DefaultXmlNode;
-import org.saxstack.parser.ExceptionHolder;
-import org.saxstack.parser.SaxStackParser;
-import org.saxstack.parser.XmlNode;
-import org.saxstack.utils.XmlUtils;
+import org.globsframework.saxstack.parser.DefaultXmlNode;
+import org.globsframework.saxstack.parser.ExceptionHolder;
+import org.globsframework.saxstack.parser.SaxStackParser;
+import org.globsframework.saxstack.parser.XmlNode;
+import org.globsframework.saxstack.utils.XmlUtils;
 import org.xml.sax.Attributes;
 
 import java.io.StringReader;
@@ -160,11 +160,7 @@ public class XmlGlobStreamReader {
         accessor = new XmlLongAccessor(stream, field);
       }
 
-      public void visitLink(LinkField field) throws Exception {
-        visitInteger(field);
-      }
-
-      public Accessor getAccessor() {
+       public Accessor getAccessor() {
         return accessor;
       }
 

@@ -15,9 +15,7 @@ public interface FieldVisitor {
 
     void visitTimeStamp(TimeStampField field) throws Exception;
 
-    void visitLink(LinkField field) throws Exception;
-
-    void visitBlob(BlobField field) throws Exception;
+   void visitBlob(BlobField field) throws Exception;
 
 
     class AbstractFieldVisitor implements FieldVisitor {
@@ -43,10 +41,7 @@ public interface FieldVisitor {
         public void visitTimeStamp(TimeStampField field) throws Exception {
         }
 
-        public void visitLink(LinkField field) throws Exception {
-        }
-
-        public void visitBlob(BlobField field) throws Exception {
+       public void visitBlob(BlobField field) throws Exception {
         }
     }
 }

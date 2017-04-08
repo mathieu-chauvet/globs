@@ -3,6 +3,7 @@ package org.globsframework.metamodel;
 import org.globsframework.metamodel.annotations.*;
 import org.globsframework.metamodel.fields.*;
 import org.globsframework.metamodel.utils.GlobTypeLoader;
+import org.globsframework.metamodel.utils.GlobTypeLoaderFactory;
 import org.globsframework.sqlstreams.annotations.AutoIncrement;
 
 public class DummyObjectWithDefaultValues {
@@ -29,13 +30,12 @@ public class DummyObjectWithDefaultValues {
   public static TimeStampField TIMESTAMP;
 
   @Target(DummyObject.class)
-  @DefaultInteger(1)
-  public static LinkField LINK;
+  public static IntegerField LINK;
 
   @DefaultString("Hello")
   public static StringField STRING;
 
   static {
-    GlobTypeLoader.init(DummyObjectWithDefaultValues.class);
+     GlobTypeLoaderFactory.create(DummyObjectWithDefaultValues.class).load();
   }
 }

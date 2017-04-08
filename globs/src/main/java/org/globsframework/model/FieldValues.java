@@ -24,9 +24,7 @@ public interface FieldValues {
 
     int get(IntegerField field, int valueIfNull) throws ItemNotFound;
 
-    Integer get(LinkField field) throws ItemNotFound;
-
-    String get(StringField field) throws ItemNotFound;
+   String get(StringField field) throws ItemNotFound;
 
     Boolean get(BooleanField field) throws ItemNotFound;
 
@@ -95,11 +93,7 @@ public interface FieldValues {
             throw new ItemNotFound(field.getName());
         }
 
-        public Integer get(LinkField field) throws ItemNotFound {
-            throw new ItemNotFound(field.getName());
-        }
-
-        public String get(StringField field) throws ItemNotFound {
+       public String get(StringField field) throws ItemNotFound {
             throw new ItemNotFound(field.getName());
         }
 

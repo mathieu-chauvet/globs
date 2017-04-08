@@ -51,11 +51,7 @@ public abstract class AbstractFieldValuesWithPrevious implements FieldValuesWith
     return value == null ? valueIfNull : value;
   }
 
-  public Integer get(LinkField field) throws ItemNotFound {
-    return (Integer)doGet(field);
-  }
-
-  public String get(StringField field) throws ItemNotFound {
+   public String get(StringField field) throws ItemNotFound {
     return (String)doGet(field);
   }
 
@@ -107,11 +103,7 @@ public abstract class AbstractFieldValuesWithPrevious implements FieldValuesWith
     return (Integer)doGetPrevious(field);
   }
 
-  public Integer getPrevious(LinkField field) throws ItemNotFound {
-    return (Integer)doGetPrevious(field);
-  }
-
-  public String getPrevious(StringField field) throws ItemNotFound {
+   public String getPrevious(StringField field) throws ItemNotFound {
     return (String)doGetPrevious(field);
   }
 

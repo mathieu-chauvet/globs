@@ -76,9 +76,6 @@ public class SqlCreateBuilder implements CreateBuilder {
         setObject(field, new ValueBlobAccessor((byte[])value));
       }
 
-      public void visitLink(LinkField field) throws Exception {
-        visitInteger(field);
-      }
     });
     return this;
   }

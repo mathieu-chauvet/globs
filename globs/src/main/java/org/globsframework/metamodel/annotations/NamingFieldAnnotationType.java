@@ -1,22 +1,28 @@
 package org.globsframework.metamodel.annotations;
 
 import org.globsframework.metamodel.GlobType;
-import org.globsframework.metamodel.utils.GlobTypeLoader;
+import org.globsframework.metamodel.utils.GlobTypeLoaderFactory;
 import org.globsframework.model.Glob;
 import org.globsframework.model.Key;
 
+import java.lang.annotation.Annotation;
+
 public class NamingFieldAnnotationType {
-    public static GlobType TYPE;
+   public static GlobType TYPE;
 
-    @InitUniqueKey
-    public static Key UNIQUE_KEY;
+   @InitUniqueKey
+   public static Key UNIQUE_KEY;
 
+   @InitUniqueGlob
+   public static Glob UNIQUE_GLOB;
 
-    public static Glob create(){
-        return TYPE.instantiate();
-    }
-
-    static {
-        GlobTypeLoader.init(NamingFieldAnnotationType.class);
-    }
+   static {
+      GlobTypeLoaderFactory.create(NamingFieldAnnotationType.class)
+         .register(GlobCreateFromAnnotation.class, new GlobCreateFromAnnotation() {
+            public Glob create(Annotation annotation) {
+               return UNIQUE_GLOB;
+            }
+         })
+         .load();
+   }
 }

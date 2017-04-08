@@ -1,9 +1,7 @@
 package org.globsframework.model;
 
 import org.globsframework.metamodel.GlobType;
-import org.globsframework.metamodel.Link;
-
-import java.io.Serializable;
+import org.globsframework.metamodel.links.Link;
 
 public interface Glob extends FieldValues {
   GlobType getType();

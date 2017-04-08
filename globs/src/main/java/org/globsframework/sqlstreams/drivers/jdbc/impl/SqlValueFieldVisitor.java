@@ -33,16 +33,7 @@ public class SqlValueFieldVisitor implements FieldVisitor {
     }
   }
 
-  public void visitLink(LinkField field) throws Exception {
-    if (value == null) {
-      preparedStatement.setNull(index, Types.INTEGER);
-    }
-    else {
-      preparedStatement.setInt(index, (Integer)value);
-    }
-  }
-
-  public void visitLong(LongField field) throws Exception {
+   public void visitLong(LongField field) throws Exception {
     if (value == null) {
       preparedStatement.setNull(index, Types.BIGINT);
     }

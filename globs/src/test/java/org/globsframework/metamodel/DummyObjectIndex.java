@@ -11,6 +11,7 @@ import org.globsframework.metamodel.index.MultiFieldUniqueIndex;
 import org.globsframework.metamodel.index.NotUniqueIndex;
 import org.globsframework.metamodel.index.UniqueIndex;
 import org.globsframework.metamodel.utils.GlobTypeLoader;
+import org.globsframework.metamodel.utils.GlobTypeLoaderFactory;
 
 public class DummyObjectIndex {
 
@@ -36,7 +37,7 @@ public class DummyObjectIndex {
 
 
   static {
-    GlobTypeLoader loader = GlobTypeLoader.init(DummyObjectIndex.class);
+    GlobTypeLoader loader = GlobTypeLoaderFactory.create(DummyObjectIndex.class).load();
     loader.defineMultiFieldNotUniqueIndex(VALUES_INDEX, VALUE_1, VALUE_2);
     loader.defineMultiFieldUniqueIndex(VALUES_AND_NAME_INDEX, VALUE_1, VALUE_2, NAME);
     loader.defineUniqueIndex(UNIQUE_NAME_INDEX, UNIQUE_NAME);

@@ -2,6 +2,7 @@ package org.globsframework.metamodel.annotations;
 
 import org.globsframework.metamodel.GlobType;
 import org.globsframework.metamodel.utils.GlobTypeLoader;
+import org.globsframework.metamodel.utils.GlobTypeLoaderFactory;
 import org.globsframework.model.Glob;
 
 public class NoObfuscationAnnotationType {
@@ -12,7 +13,7 @@ public class NoObfuscationAnnotationType {
   }
 
   static {
-    GlobTypeLoader.init("globs", NoObfuscationAnnotationType.class, "noObfuscationAnnotation");
+     GlobTypeLoaderFactory.create(NoObfuscationAnnotationType.class, "globs", "noObfuscationAnnotation");
   }
 
 }

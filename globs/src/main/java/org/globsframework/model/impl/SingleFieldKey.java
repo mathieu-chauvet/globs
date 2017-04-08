@@ -16,153 +16,154 @@ import java.util.Date;
 
 public class SingleFieldKey extends DefaultKey {
 
-  private Object value;
-  private Field keyField;
-  private int hashCode = -1;
+   private Object value;
+   private Field keyField;
+   private int hashCode = 0;
 
-  public SingleFieldKey(Field field, Object value) throws MissingInfo {
-    checkValue(field, value);
-    this.keyField = field;
-    this.keyField.checkValue(value);
-    this.value = value;
-  }
+   public SingleFieldKey(Field field, Object value) throws MissingInfo {
+      checkValue(field, value);
+      this.keyField = field;
+      this.keyField.checkValue(value);
+      this.value = value;
+   }
 
-  static void checkValue(Field field, Object value) throws MissingInfo {
-    if (value == null) {
-      throw new MissingInfo("Field '" + field.getName() +
-                            "' missing (should not be NULL) for identifying a Glob of type: " + field.getGlobType().getName());
-    }
-  }
+   static void checkValue(Field field, Object value) throws MissingInfo {
+//    if (value == null) {
+//      throw new MissingInfo("Field '" + field.getName() +
+//                            "' missing (should not be NULL) for identifying a Glob of type: " + field.getGlobType().getName());
+//    }
+   }
 
-  public SingleFieldKey(GlobType type, Object value) throws InvalidParameter {
-    this(getKeyField(type), value);
-  }
+   public SingleFieldKey(GlobType type, Object value) throws InvalidParameter {
+      this(getKeyField(type), value);
+   }
 
-  private static Field getKeyField(GlobType type) throws InvalidParameter {
-    Field[] keyFields = type.getKeyFields();
-    if (keyFields.length != 1) {
-      throw new InvalidParameter("Cannot use a single field key for type " + type + " - " +
-                                 "key fields=" + Arrays.toString(keyFields));
-    }
-    return keyFields[0];
-  }
+   private static Field getKeyField(GlobType type) throws InvalidParameter {
+      Field[] keyFields = type.getKeyFields();
+      if (keyFields.length != 1) {
+         throw new InvalidParameter("Cannot use a single field key for type " + type + " - " +
+                                    "key fields=" + Arrays.toString(keyFields));
+      }
+      return keyFields[0];
+   }
 
-  public GlobType getGlobType() {
-    return keyField.getGlobType();
-  }
+   public GlobType getGlobType() {
+      return keyField.getGlobType();
+   }
 
-  public void apply(FieldValues.Functor functor) throws Exception {
-    functor.process(keyField, value);
-  }
-
-  public boolean contains(Field field) {
-    return keyField.equals(field);
-  }
-
-  public void safeApply(FieldValues.Functor functor) {
-    try {
+   public void apply(FieldValues.Functor functor) throws Exception {
       functor.process(keyField, value);
-    }
-    catch (Exception e) {
-      throw new RuntimeException(e);
-    }
-  }
+   }
 
-  public int size() {
-    return 1;
-  }
+   public boolean contains(Field field) {
+      return keyField.equals(field);
+   }
 
-  public byte[] get(BlobField field) {
-    checkIsKeyField(field);
-    return (byte[])value;
-  }
+   public void safeApply(FieldValues.Functor functor) {
+      try {
+         functor.process(keyField, value);
+      }
+      catch (Exception e) {
+         throw new RuntimeException(e);
+      }
+   }
 
-  public Boolean get(BooleanField field) {
-    checkIsKeyField(field);
-    return (Boolean)value;
-  }
+   public int size() {
+      return 1;
+   }
 
-  public boolean isTrue(BooleanField field) {
-    return Boolean.TRUE.equals(get(field));
-  }
+   public byte[] get(BlobField field) {
+      checkIsKeyField(field);
+      return (byte[])value;
+   }
 
-  public Date get(DateField field) {
-    checkIsKeyField(field);
-    return (Date)value;
-  }
+   public Boolean get(BooleanField field) {
+      checkIsKeyField(field);
+      return (Boolean)value;
+   }
 
-  public Double get(DoubleField field) {
-    checkIsKeyField(field);
-    return (Double)value;
-  }
+   public boolean isTrue(BooleanField field) {
+      return Boolean.TRUE.equals(get(field));
+   }
 
-  public Object getValue(Field field) {
-    checkIsKeyField(field);
-    return value;
-  }
+   public Date get(DateField field) {
+      checkIsKeyField(field);
+      return (Date)value;
+   }
 
-  public Integer get(IntegerField field) {
-    checkIsKeyField(field);
-    return (Integer)value;
-  }
+   public Double get(DoubleField field) {
+      checkIsKeyField(field);
+      return (Double)value;
+   }
 
-  public Integer get(LinkField field) {
-    return get((IntegerField)field);
-  }
+   public Object getValue(Field field) {
+      checkIsKeyField(field);
+      return value;
+   }
 
-  public Long get(LongField field) {
-    checkIsKeyField(field);
-    return (Long)value;
-  }
+   public Integer get(IntegerField field) {
+      checkIsKeyField(field);
+      return (Integer)value;
+   }
 
-  public String get(StringField field) {
-    checkIsKeyField(field);
-    return (String)value;
-  }
+   public Long get(LongField field) {
+      checkIsKeyField(field);
+      return (Long)value;
+   }
 
-  public Date get(TimeStampField field) {
-    checkIsKeyField(field);
-    return (Date)value;
-  }
+   public String get(StringField field) {
+      checkIsKeyField(field);
+      return (String)value;
+   }
 
-  // optimized - do not use generated code
-  public boolean equals(Object o) {
-    if (this == o) {
-      return true;
-    }
-    if (o == null) {
-      return false;
-    }
-    if (o.getClass().equals(SingleFieldKey.class)) {
-      SingleFieldKey otherSingleFieldKey = (SingleFieldKey)o;
-      return otherSingleFieldKey.keyField.equals(keyField) &&
-             Utils.equal(otherSingleFieldKey.value, value);
-    }
+   public Date get(TimeStampField field) {
+      checkIsKeyField(field);
+      return (Date)value;
+   }
 
-    if (!DefaultKey.class.isAssignableFrom(o.getClass())) {
-      return false;
-    }
-    Key otherKey = (Key)o;
-    return keyField.getGlobType().equals(otherKey.getGlobType())
-           && Utils.equal(value, otherKey.getValue(keyField));
-  }
+   // optimized - do not use generated code
+   public boolean equals(Object o) {
+      if (this == o) {
+         return true;
+      }
+      if (o == null) {
+         return false;
+      }
+      if (o.getClass().equals(SingleFieldKey.class)) {
+         SingleFieldKey otherSingleFieldKey = (SingleFieldKey)o;
+         return otherSingleFieldKey.keyField.equals(keyField) &&
+                Utils.equal(otherSingleFieldKey.value, value);
+      }
 
-  // optimized - do not use generated code
-  public int hashCode() {
-    if (hashCode < 0) {
-      hashCode = (value != null ? value.hashCode() : 0);
-      hashCode = 31 * hashCode + keyField.hashCode();
-    }
-    return hashCode;
-  }
+      if (!DefaultKey.class.isAssignableFrom(o.getClass())) {
+         return false;
+      }
+      Key otherKey = (Key)o;
+      return keyField.getGlobType().equals(otherKey.getGlobType())
+             && Utils.equal(value, otherKey.getValue(keyField));
+   }
 
-  public FieldValue[] toArray() {
-    return new FieldValue[]{
-      new FieldValue(keyField, value),
-    };
-  }
+   // optimized - do not use generated code
+   public int hashCode() {
+      if (hashCode != 0) {
+         return hashCode;
+      }
+      int hash = getGlobType().hashCode();
+      hash = 31 * hash + (value != null ? value.hashCode() : 0);
+      if (hash == 0){
+         hash = 31;
+      }
+      this.hashCode = hash;
+      return hashCode;
+   }
 
-  public String toString() {
-    return getGlobType().getName() + "[" + keyField.getName() + "=" + value + "]";
-  }
+   public FieldValue[] toArray() {
+      return new FieldValue[]{
+         new FieldValue(keyField, value),
+      };
+   }
+
+   public String toString() {
+      return getGlobType().getName() + "[" + keyField.getName() + "=" + value + "]";
+   }
 }

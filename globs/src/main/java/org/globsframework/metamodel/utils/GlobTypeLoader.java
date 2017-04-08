@@ -2,13 +2,11 @@ package org.globsframework.metamodel.utils;
 
 import org.globsframework.metamodel.Field;
 import org.globsframework.metamodel.GlobType;
-import org.globsframework.metamodel.Link;
-import org.globsframework.metamodel.annotations.KeyField;
-import org.globsframework.metamodel.annotations.Required;
-import org.globsframework.metamodel.fields.LinkField;
+import org.globsframework.metamodel.annotations.*;
+import org.globsframework.metamodel.fields.*;
+import org.globsframework.metamodel.fields.impl.AbstractField;
 import org.globsframework.metamodel.index.*;
-import org.globsframework.metamodel.links.DefaultLink;
-import org.globsframework.metamodel.links.LinkBuilder;
+import org.globsframework.metamodel.links.Link;
 import org.globsframework.model.Glob;
 import org.globsframework.model.GlobList;
 import org.globsframework.model.impl.ReadOnlyGlob;
@@ -20,294 +18,423 @@ import org.globsframework.utils.exceptions.MissingInfo;
 import org.globsframework.utils.exceptions.UnexpectedApplicationState;
 
 import java.lang.annotation.Annotation;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
-import java.util.HashMap;
+import java.lang.reflect.Modifier;
+import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class GlobTypeLoader {
-    private DefaultGlobType type;
-    private DefaultAnnotations fieldAnnotations = new DefaultAnnotations();
-    private DefaultFieldFactory fieldFactory;
-    private String modelName;
-    private Class<?> targetClass;
-    private String name;
+   private DefaultGlobType type;
+   private DefaultFieldLoaderFactory fieldFactory;
+   private String modelName;
+   private Class<?> targetClass;
+   private String name;
+   private FieldProcessorService fieldProcessorService;
+   private Map<Class, Object> registered = new ConcurrentHashMap<>();
 
-    public static GlobTypeLoader init(Class<?> targetClass) {
-        return init(targetClass, null);
-    }
 
-    public static GlobTypeLoader init(Class<?> targetClass, String name) {
-        return init("Default", targetClass, name);
-    }
+//   private static GlobTypeLoader init(Class<?> targetClass) {
+//      return init(targetClass, null);
+//   }
+//
+//   private static GlobTypeLoader init(Class<?> targetClass, String name) {
+//      return init("Default", targetClass, name);
+//   }
+//
+//   private static GlobTypeLoader init(String modelName, Class<?> targetClass, String name) {
+//      GlobTypeLoader loader = new GlobTypeLoader(targetClass, modelName, name, GlobTypeLoaderFactory.getProcessorService());
+//      loader.run();
+//      loader.type.completeInit();
+//      return loader;
+//   }
 
-    public static GlobTypeLoader init(String modelName, Class<?> targetClass, String name) {
-        GlobTypeLoader loader = new GlobTypeLoader(targetClass, modelName, name);
-        loader.run();
-        loader.type.completeInit();
-        return loader;
-    }
+   public GlobTypeLoader() {
+   }
 
-    public GlobType getType() {
-        return type;
-    }
+   public GlobTypeLoader(Class<?> targetClass, String modelName, String name, FieldProcessorService fieldProcessorService) {
+      this.modelName = modelName;
+      this.fieldProcessorService = fieldProcessorService;
+      this.targetClass = targetClass;
+      this.name = name;
+   }
 
-    public LinkBuilder defineLink(Link link) {
-        return LinkBuilder.init((DefaultLink) link);
-    }
+   public GlobTypeLoader load() {
+      checkClassIsNotAlreadyInitialized(targetClass);
+      processClass(targetClass);
+      processFields(targetClass);
+//      processLink(targetClass);
+      processConstants(targetClass);
+      processIndex(targetClass);
+      type.completeInit();
+      for (Map.Entry<Class, Object> entry : registered.entrySet()) {
+         type.register(entry.getKey(), entry.getValue());
+      }
+      processOther(targetClass);
+      return this;
+   }
 
-    private GlobTypeLoader(String modelName, Class<?> targetClass, String name) {
-        this.modelName = modelName;
-        this.targetClass = targetClass;
-        this.name = name;
-    }
+   public GlobType getType() {
+      return type;
+   }
 
-    private void run() {
-        checkClassIsNotAlreadyInitialized(targetClass);
-        processClass(targetClass);
-        processFields(targetClass);
-        processLinks(targetClass);
-        processConstants(targetClass);
-        processIndex(targetClass);
-        type.completeInit();
-    }
-
-    private void checkClassIsNotAlreadyInitialized(Class targetClass) {
-        for (java.lang.reflect.Field classField : targetClass.getFields()) {
+   private void processOther(Class<?> targetClass) {
+      for (java.lang.reflect.Field classField : targetClass.getFields()) {
+         List<FieldProcessor> processor = fieldProcessorService.get(classField);
+         if (processor != null && !processor.isEmpty()) {
+            DefaultAnnotations annotations = new DefaultAnnotations();
+            processFieldAnnotations(classField, annotations);
+            annotations.addAnnotation(FieldNameAnnotationType.create(getFieldName(classField)));
+            applyProcessor(targetClass, classField, processor, annotations);
+         }
+         else{
             try {
-                if (classField.getType().equals(GlobType.class)) {
-                    if (classField.get(null) != null) {
-                        throw new UnexpectedApplicationState(targetClass.getName() + " already initialized");
-                    }
-                }
-            } catch (IllegalAccessException e) {
-                throw GlobTypeLoader.getFieldAccessException(targetClass, classField, null, e);
+               Object value = classField.get(null);
+               if (value == null) {
+                  throw new MissingInfo("Missing initialisation on " + targetClass.getName() + " for " + classField.getName());
+               }
             }
-        }
-    }
-
-    private void processClass(Class targetClass) {
-        Map<Class<? extends Annotation>, Annotation> annotationsByClass = new HashMap<Class<? extends Annotation>, Annotation>();
-
-        for (java.lang.reflect.Field field : targetClass.getFields()) {
-            if (field.getType().equals(GlobType.class)) {
-                createType(field, annotationsByClass, targetClass);
-            } else if (isGlobField(field) || isGlobLink(field)) {
-                processFieldAnnotations(field);
+            catch (IllegalAccessException e) {
+               throw new RuntimeException(e);
             }
-        }
+         }
+      }
+   }
 
-        if (type == null) {
-            throw new MissingInfo("Class " + targetClass.getName() +
-                    " must have a TYPE field of class " + GlobType.class.getName());
-        }
-    }
-
-    private void createType(java.lang.reflect.Field classField,
-                            Map<Class<? extends Annotation>, Annotation> annotationsByClass,
-                            Class<?> targetClass) {
-        if (type != null) {
-            throw new ItemAlreadyExists("Class " + targetClass.getName() +
-                    " must have only one TYPE field of class " + GlobType.class.getName());
-        }
-
-        this.type = new DefaultGlobType(getTypeName(targetClass), annotationsByClass);
-        this.fieldFactory = new DefaultFieldFactory(type);
-        GlobTypeLoader.setClassField(classField, type, targetClass);
-
-        for (Annotation annotation : classField.getAnnotations()) {
-            annotationsByClass.put(annotation.annotationType(), annotation);
-        }
-    }
-
-    private void processFieldAnnotations(java.lang.reflect.Field field) {
-        for (Annotation annotation : field.getAnnotations()) {
-            processAnnotation(annotation);
-        }
-    }
-
-    private void processAnnotation(Annotation annotation) {
-        try {
-            java.lang.reflect.Field type = annotation.getClass().getField("CLASS_TYPE");
-            if (type != null){
-                Object o = type.get(annotation);
-                if (o instanceof Class) {
-                    Class classGlobType = (Class) o;
-                    Method create = classGlobType.getMethod("create", annotation.getClass());
-                    fieldAnnotations.add((Glob) create.invoke(null, annotation));
-                }
+   private void applyProcessor(Class<?> targetClass, java.lang.reflect.Field classField, List<FieldProcessor> processor,
+                               DefaultAnnotations annotations) {
+      for (FieldProcessor fieldProcessor : processor) {
+         Object value = fieldProcessor.getValue(type, annotations, classField.getAnnotations());
+         if (value instanceof MutableAnnotations){
+            for (Glob glob : annotations.list()) {
+               ((MutableAnnotations)value).addAnnotation(glob);
             }
-        } catch (NoSuchFieldException e) {
-            e.printStackTrace();
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        } catch (NoSuchMethodException e) {
-            e.printStackTrace();
-        } catch (InvocationTargetException e) {
-            e.printStackTrace();
-        }
-    }
-
-    private void processFields(Class<?> targetClass) {
-        for (java.lang.reflect.Field classField : targetClass.getFields()) {
-            if (isGlobField(classField)) {
-                boolean isKeyField = classField.isAnnotationPresent(KeyField.class);
-                Field field = fieldFactory.createField(getFieldName(classField),
-                        classField.getType(),
-                        isKeyField,
-                        fieldAnnotations);
-                setClassField(classField, field, targetClass);
-            }
-        }
-    }
-
-    private void processLinks(Class<?> targetClass) {
-        for (java.lang.reflect.Field classField : targetClass.getFields()) {
-            if (Link.class.isAssignableFrom(classField.getType()) &&
-                    !LinkField.class.isAssignableFrom(classField.getType())) {
-
-                boolean required = classField.isAnnotationPresent(Required.class);
-                DefaultLink link = new DefaultLink(type, getFieldName(classField), required, fieldAnnotations);
-                GlobTypeLoader.setClassField(classField, link, targetClass);
-            }
-        }
-    }
-
-    private void processConstants(Class<?> targetClass) {
-        if (!targetClass.isEnum() && !GlobConstantContainer.class.isAssignableFrom(targetClass)) {
+         }
+         if (value != null) {
+            setClassField(classField, value, targetClass);
             return;
-        }
-        if (!targetClass.isEnum()) {
-            throw new InvalidParameter("Class " + targetClass.getSimpleName() +
-                    " must be an enum in order to declare constants");
-        }
-        if (!GlobConstantContainer.class.isAssignableFrom(targetClass)) {
-            throw new InvalidParameter("Class " + targetClass.getSimpleName() +
-                    " must implement " + GlobConstantContainer.class.getSimpleName() +
-                    " in order to declare constants");
-        }
-        for (GlobConstantContainer container : ((Class<GlobConstantContainer>) targetClass).getEnumConstants()) {
-            type.addConstant(container.getGlob());
-        }
-    }
+         }
+      }
+   }
 
-    private void processIndex(Class<?> targetClass) {
-        for (java.lang.reflect.Field classField : targetClass.getFields()) {
-            if (isUniqueIndexField(classField)) {
-                Index index = fieldFactory.addUniqueIndex(classField.getName());
-                setClassField(classField, index, targetClass);
-                type.addIndex(index);
+
+//   private void processLink(Class<?> targetClass) {
+//      for (java.lang.reflect.Field classField : targetClass.getFields()) {
+//         if (isGlobLink(classField)) {
+//            UnInitializedLink link = new UnInitializedLink("");
+//            processFieldAnnotations(classField, link);
+//            setClassField(classField, link, targetClass);
+//         }
+//      }
+//   }
+
+   private void checkClassIsNotAlreadyInitialized(Class targetClass) {
+      for (java.lang.reflect.Field classField : targetClass.getFields()) {
+         try {
+            if (classField.getType().equals(GlobType.class)) {
+               if (classField.get(null) != null) {
+                  throw new UnexpectedApplicationState(targetClass.getName() + " already initialized");
+               }
             }
-            if (isNotUniqueIndexField(classField)) {
-                Index index = fieldFactory.addNotUniqueIndex(classField.getName());
-                setClassField(classField, index, targetClass);
-                type.addIndex(index);
+         }
+         catch (IllegalAccessException e) {
+            throw GlobTypeLoader.getFieldAccessException(targetClass, classField, null, e);
+         }
+      }
+   }
+
+   private void processClass(Class targetClass) {
+
+      for (java.lang.reflect.Field field : targetClass.getFields()) {
+         if (field.getType().equals(GlobType.class)) {
+            createType(field, targetClass);
+         }
+      }
+
+      if (type == null) {
+         throw new MissingInfo("Class " + targetClass.getName() +
+                               " must have a TYPE field of class " + GlobType.class.getName());
+      }
+   }
+
+   private void createType(java.lang.reflect.Field classField,
+                           Class<?> targetClass) {
+      if (type != null) {
+         throw new ItemAlreadyExists("Class " + targetClass.getName() +
+                                     " must have only one TYPE field of class " + GlobType.class.getName());
+      }
+      this.type = new DefaultGlobType(getTypeName(targetClass));
+      for (Annotation annotation : classField.getAnnotations()) {
+         Glob glob = processAnnotation(annotation);
+         if (glob != null) {
+            type.addAnnotation(glob);
+         }
+      }
+      this.fieldFactory = new DefaultFieldLoaderFactory(type);
+      GlobTypeLoader.setClassField(classField, type, targetClass);
+   }
+
+   private void processFieldAnnotations(java.lang.reflect.Field field, MutableAnnotations annotations) {
+      for (Annotation annotation : field.getAnnotations()) {
+         Glob globAnnotation = processAnnotation(annotation);
+         if (globAnnotation != null) {
+            annotations.addAnnotation(globAnnotation);
+         }
+      }
+   }
+
+   private Glob processAnnotation(Annotation annotation) {
+      try {
+         if (annotation.annotationType().isAnnotationPresent(NoType.class)){
+            return null;
+         }
+         java.lang.reflect.Field[] fields = annotation.getClass().getFields();
+         GlobType globType = null;
+         java.lang.reflect.Field foundField = null;
+         for (java.lang.reflect.Field field : fields) {
+            if (field.getType().equals(GlobType.class)) {
+               if (Modifier.isStatic(field.getModifiers()) && Modifier.isPublic(field.getModifiers())) {
+                  globType = (GlobType)field.get(null);
+               }
+               else {
+                  foundField = field;
+               }
             }
-            if (isMultiFieldNotUniqueIndexField(classField)) {
-                MultiFieldNotUniqueIndex index = fieldFactory.addMultiFieldNotUniqueIndex(classField.getName());
-                setClassField(classField, index, targetClass);
-                type.addIndex(index);
+            if (field.getType().equals(Glob.class)) {
+               if (Modifier.isStatic(field.getModifiers()) && Modifier.isPublic(field.getModifiers())) {
+                  return (Glob)field.get(null);
+               }
             }
-            if (isMultiFieldUniqueIndexField(classField)) {
-                MultiFieldUniqueIndex index = fieldFactory.addMultiFieldUniqueIndex(classField.getName());
-                setClassField(classField, index, targetClass);
-                type.addIndex(index);
+         }
+         if (globType == null) {
+            if (foundField != null) {
+               throw new RuntimeException(foundField.getName() + " must be static public");
             }
-        }
-    }
-
-    private boolean isMultiFieldUniqueIndexField(java.lang.reflect.Field field) {
-        return MultiFieldUniqueIndex.class.isAssignableFrom(field.getType());
-    }
-
-    private boolean isMultiFieldNotUniqueIndexField(java.lang.reflect.Field field) {
-        return MultiFieldNotUniqueIndex.class.isAssignableFrom(field.getType());
-    }
-
-    private boolean isNotUniqueIndexField(java.lang.reflect.Field field) {
-        return NotUniqueIndex.class.isAssignableFrom(field.getType());
-    }
-
-    private boolean isUniqueIndexField(java.lang.reflect.Field field) {
-        return UniqueIndex.class.isAssignableFrom(field.getType());
-    }
-
-    private static void setClassField(java.lang.reflect.Field classField, Object value, Class<?> targetClass) {
-        try {
-            classField.set(null, value);
-        } catch (Exception e) {
-            throw GlobTypeLoader.getFieldAccessException(targetClass, classField, value, e);
-        }
-    }
-
-    private static RuntimeException getFieldAccessException(Class<?> targetClass, java.lang.reflect.Field classField, Object value, Exception e) {
-        String valueDescription;
-        if (value != null) {
-            valueDescription = value.toString() + " (class " + value.getClass().getName() + ")";
-        } else {
-            valueDescription = "'null'";
-        }
-        return new RuntimeException("Unable to initialize field " + targetClass.getName() + "." + classField.getName() +
-                " with value " + valueDescription, e);
-    }
-
-    GlobTypeLoader addField(AbstractField field) throws ItemAlreadyExists {
-        if (type.hasField(field.getName())) {
-            throw new ItemAlreadyExists("Field " + field.getName() +
-                    " declared twice for type " + type.getName());
-        }
-        type.addField(field);
-        return this;
-    }
-
-    private String getTypeName(Class<?> aClass) {
-        if (name != null) {
-            return name;
-        } else {
-            String fullName = aClass.getName();
-            int lastSeparatorIndex = Math.max(fullName.lastIndexOf("."), fullName.lastIndexOf("$"));
-            return Strings.uncapitalize(fullName.substring(lastSeparatorIndex + 1));
-        }
-    }
-
-    private String getFieldName(java.lang.reflect.Field field) {
-        if (field.getName().length() == 1) {
-            return field.getName();
-        }
-        return Strings.toNiceLowerCase(field.getName());
-    }
-
-    private boolean isGlobField(java.lang.reflect.Field field) {
-        return Field.class.isAssignableFrom(field.getType());
-    }
-
-    private boolean isGlobLink(java.lang.reflect.Field field) {
-        return Link.class.isAssignableFrom(field.getType());
-    }
-
-    public void addConstants(GlobList globs) {
-        for (Glob glob : globs) {
-            if (glob instanceof ReadOnlyGlob) {
-                type.addConstant((ReadOnlyGlob) glob);
-            } else {
-                type.addConstant(new ReadOnlyGlob(glob.getType(), glob.toArray()));
+            throw new RuntimeException("For " + annotation.annotationType() + " missing GlobType in annotation : code is missing :" +
+                                       "in annotation : GlobType TYPE = TheAnnotationType.TYPE;");
+         }
+         else {
+            GlobCreateFromAnnotation registered = globType.getRegistered(GlobCreateFromAnnotation.class);
+            if (registered != null) {
+               return registered.create(annotation);
             }
-        }
-    }
+            throw new RuntimeException("For " + annotation.annotationType() + " no GlobCreateFromAnnotation registered. Code like following is missing \n" +
+            "       loader.register(GlobCreateFromAnnotation.class, annotation -> create((theAnnotation)annotation))\n");
+         }
+      }
+      catch (IllegalAccessException e) {
+      }
+      return null;
+   }
 
-    public void defineUniqueIndex(UniqueIndex index, Field field) {
-        ((DefaultUniqueIndex) type.getIndex(index.getName())).setField(field);
-    }
+   private void processFields(Class<?> targetClass) {
+      int fieldIndex = 0;
+      int keyCount = 0;
+      for (java.lang.reflect.Field classField : targetClass.getFields()) {
+         if (isGlobField(classField)) {
+            boolean isKeyField = classField.isAnnotationPresent(KeyField.class);
+            String fieldName;
+            if (classField.isAnnotationPresent(FieldNameAnnotation.class)) {
+               fieldName = classField.getAnnotation(FieldNameAnnotation.class).value();
+            }
+            else {
+               fieldName = getFieldName(classField);
+            }
+            AbstractField field = create(fieldName, classField.getType(), isKeyField, fieldIndex, classField);
+            field.addAnnotation(FieldNameAnnotationType.create(fieldName));
+            if (isKeyField) {
+               keyCount++;
+               field.addAnnotation(KeyAnnotationType.create(keyCount));
+            }
+            setClassField(classField, field, targetClass);
+            fieldIndex++;
+            processFieldAnnotations(classField, field);
+         }
+      }
+   }
 
-    public void defineNonUniqueIndex(NotUniqueIndex index, Field field) {
-        ((DefaultNotUniqueIndex) type.getIndex(index.getName())).setField(field);
-    }
+   AbstractField create(String name, Class<?> fieldClass, boolean isKeyField, int index, java.lang.reflect.Field field) {
+      if (StringField.class.isAssignableFrom(fieldClass)) {
+         DefaultString annotation1 = field.getAnnotation(DefaultString.class);
+         String defaultValue = annotation1 != null ? annotation1.value() : null;
+         return fieldFactory.addString(name, isKeyField, index, defaultValue);
+      }
+      else if (IntegerField.class.isAssignableFrom(fieldClass)) {
+         DefaultInteger defaultInteger = field.getAnnotation(DefaultInteger.class);
+         return fieldFactory.addInteger(name, isKeyField, index, defaultInteger != null ? defaultInteger.value() : null);
+      }
+      else if (LongField.class.isAssignableFrom(fieldClass)) {
+         DefaultLong defaultLong = field.getAnnotation(DefaultLong.class);
+         return fieldFactory.addLong(name, isKeyField, index,
+                                     defaultLong != null ? defaultLong.value() : null);
+      }
+      else if (BooleanField.class.isAssignableFrom(fieldClass)) {
+         DefaultBoolean defaultBoolean = field.getAnnotation(DefaultBoolean.class);
+         return fieldFactory.addBoolean(name, isKeyField, index,
+                                        defaultBoolean != null ? defaultBoolean.value() : null);
+      }
+      else if (DateField.class.isAssignableFrom(fieldClass)) {
+         return fieldFactory.addDate(name, isKeyField, index);
+      }
+      else if (DoubleField.class.isAssignableFrom(fieldClass)) {
+         DefaultDouble defaultDouble = field.getAnnotation(DefaultDouble.class);
+         return fieldFactory.addDouble(name, isKeyField, index,
+                                       defaultDouble != null ? defaultDouble.value() : null);
+      }
+      else if (TimeStampField.class.isAssignableFrom(fieldClass)) {
+         return fieldFactory.addTimestamp(name, isKeyField, index);
+      }
+      else if (BlobField.class.isAssignableFrom(fieldClass)) {
+         return fieldFactory.addBlob(name, index);
+      }
+      else {
+         throw new InvalidParameter("Unknown type " + fieldClass.getName());
+      }
+   }
 
-    public void defineMultiFieldUniqueIndex(MultiFieldUniqueIndex index, Field... fields) {
-        ((DefaultMultiFieldUniqueIndex) type.getMultiFieldIndex(index.getName())).setField(fields);
-    }
+   private void processConstants(Class<?> targetClass) {
+      if (!targetClass.isEnum() && !GlobConstantContainer.class.isAssignableFrom(targetClass)) {
+         return;
+      }
+      if (!targetClass.isEnum()) {
+         throw new InvalidParameter("Class " + targetClass.getSimpleName() +
+                                    " must be an enum in order to declare constants");
+      }
+      if (!GlobConstantContainer.class.isAssignableFrom(targetClass)) {
+         throw new InvalidParameter("Class " + targetClass.getSimpleName() +
+                                    " must implement " + GlobConstantContainer.class.getSimpleName() +
+                                    " in order to declare constants");
+      }
+      for (GlobConstantContainer container : ((Class<GlobConstantContainer>)targetClass).getEnumConstants()) {
+         type.addConstant(container.getGlob());
+      }
+   }
 
-    public void defineMultiFieldNotUniqueIndex(MultiFieldNotUniqueIndex index, Field... fields) {
-        ((DefaultMultiFieldNotUniqueIndex) type.getMultiFieldIndex(index.getName())).setField(fields);
-    }
+   private void processIndex(Class<?> targetClass) {
+      for (java.lang.reflect.Field classField : targetClass.getFields()) {
+         if (isUniqueIndexField(classField)) {
+            Index index = fieldFactory.addUniqueIndex(classField.getName());
+            setClassField(classField, index, targetClass);
+            type.addIndex(index);
+         }
+         if (isNotUniqueIndexField(classField)) {
+            Index index = fieldFactory.addNotUniqueIndex(classField.getName());
+            setClassField(classField, index, targetClass);
+            type.addIndex(index);
+         }
+         if (isMultiFieldNotUniqueIndexField(classField)) {
+            MultiFieldNotUniqueIndex index = fieldFactory.addMultiFieldNotUniqueIndex(classField.getName());
+            setClassField(classField, index, targetClass);
+            type.addIndex(index);
+         }
+         if (isMultiFieldUniqueIndexField(classField)) {
+            MultiFieldUniqueIndex index = fieldFactory.addMultiFieldUniqueIndex(classField.getName());
+            setClassField(classField, index, targetClass);
+            type.addIndex(index);
+         }
+      }
+   }
+
+   private boolean isMultiFieldUniqueIndexField(java.lang.reflect.Field field) {
+      return MultiFieldUniqueIndex.class.isAssignableFrom(field.getType());
+   }
+
+   private boolean isMultiFieldNotUniqueIndexField(java.lang.reflect.Field field) {
+      return MultiFieldNotUniqueIndex.class.isAssignableFrom(field.getType());
+   }
+
+   private boolean isNotUniqueIndexField(java.lang.reflect.Field field) {
+      return NotUniqueIndex.class.isAssignableFrom(field.getType());
+   }
+
+   private boolean isUniqueIndexField(java.lang.reflect.Field field) {
+      return UniqueIndex.class.isAssignableFrom(field.getType());
+   }
+
+   private static void setClassField(java.lang.reflect.Field classField, Object value, Class<?> targetClass) {
+      try {
+         classField.set(null, value);
+      }
+      catch (Exception e) {
+         throw GlobTypeLoader.getFieldAccessException(targetClass, classField, value, e);
+      }
+   }
+
+   private static RuntimeException getFieldAccessException(Class<?> targetClass, java.lang.reflect.Field classField, Object value, Exception e) {
+      String valueDescription;
+      if (value != null) {
+         valueDescription = value.toString() + " (class " + value.getClass().getName() + ")";
+      }
+      else {
+         valueDescription = "'null'";
+      }
+      return new RuntimeException("Unable to initialize field " + targetClass.getName() + "." + classField.getName() +
+                                  " with value " + valueDescription, e);
+   }
+
+   GlobTypeLoader addField(AbstractField field) throws ItemAlreadyExists {
+      if (type.hasField(field.getName())) {
+         throw new ItemAlreadyExists("Field " + field.getName() +
+                                     " declared twice for type " + type.getName());
+      }
+      type.addField(field);
+      return this;
+   }
+
+   private String getTypeName(Class<?> aClass) {
+      if (name != null) {
+         return name;
+      }
+      else {
+         String fullName = aClass.getName();
+         int lastSeparatorIndex = Math.max(fullName.lastIndexOf("."), fullName.lastIndexOf("$"));
+         return Strings.uncapitalize(fullName.substring(lastSeparatorIndex + 1));
+      }
+   }
+
+   private String getFieldName(java.lang.reflect.Field field) {
+      if (field.getName().length() == 1) {
+         return field.getName();
+      }
+      return Strings.toNiceLowerCase(field.getName());
+   }
+
+   private boolean isGlobField(java.lang.reflect.Field field) {
+      return Field.class.isAssignableFrom(field.getType());
+   }
+
+   private boolean isGlobLink(java.lang.reflect.Field field) {
+      return Link.class.isAssignableFrom(field.getType());
+   }
+
+   public void addConstants(GlobList globs) {
+      for (Glob glob : globs) {
+         if (glob instanceof ReadOnlyGlob) {
+            type.addConstant((ReadOnlyGlob)glob);
+         }
+         else {
+            type.addConstant(new ReadOnlyGlob(glob.getType(), glob.toArray()));
+         }
+      }
+   }
+
+   public void defineUniqueIndex(UniqueIndex index, Field field) {
+      ((DefaultUniqueIndex)type.getIndex(index.getName())).setField(field);
+   }
+
+   public void defineNonUniqueIndex(NotUniqueIndex index, Field field) {
+      ((DefaultNotUniqueIndex)type.getIndex(index.getName())).setField(field);
+   }
+
+   public void defineMultiFieldUniqueIndex(MultiFieldUniqueIndex index, Field... fields) {
+      ((DefaultMultiFieldUniqueIndex)type.getMultiFieldIndex(index.getName())).setField(fields);
+   }
+
+   public void defineMultiFieldNotUniqueIndex(MultiFieldNotUniqueIndex index, Field... fields) {
+      ((DefaultMultiFieldNotUniqueIndex)type.getMultiFieldIndex(index.getName())).setField(fields);
+   }
+
+   public <T> GlobTypeLoader register(Class<T> klass, T t) {
+      registered.put(klass, t);
+      return this;
+   }
 }

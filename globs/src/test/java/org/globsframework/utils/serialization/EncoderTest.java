@@ -58,7 +58,7 @@ public class EncoderTest extends TestCase {
       .init(TYPE)
       .set(ID, id)
       .set(DATE, date)
-      .set(LINK, linkId)
+      .set(LINK_ID, linkId)
       .set(NAME, name)
       .set(PASSWORD, blob)
       .set(PRESENT, present)
@@ -72,7 +72,7 @@ public class EncoderTest extends TestCase {
 
     assertEquals(1, decodedGlob.get(ID).intValue());
     assertEquals(date, decodedGlob.get(DATE));
-    assertEquals(linkId, decodedGlob.get(LINK).intValue());
+    assertEquals(linkId, decodedGlob.get(LINK_ID).intValue());
     assertEquals(name, decodedGlob.get(NAME));
     assertTrue(Arrays.equals(blob, decodedGlob.get(PASSWORD)));
     assertEquals(present, decodedGlob.get(PRESENT).booleanValue());

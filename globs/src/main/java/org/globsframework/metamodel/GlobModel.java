@@ -20,4 +20,6 @@ public interface GlobModel extends Iterable<GlobType> {
   <T> Property<GlobType, T> createGlobTypeProperty(String name);
 
   <T> Property<Field, T> createFieldProperty(String name);
+
+   GlobLinkModel getLinkModel();
 }

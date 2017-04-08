@@ -15,9 +15,7 @@ public interface FieldSetter {
 
   FieldSetter set(IntegerField field, Integer value) throws ItemNotFound;
 
-  FieldSetter set(LinkField field, Integer value) throws ItemNotFound;
-
-  FieldSetter set(StringField field, String value) throws ItemNotFound;
+   FieldSetter set(StringField field, String value) throws ItemNotFound;
 
   FieldSetter set(BooleanField field, Boolean value) throws ItemNotFound;
 

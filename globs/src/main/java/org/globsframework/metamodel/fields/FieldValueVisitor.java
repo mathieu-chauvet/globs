@@ -19,9 +19,7 @@ public interface FieldValueVisitor {
 
     void visitLong(LongField field, Long value) throws Exception;
 
-    void visitLink(LinkField field, Integer value) throws Exception;
-
-    class AbstractFieldValueVisitor implements FieldValueVisitor {
+   class AbstractFieldValueVisitor implements FieldValueVisitor {
 
         public void visitInteger(IntegerField field, Integer value) throws Exception {
 
@@ -55,9 +53,6 @@ public interface FieldValueVisitor {
 
         }
 
-        public void visitLink(LinkField field, Integer value) throws Exception {
-
-        }
-    }
+   }
 
 }

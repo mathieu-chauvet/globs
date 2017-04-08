@@ -12,7 +12,6 @@ import java.util.Arrays;
 import java.util.Map;
 
 public class KeyBuilder {
-
   private FieldValuesBuilder fieldValuesBuilder = new FieldValuesBuilder();
   private GlobType globType;
 
@@ -46,15 +45,23 @@ public class KeyBuilder {
     return this;
   }
 
-  public DefaultKey get() {
+  public Key get() {
     return createFromValues(globType, fieldValuesBuilder.get());
   }
 
-  public static DefaultKey newKey(GlobType type, Object value) throws InvalidParameter {
+   public static Key newEmptyKey(GlobType type) {
+      return new EmptyKey(type);
+   }
+
+  public static Key newKey(GlobType type, Object value) throws InvalidParameter {
     return new SingleFieldKey(type, value);
   }
 
-  public static Key createFromValues(GlobType type, final Map<Field, Object> values) throws MissingInfo {
+   public static Key newKey(Field idField, Object value) throws InvalidParameter {
+      return new SingleFieldKey(idField, value);
+   }
+
+   public static Key createFromValues(GlobType type, final Map<Field, Object> values) throws MissingInfo {
     Field[] keyFields = type.getKeyFields();
     if (keyFields.length == 1) {
       Field field = keyFields[0];
@@ -94,7 +101,7 @@ public class KeyBuilder {
     });
   }
 
-  public static DefaultKey createFromValues(GlobType type, final FieldValues values) {
+  public static Key createFromValues(GlobType type, final FieldValues values) {
     Field[] keyFields = type.getKeyFields();
     if (keyFields.length == 1) {
       Field field = keyFields[0];
@@ -189,7 +196,7 @@ public class KeyBuilder {
     });
   }
 
-  private static DefaultKey createSingle(GlobType type, Field field, boolean present, Object value)
+  private static Key createSingle(GlobType type, Field field, boolean present, Object value)
     throws MissingInfo {
     if (!present) {
       throw new MissingInfo("Field '" + field.getName() +
@@ -198,7 +205,8 @@ public class KeyBuilder {
     return newKey(type, value);
   }
 
-  private static DefaultKey createKey(GlobType type, FieldValueGetter getter) throws MissingInfo {
+  private static Key createKey(GlobType type, FieldValueGetter getter) throws MissingInfo {
     return new CompositeKey(type, getter);
   }
+
 }

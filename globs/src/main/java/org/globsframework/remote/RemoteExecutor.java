@@ -150,8 +150,5 @@ public class RemoteExecutor {
       request.update(field, input.readLong());
     }
 
-    public void visitLink(LinkField field) throws Exception {
-      request.update(field, input.readInteger());
-    }
   }
 }

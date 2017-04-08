@@ -26,29 +26,22 @@ public class GlobTypeUtils {
   }
 
   public static StringField findNamingField(GlobType type) {
-    Field[] fields = type.getFieldsWithAnnotation(NamingFieldAnnotationType.UNIQUE_KEY);
-    if (fields.length == 1) {
-      return stringField(fields, type);
+    Field field = type.findFieldWithAnnotation(NamingFieldAnnotationType.UNIQUE_KEY);
+    if (field != null) {
+      return stringField(field, type);
     }
     return null;
   }
 
   public static StringField getNamingField(GlobType type) throws ItemNotFound, ItemAmbiguity, InvalidParameter {
-    Field[] fields = type.getFieldsWithAnnotation(NamingField.class);
-    if (fields.length == 0) {
-      throw new ItemNotFound("Type '" + type + "' has no naming field");
-    }
-    if (fields.length > 1) {
-      throw new ItemAmbiguity("Type '" + type + "' has too many naming fields");
-    }
-    return stringField(fields, type);
+    Field field = type.getFieldWithAnnotation(NamingFieldAnnotationType.UNIQUE_KEY);
+    return stringField(field, type);
   }
 
-  private static StringField stringField(Field[] fields, GlobType type) {
-    Field namingField = fields[0];
-    if (!(namingField instanceof StringField)) {
+  private static StringField stringField(Field field, GlobType type) {
+    if (!(field instanceof StringField)) {
       throw new InvalidParameter("Naming field of type '" + type + "' should be a StringField");
     }
-    return (StringField)namingField;
+    return (StringField)field;
   }
 }

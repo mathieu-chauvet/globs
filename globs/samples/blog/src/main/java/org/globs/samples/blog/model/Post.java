@@ -4,6 +4,7 @@ import org.globsframework.metamodel.GlobType;
 import org.globsframework.metamodel.utils.GlobTypeLoader;
 import org.globsframework.metamodel.fields.*;
 import org.globsframework.metamodel.annotations.*;
+import org.globsframework.metamodel.utils.GlobTypeLoaderFactory;
 
 public class Post {
   public static GlobType TYPE;
@@ -26,6 +27,6 @@ public class Post {
   public static IntegerField CATEGORY;
 
   static {
-    GlobTypeLoader.init(Post.class);
+    GlobTypeLoaderFactory.create(Post.class).load();
   }
 }

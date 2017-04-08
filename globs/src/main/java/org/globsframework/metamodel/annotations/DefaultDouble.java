@@ -9,8 +9,9 @@ import java.lang.annotation.RetentionPolicy;
 
 @Retention(RetentionPolicy.RUNTIME)
 @java.lang.annotation.Target({ElementType.FIELD})
+
 public @interface DefaultDouble {
     double value();
 
-    Class CLASS_TYPE = DefaultDoubleAnnotationType.class;
+    GlobType TYPE = DefaultDoubleAnnotationType.DESC;
 }
