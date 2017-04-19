@@ -6,17 +6,21 @@ import org.globsframework.metamodel.DummyObject2;
 import org.globsframework.metamodel.DummyObjectWithCompositeKey;
 import org.globsframework.metamodel.Field;
 import static org.globsframework.model.KeyBuilder.newKey;
+import static org.junit.Assert.*;
+
 import org.globsframework.model.impl.CompositeKey;
 import org.globsframework.model.impl.SingleFieldKey;
 import org.globsframework.model.utils.FieldValueGetter;
 import org.globsframework.utils.exceptions.InvalidParameter;
 import org.globsframework.utils.exceptions.ItemNotFound;
+import org.junit.Test;
 
 import java.util.HashMap;
 import java.util.Map;
 
-public class KeyBuilderTest extends TestCase {
-  public void testCompositeKeyUsingCreateFromValues() throws Exception {
+public class KeyBuilderTest  {
+   @Test
+   public void testCompositeKeyUsingCreateFromValues() throws Exception {
     FieldValues values = FieldValuesBuilder
       .init(DummyObjectWithCompositeKey.ID1, 1)
       .set(DummyObjectWithCompositeKey.ID2, 2)
@@ -27,6 +31,7 @@ public class KeyBuilderTest extends TestCase {
     assertEquals("dummyObjectWithCompositeKey[id1=1, id2=2]", key.toString());
   }
 
+   @Test
   public void testCompositeKeyUsingInit() throws Exception {
     Key key = KeyBuilder
       .init(DummyObjectWithCompositeKey.ID1, 1)
@@ -36,6 +41,7 @@ public class KeyBuilderTest extends TestCase {
     assertEquals("dummyObjectWithCompositeKey[id1=1, id2=2]", key.toString());
   }
 
+   @Test
   public void testAllFieldsMustUseTheSameType() throws Exception {
     try {
       KeyBuilder
@@ -49,7 +55,8 @@ public class KeyBuilderTest extends TestCase {
     }
   }
 
-  public void testAllKeyFieldsMustBePresentInCreateForValuesParameters() throws Exception {
+   @Test
+   public void testAllKeyFieldsMustBePresentInCreateForValuesParameters() throws Exception {
     try {
       KeyBuilder.createFromValues(DummyObject.TYPE, FieldValuesBuilder.init(DummyObject.NAME, "name").get());
       fail();
@@ -69,13 +76,15 @@ public class KeyBuilderTest extends TestCase {
     }
   }
 
-  public void testSingleKey() throws Exception {
+   @Test
+   public void testSingleKey() throws Exception {
     Key key = newKey(DummyObject.TYPE, 3);
     assertEquals("dummyObject[id=3]", key.toString());
     assertTrue(key instanceof SingleFieldKey);
   }
 
-  public void testEqualsAndHashCodeWithSingleFieldKey() throws Exception {
+   @Test
+   public void testEqualsAndHashCodeWithSingleFieldKey() throws Exception {
     Key key1a = DefaultKey.create(DummyObject.TYPE, 1);
     Key key1b = DefaultKey.create(DummyObject.TYPE, 1);
     Key key2 = DefaultKey.create(DummyObject.TYPE, 2);
@@ -92,7 +101,8 @@ public class KeyBuilderTest extends TestCase {
     assertFalse(key1a.equals("blah"));
   }
 
-  public void testEqualsAndHashCodeWithCompositeKey() throws Exception {
+   @Test
+   public void testEqualsAndHashCodeWithCompositeKey() throws Exception {
     FieldValues values = FieldValuesBuilder
       .init(DummyObjectWithCompositeKey.ID1, 1)
       .set(DummyObjectWithCompositeKey.ID2, 2)
@@ -116,7 +126,8 @@ public class KeyBuilderTest extends TestCase {
     assertFalse(key1.equals("blah"));
   }
 
-  public void testSingleKeysCanBeUsedInMapsAndMixedWithCompositeKeys() throws Exception {
+   @Test
+   public void testSingleKeysCanBeUsedInMapsAndMixedWithCompositeKeys() throws Exception {
     SingleFieldKey singleKey = new SingleFieldKey(DummyObject.TYPE, 2);
     CompositeKey compositeKey = new CompositeKey(DummyObject.TYPE, new FieldValueGetter() {
       public boolean contains(Field field) {
@@ -141,7 +152,8 @@ public class KeyBuilderTest extends TestCase {
     assertEquals("b", map.get(compositeKey));
   }
 
-  public void testCreateSingleCheck() throws Exception {
+   @Test
+   public void testCreateSingleCheck() throws Exception {
     try {
       newKey(DummyObjectWithCompositeKey.TYPE, 3);
       fail();
@@ -153,7 +165,8 @@ public class KeyBuilderTest extends TestCase {
     }
   }
 
-  public void testReturnsAnOptimizedStructureForASingleKeyType() throws Exception {
+   @Test
+   public void testReturnsAnOptimizedStructureForASingleKeyType() throws Exception {
     Map<Field, Object> values = new HashMap<Field, Object>();
     values.put(DummyObject.ID, 2);
     values.put(DummyObject.NAME, "a");
@@ -170,7 +183,8 @@ public class KeyBuilderTest extends TestCase {
     }
   }
 
-  public void testOnlyValidValuesAreAuthorized() throws Exception {
+   @Test
+   public void testOnlyValidValuesAreAuthorized() throws Exception {
     try {
       newKey(DummyObjectWithCompositeKey.TYPE, "a");
       fail();

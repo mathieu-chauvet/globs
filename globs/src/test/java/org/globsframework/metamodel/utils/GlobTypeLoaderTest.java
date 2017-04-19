@@ -1,13 +1,11 @@
 package org.globsframework.metamodel.utils;
 
 import junit.framework.Assert;
-import junit.framework.TestCase;
 import org.globsframework.metamodel.*;
 import org.globsframework.metamodel.annotations.*;
 import org.globsframework.metamodel.fields.*;
 import org.globsframework.metamodel.index.UniqueIndex;
 import org.globsframework.metamodel.links.Link;
-import org.globsframework.metamodel.links.impl.DefaultMutableGlobLinkModel;
 import org.globsframework.metamodel.links.impl.UnInitializedLink;
 import org.globsframework.model.Glob;
 import org.globsframework.model.Key;
@@ -27,7 +25,6 @@ import org.junit.Test;
 import java.lang.annotation.Annotation;
 import java.lang.annotation.Retention;
 import java.util.Arrays;
-import java.util.Date;
 
 import static java.lang.annotation.RetentionPolicy.RUNTIME;
 import static org.junit.Assert.*;
@@ -256,7 +253,7 @@ public class GlobTypeLoaderTest {
          loader.register(MutableGlobLinkModel.LinkRegister.class, mutableGlobLinkModel ->
             AnObjectWithALinkFieldTargettingAMultiKeyObject.LINK =
                mutableGlobLinkModel.getDirectLinkBuilder(AnObjectWithALinkFieldTargettingAMultiKeyObject.LINK)
-               .add(AnObjectWithALinkFieldTargettingAMultiKeyObject.ID, AnObjectWithACompositeKey.ID1).publish());
+                  .add(AnObjectWithALinkFieldTargettingAMultiKeyObject.ID, AnObjectWithACompositeKey.ID1).publish());
          loader.load();
          GlobModelBuilder.init(AnObjectWithALinkFieldTargettingAMultiKeyObject.TYPE);
          fail();

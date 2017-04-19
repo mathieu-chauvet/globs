@@ -1,37 +1,42 @@
 package org.globsframework.metamodel.utils;
 
-import junit.framework.TestCase;
 import org.globsframework.metamodel.DummyObject;
 import org.globsframework.metamodel.DummyObject2;
 import org.globsframework.utils.exceptions.ItemNotFound;
+import org.junit.Test;
 
-public class GlobTypeUtilsTest extends TestCase {
-  public void testGetType() throws Exception {
-    assertSame(DummyObject.TYPE, GlobTypeUtils.getType(DummyObject.class));
+import static org.junit.Assert.*;
 
-    try {
-      GlobTypeUtils.getType(String.class);
-      fail();
-    }
-    catch (Exception e) {
-      assertEquals("Class java.lang.String does not define a GlobType", e.getMessage());
-    }
-  }
+public class GlobTypeUtilsTest {
+   @Test
+   public void testGetType() throws Exception {
+      assertSame(DummyObject.TYPE, GlobTypeUtils.getType(DummyObject.class));
 
-  public void testGetNamingField() throws Exception {
-    assertSame(DummyObject.NAME, GlobTypeUtils.getNamingField(DummyObject.TYPE));
+      try {
+         GlobTypeUtils.getType(String.class);
+         fail();
+      }
+      catch (Exception e) {
+         assertEquals("Class java.lang.String does not define a GlobType", e.getMessage());
+      }
+   }
 
-    try {
-      GlobTypeUtils.getNamingField(DummyObject2.TYPE);
-      fail();
-    }
-    catch (ItemNotFound e) {
-      assertEquals("no field found with EmptyKey/namingFieldAnnotationType under dummyObject2", e.getMessage());
-    }
-  }
+   @Test
+   public void testGetNamingField() throws Exception {
+      assertSame(DummyObject.NAME, GlobTypeUtils.getNamingField(DummyObject.TYPE));
 
-  public void testFindNamingField() throws Exception {
-    assertSame(DummyObject.NAME, GlobTypeUtils.findNamingField(DummyObject.TYPE));
-    assertNull(GlobTypeUtils.findNamingField(DummyObject2.TYPE));
-  }
+      try {
+         GlobTypeUtils.getNamingField(DummyObject2.TYPE);
+         fail();
+      }
+      catch (ItemNotFound e) {
+         assertEquals("no field found with EmptyKey/namingFieldAnnotationType under dummyObject2", e.getMessage());
+      }
+   }
+
+   @Test
+   public void testFindNamingField() throws Exception {
+      assertSame(DummyObject.NAME, GlobTypeUtils.findNamingField(DummyObject.TYPE));
+      assertNull(GlobTypeUtils.findNamingField(DummyObject2.TYPE));
+   }
 }

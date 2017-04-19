@@ -1,6 +1,5 @@
 package org.globsframework.metamodel.utils;
 
-import junit.framework.TestCase;
 import org.globsframework.metamodel.*;
 import org.globsframework.metamodel.annotations.KeyField;
 import org.globsframework.metamodel.annotations.Required;
@@ -10,11 +9,15 @@ import org.globsframework.metamodel.links.Link;
 import org.globsframework.utils.Strings;
 import org.globsframework.utils.TestUtils;
 import org.globsframework.utils.exceptions.InvalidData;
+import org.junit.Test;
 
-public class DefaultGlobModelTest extends TestCase {
+import static org.junit.Assert.*;
+
+public class DefaultGlobModelTest {
    private GlobModel inner = new DefaultGlobModel(DummyObject.TYPE);
    private GlobModel model = new DefaultGlobModel(inner, DummyObject2.TYPE);
 
+   @Test
    public void testStandardCase() throws Exception {
       TestUtils.assertSetEquals(inner.getAll(), DummyObject.TYPE);
       TestUtils.assertSetEquals(model.getAll(), DummyObject.TYPE, DummyObject2.TYPE);
@@ -24,6 +27,7 @@ public class DefaultGlobModelTest extends TestCase {
       assertEquals(DummyObject2.TYPE, model.getType(DummyObject2.TYPE.getName()));
    }
 
+   @Test
    public void testPropertyIdAllocationIsDelegatedToTheInnerModel() throws Exception {
       assertEquals(0, inner.createFieldProperty("prop1").getId());
       assertEquals(1, inner.createFieldProperty("prop2").getId());
@@ -34,6 +38,7 @@ public class DefaultGlobModelTest extends TestCase {
       assertEquals(2, model.createGlobTypeProperty("prop3").getId());
    }
 
+   @Test
    public void testIncludesConstantsFromInnerModel() throws Exception {
       inner = new DefaultGlobModel(DummyObjectWithConstants.TYPE);
       model = new DefaultGlobModel(inner, DummyObject.TYPE);
@@ -106,6 +111,7 @@ public class DefaultGlobModelTest extends TestCase {
       }
    }
 
+   @Test
    public void testDependencies() throws Exception {
       GlobModel model =
          GlobModelBuilder.init(LargeLinkCycle1.TYPE, LargeLinkCycle2.TYPE, LargeLinkCycle3.TYPE).get();
@@ -122,6 +128,7 @@ public class DefaultGlobModelTest extends TestCase {
       assertFalse(dependencies.needsPostUpdate(LargeLinkCycle2.TYPE));
    }
 
+   @Test
    public void testDependenciesWithInnerModel() throws Exception {
       GlobModel inner = GlobModelBuilder.init(LargeLinkCycle1.TYPE).get();
       GlobModel model = GlobModelBuilder.init(inner, LargeLinkCycle2.TYPE, LargeLinkCycle3.TYPE).get();
@@ -205,6 +212,7 @@ public class DefaultGlobModelTest extends TestCase {
       }
    }
 
+   @Test
    public void testDependenciesWithLinkCycleWithRequiredFieldError() throws Exception {
       try {
          GlobModelBuilder.init(LargeLinkCycleWithRequiredFieldError1.TYPE,

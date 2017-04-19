@@ -1,7 +1,6 @@
 package org.globsframework.model.utils;
 
 import junit.framework.AssertionFailedError;
-import junit.framework.TestCase;
 import org.globsframework.metamodel.GlobModel;
 import org.globsframework.metamodel.GlobType;
 import org.globsframework.metamodel.MutableGlobLinkModel;
@@ -17,11 +16,12 @@ import org.globsframework.model.ChangeSet;
 import org.globsframework.xml.XmlChangeSetParser;
 import org.globsframework.xml.XmlChangeSetVisitor;
 import org.globsframework.xml.XmlTestUtils;
+import org.junit.Test;
 
 import java.io.StringReader;
 import java.io.StringWriter;
 
-public class ChangeSetSequencerTest extends TestCase {
+public class ChangeSetSequencerTest {
 
    public static class ObjectWithCompositeKey {
       public static GlobType TYPE;
@@ -63,6 +63,7 @@ public class ChangeSetSequencerTest extends TestCase {
       }
    }
 
+   @Test
    public void testSingleType() throws Exception {
       checkSequence("<changes>"
                     + "  <delete type='objectWithCompositeKey' id1='0' id2='3'/>"
@@ -76,6 +77,7 @@ public class ChangeSetSequencerTest extends TestCase {
                     + "</changes>");
    }
 
+   @Test
    public void testSingleTypeWithUpdateOnCreate() throws Exception {
       checkSequence("<changes>"
                     + "  <create type='objectWithCompositeKey' id1='0' id2='1'/>"
@@ -106,6 +108,7 @@ public class ChangeSetSequencerTest extends TestCase {
       }
    }
 
+   @Test
    public void testObjectWithSelfReference() throws Exception {
       try {
          checkSequence("<changes>"
@@ -188,6 +191,7 @@ public class ChangeSetSequencerTest extends TestCase {
       }
    }
 
+   @Test
    public void testLink() throws Exception {
       checkSequence("<changes>"
                     + "  <create type='linkedToObjectWithCompositeKey' id='0' link1='1' link2='2'/>"
@@ -210,6 +214,7 @@ public class ChangeSetSequencerTest extends TestCase {
                     + "</changes>");
    }
 
+   @Test
    public void testLinkCycle() throws Exception {
       checkSequence("<changes>"
                     + "  <create type='linkCycle1' id1='0' id2='2' link1='1' link2='2'/>"
@@ -287,6 +292,7 @@ public class ChangeSetSequencerTest extends TestCase {
       }
    }
 
+   @Test
    public void testLargeLinkCycle() throws Exception {
       checkSequence("<changes>"
                     + "  <create type='largeLinkCycle1' id='1' linkId='2'/>"

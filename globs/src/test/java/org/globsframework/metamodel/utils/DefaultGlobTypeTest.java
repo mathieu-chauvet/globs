@@ -10,12 +10,18 @@ import org.globsframework.metamodel.properties.Property;
 import org.globsframework.utils.Functor;
 import org.globsframework.utils.TestUtils;
 import org.globsframework.utils.exceptions.UnexpectedApplicationState;
+import org.junit.Test;
 
-public class DefaultGlobTypeTest extends TestCase {
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+
+public class DefaultGlobTypeTest {
   private GlobType globType;
   private Field field;
   private GlobModel globModel;
 
+   @Test
   public void testGlobTypeProperty() throws Exception {
     initGlobType();
 
@@ -39,6 +45,7 @@ public class DefaultGlobTypeTest extends TestCase {
     assertEquals("field info", property.getName());
   }
 
+   @Test
   public void testFields() {
     initGlobType();
     assertEquals("type", globType.getName());
@@ -52,7 +59,8 @@ public class DefaultGlobTypeTest extends TestCase {
     }, UnexpectedApplicationState.class);
   }
 
-  public void testFieldProperty() throws Exception {
+   @Test
+   public void testFieldProperty() throws Exception {
     initGlobType();
     Property<Field, Object> property = globModel.createFieldProperty("field property");
     field.updateProperty(property, 3);
