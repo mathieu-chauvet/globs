@@ -4,11 +4,12 @@ import org.globsframework.metamodel.GlobType;
 import org.globsframework.metamodel.fields.FieldValueVisitor;
 import org.globsframework.metamodel.fields.FieldVisitor;
 import org.globsframework.metamodel.fields.IntegerField;
+import org.globsframework.metamodel.type.DataType;
 import org.globsframework.utils.exceptions.UnexpectedApplicationState;
 
 public class DefaultIntegerField extends AbstractField implements IntegerField {
    public DefaultIntegerField(String name, GlobType globType, int index, boolean isKeyField, Integer defaultValue) {
-      super(name, globType, Integer.class, index, isKeyField, defaultValue);
+      super(name, globType, Integer.class, index, isKeyField, defaultValue, DataType.Integer);
    }
 
    public void visit(FieldVisitor visitor) throws Exception {

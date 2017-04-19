@@ -4,12 +4,12 @@ import org.globsframework.metamodel.GlobType;
 import org.globsframework.metamodel.fields.FieldValueVisitor;
 import org.globsframework.metamodel.fields.FieldVisitor;
 import org.globsframework.metamodel.fields.LongField;
-import org.globsframework.metamodel.utils.Annotations;
+import org.globsframework.metamodel.type.DataType;
 import org.globsframework.utils.exceptions.UnexpectedApplicationState;
 
 public class DefaultLongField extends AbstractField implements LongField {
    public DefaultLongField(String name, GlobType globType, int index, boolean isKeyField, Long defaultValue) {
-      super(name, globType, Long.class, index, isKeyField, defaultValue);
+      super(name, globType, Long.class, index, isKeyField, defaultValue, DataType.Long);
    }
 
    public void visit(FieldVisitor visitor) throws Exception {

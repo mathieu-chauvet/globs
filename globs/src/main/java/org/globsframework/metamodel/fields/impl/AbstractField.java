@@ -5,6 +5,7 @@ import org.globsframework.metamodel.GlobType;
 import org.globsframework.metamodel.annotations.RequiredAnnotationType;
 import org.globsframework.metamodel.properties.Property;
 import org.globsframework.metamodel.properties.PropertyHolder;
+import org.globsframework.metamodel.type.DataType;
 import org.globsframework.metamodel.utils.Annotations;
 import org.globsframework.metamodel.utils.DefaultAnnotations;
 import org.globsframework.metamodel.utils.MutableAnnotations;
@@ -26,18 +27,20 @@ abstract public class AbstractField implements Field, MutableAnnotations, Proper
    private final String name;
    private final Class valueClass;
    private final Object defaultValue;
+   private final DataType dataType;
    private static Object NULL_OBJECT = new Object();
    private volatile Object properties[] = new Object[]{NULL_OBJECT, NULL_OBJECT};
 
    protected AbstractField(String name, GlobType globType,
                            Class valueClass, int index, boolean isKeyField,
-                           Object defaultValue) {
+                           Object defaultValue, DataType dataType) {
       this.defaultValue = defaultValue;
       this.name = name;
       this.keyField = isKeyField;
       this.index = index;
       this.globType = globType;
       this.valueClass = valueClass;
+      this.dataType = dataType;
    }
 
    public Object normalize(Object value) {
@@ -66,6 +69,10 @@ abstract public class AbstractField implements Field, MutableAnnotations, Proper
 
    public boolean isRequired() {
       return hasAnnotation(RequiredAnnotationType.UNIQUE_KEY);
+   }
+
+   public DataType getDataType() {
+      return dataType;
    }
 
    public void checkValue(Object object) throws InvalidParameter {

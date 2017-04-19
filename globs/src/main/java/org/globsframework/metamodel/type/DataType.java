@@ -6,5 +6,7 @@ public enum DataType {
    Long,
    Integer,
    Boolean,
+   Date,
+   TimeStamp,
    Bytes;
 }

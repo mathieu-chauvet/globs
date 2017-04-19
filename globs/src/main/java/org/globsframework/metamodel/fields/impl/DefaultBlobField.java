@@ -6,6 +6,7 @@ import org.globsframework.metamodel.annotations.MaxSizeType;
 import org.globsframework.metamodel.fields.BlobField;
 import org.globsframework.metamodel.fields.FieldValueVisitor;
 import org.globsframework.metamodel.fields.FieldVisitor;
+import org.globsframework.metamodel.type.DataType;
 import org.globsframework.metamodel.utils.Annotations;
 import org.globsframework.utils.exceptions.UnexpectedApplicationState;
 
@@ -14,7 +15,7 @@ import java.util.Arrays;
 public class DefaultBlobField extends AbstractField implements BlobField {
 
    public DefaultBlobField(String name, GlobType globType, int index) {
-      super(name, globType, byte[].class, index, false, null);
+      super(name, globType, byte[].class, index, false, null, DataType.Bytes);
    }
 
    public void visit(FieldVisitor visitor) throws Exception {

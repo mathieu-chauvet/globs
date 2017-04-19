@@ -1,11 +1,11 @@
 package org.globsframework.metamodel.utils;
 
-import junit.framework.TestCase;
 import org.globsframework.metamodel.Field;
 import org.globsframework.metamodel.GlobType;
 import org.globsframework.metamodel.annotations.DefaultDoubleAnnotationType;
 import org.globsframework.metamodel.annotations.NamingFieldAnnotationType;
 import org.globsframework.metamodel.fields.*;
+import org.globsframework.metamodel.type.DataType;
 import org.globsframework.utils.exceptions.InvalidParameter;
 import org.globsframework.utils.exceptions.ItemAlreadyExists;
 import org.junit.Ignore;
@@ -17,81 +17,82 @@ public class GlobTypeBuilderTest {
 
    @Test
    public void test() throws Exception {
-    GlobType type = DefaultGlobTypeBuilder.init("aType")
-      .addIntegerKey("id")
-      .addStringField("string")
-      .addIntegerField("int")
-      .addLongField("long")
-      .addDoubleField("double")
-      .addBlobField("blob")
-      .addBooleanField("boolean")
-      .get();
+      GlobType type = DefaultGlobTypeBuilder.init("aType")
+         .addIntegerKey("id")
+         .addStringField("string")
+         .addIntegerField("int")
+         .addLongField("long")
+         .addDoubleField("double")
+         .addBlobField("blob")
+         .addBooleanField("boolean")
+         .get();
 
-    assertEquals("aType", type.getName());
+      assertEquals("aType", type.getName());
 
-    Field[] keyFields = type.getKeyFields();
-    assertEquals(1, keyFields.length);
-    Field key = keyFields[0];
-    assertTrue(key instanceof IntegerField);
-    assertEquals("id", key.getName());
+      Field[] keyFields = type.getKeyFields();
+      assertEquals(1, keyFields.length);
+      Field key = keyFields[0];
+      assertTrue(key instanceof IntegerField);
+      assertEquals("id", key.getName());
 
-    checkField(type, "string", StringField.class);
-    checkField(type, "int", IntegerField.class);
-    checkField(type, "long", LongField.class);
-    checkField(type, "double", DoubleField.class);
-    checkField(type, "blob", BlobField.class);
-    checkField(type, "boolean", BooleanField.class);
-//    checkField(type, "date", DateField.class);
-//    checkField(type, "timestamp", TimeStampField.class);
-  }
+      checkField(type, "string", StringField.class, DataType.String);
+      checkField(type, "int", IntegerField.class, DataType.Integer);
+      checkField(type, "long", LongField.class, DataType.Long);
+      checkField(type, "double", DoubleField.class, DataType.Double);
+      checkField(type, "blob", BlobField.class, DataType.Bytes);
+      checkField(type, "boolean", BooleanField.class, DataType.Boolean);
+//      checkField(type, "date", DateField.class, DataType.Date);
+//      checkField(type, "timestamp", TimeStampField.class, DataType.TimeStamp);
+   }
 
-  private void checkField(GlobType type, String fieldName, Class<? extends Field> fieldClass) {
-    Field field = type.getField(fieldName);
-    assertTrue(fieldClass.isAssignableFrom(field.getClass()));
-  }
+   private void checkField(GlobType type, String fieldName, Class<? extends Field> fieldClass, DataType dataType) {
+      Field field = type.getField(fieldName);
+      assertTrue(fieldClass.isAssignableFrom(field.getClass()));
+      assertEquals(dataType, field.getDataType());
+   }
 
    @Test
-  public void testCannotUseTheSameNameTwice() throws Exception {
-    try {
-      DefaultGlobTypeBuilder.init("aType")
-        .addIntegerKey("id")
-        .addStringField("field")
-        .addIntegerField("field");
-      fail();
-    }
-    catch (ItemAlreadyExists e) {
-      assertEquals("Field field declared twice for type aType", e.getMessage());
-    }
-  }
+   public void testCannotUseTheSameNameTwice() throws Exception {
+      try {
+         DefaultGlobTypeBuilder.init("aType")
+            .addIntegerKey("id")
+            .addStringField("field")
+            .addIntegerField("field");
+         fail();
+      }
+      catch (ItemAlreadyExists e) {
+         assertEquals("Field field declared twice for type aType", e.getMessage());
+      }
+   }
 
    @Ignore
    @Test
-  public void testAtLeastOneKeyMustBeDefined() throws Exception {
-    try {
-      DefaultGlobTypeBuilder.init("type").get();
-      fail();
-    }
-    catch (InvalidParameter e) {
-      assertEquals("GlobType type has no key field", e.getMessage());
-    }
-  }
+   public void testAtLeastOneKeyMustBeDefined() throws Exception {
+      try {
+         DefaultGlobTypeBuilder.init("type").get();
+         fail();
+      }
+      catch (InvalidParameter e) {
+         assertEquals("GlobType type has no key field", e.getMessage());
+      }
+   }
 
    @Test
    public void testNamingField() throws Exception {
-    GlobType type = DefaultGlobTypeBuilder.init("aType")
-      .addIntegerKey("id")
-      .addStringField("name", NamingFieldAnnotationType.UNIQUE_GLOB)
-      .get();
+      GlobType type = DefaultGlobTypeBuilder.init("aType")
+         .addIntegerKey("id")
+         .addStringField("name", NamingFieldAnnotationType.UNIQUE_GLOB)
+         .get();
 
-    StringField field = GlobTypeUtils.findNamingField(type);
-    assertNotNull(field);
-    assertEquals("name", field.getName());
-  }
+      StringField field = GlobTypeUtils.findNamingField(type);
+      assertNotNull(field);
+      assertEquals("name", field.getName());
+   }
 
    @Test
    public void testWithAnnotations() throws Exception {
-    DefaultGlobTypeBuilder.init("aType")
-            .addDoubleField("aDouble", DefaultDoubleAnnotationType.create(2.2));
+      DefaultGlobTypeBuilder.init("aType")
+         .addDoubleField("aDouble", DefaultDoubleAnnotationType.create(2.2));
 
-  }
+   }
 }

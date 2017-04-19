@@ -4,14 +4,14 @@ import org.globsframework.metamodel.GlobType;
 import org.globsframework.metamodel.fields.DoubleField;
 import org.globsframework.metamodel.fields.FieldValueVisitor;
 import org.globsframework.metamodel.fields.FieldVisitor;
-import org.globsframework.metamodel.utils.Annotations;
+import org.globsframework.metamodel.type.DataType;
 import org.globsframework.utils.exceptions.UnexpectedApplicationState;
 
 public class DefaultDoubleField extends AbstractField implements DoubleField {
 
    public DefaultDoubleField(String name, GlobType globType,
                              int index, boolean isKeyField, Double defaultValue) {
-      super(name, globType, Double.class, index, isKeyField, defaultValue);
+      super(name, globType, Double.class, index, isKeyField, defaultValue, DataType.Double);
    }
 
    public void visit(FieldVisitor visitor) throws Exception {
