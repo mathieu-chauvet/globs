@@ -1,7 +1,7 @@
 package org.globsframework.model.utils;
 
 import org.globsframework.metamodel.DummyObject;
-import org.globsframework.model.DefaultKey;
+import org.globsframework.model.AbstractKey;
 import org.globsframework.model.Glob;
 import org.globsframework.model.GlobList;
 import org.globsframework.model.Key;
@@ -16,10 +16,10 @@ public class GlobUtilsTest {
 
    @Test
    public void testDiff() throws Exception {
-      Key k1 = DefaultKey.create(DummyObject.TYPE, 1);
-      Key k2 = DefaultKey.create(DummyObject.TYPE, 2);
-      Key k3 = DefaultKey.create(DummyObject.TYPE, 3);
-      Key k4 = DefaultKey.create(DummyObject.TYPE, 4);
+      Key k1 = AbstractKey.create(DummyObject.TYPE, 1);
+      Key k2 = AbstractKey.create(DummyObject.TYPE, 2);
+      Key k3 = AbstractKey.create(DummyObject.TYPE, 3);
+      Key k4 = AbstractKey.create(DummyObject.TYPE, 4);
 
       DefaultGlobRepository repository = new DefaultGlobRepository();
       Glob g1 = repository.create(k1);
@@ -40,9 +40,9 @@ public class GlobUtilsTest {
 
    @Test
    public void testDiffWithNull() throws Exception {
-      Key k1 = DefaultKey.create(DummyObject.TYPE, 1);
-      Key k2 = DefaultKey.create(DummyObject.TYPE, 2);
-      Key k3 = DefaultKey.create(DummyObject.TYPE, 3);
+      Key k1 = AbstractKey.create(DummyObject.TYPE, 1);
+      Key k2 = AbstractKey.create(DummyObject.TYPE, 2);
+      Key k3 = AbstractKey.create(DummyObject.TYPE, 3);
 
       DefaultGlobRepository repository = new DefaultGlobRepository();
       Glob g1 = repository.create(k1);
@@ -78,8 +78,8 @@ public class GlobUtilsTest {
 
    @Test
    public void testCopy() throws Exception {
-      Key k1 = DefaultKey.create(DummyObject.TYPE, 1);
-      Key k2 = DefaultKey.create(DummyObject.TYPE, 2);
+      Key k1 = AbstractKey.create(DummyObject.TYPE, 1);
+      Key k2 = AbstractKey.create(DummyObject.TYPE, 2);
 
       DefaultGlobRepository repository = new DefaultGlobRepository();
       Glob g1 = repository.create(k1);

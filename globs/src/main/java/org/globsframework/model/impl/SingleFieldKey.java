@@ -3,7 +3,7 @@ package org.globsframework.model.impl;
 import org.globsframework.metamodel.Field;
 import org.globsframework.metamodel.GlobType;
 import org.globsframework.metamodel.fields.*;
-import org.globsframework.model.DefaultKey;
+import org.globsframework.model.AbstractKey;
 import org.globsframework.model.FieldValue;
 import org.globsframework.model.FieldValues;
 import org.globsframework.model.Key;
@@ -11,10 +11,9 @@ import org.globsframework.utils.Utils;
 import org.globsframework.utils.exceptions.InvalidParameter;
 import org.globsframework.utils.exceptions.MissingInfo;
 
-import java.time.ZonedDateTime;
 import java.util.Arrays;
 
-public class SingleFieldKey extends DefaultKey {
+public class SingleFieldKey extends AbstractKey {
    private Object value;
    private Field keyField;
    private int hashCode = 0;
@@ -124,7 +123,7 @@ public class SingleFieldKey extends DefaultKey {
                 Utils.equal(otherSingleFieldKey.value, value);
       }
 
-      if (!DefaultKey.class.isAssignableFrom(o.getClass())) {
+      if (!AbstractKey.class.isAssignableFrom(o.getClass())) {
          return false;
       }
       Key otherKey = (Key)o;

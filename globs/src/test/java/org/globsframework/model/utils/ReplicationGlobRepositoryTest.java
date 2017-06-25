@@ -2,7 +2,7 @@ package org.globsframework.model.utils;
 
 import org.globsframework.metamodel.DummyObject;
 import org.globsframework.metamodel.DummyObject2;
-import org.globsframework.model.DefaultKey;
+import org.globsframework.model.AbstractKey;
 import org.globsframework.model.GlobChecker;
 import org.globsframework.model.GlobRepository;
 import org.globsframework.model.Key;
@@ -42,9 +42,9 @@ public class ReplicationGlobRepositoryTest {
                         value(DummyObject.ID, 3),
                         value(DummyObject.NAME, "obj3"));
 
-      repository.update(DefaultKey.create(DummyObject.TYPE, 1), DummyObject.NAME, "newName");
+      repository.update(AbstractKey.create(DummyObject.TYPE, 1), DummyObject.NAME, "newName");
 
-      repository.delete(DefaultKey.create(DummyObject.TYPE, 2));
+      repository.delete(AbstractKey.create(DummyObject.TYPE, 2));
 
       repository.create(DummyObject2.TYPE,
                         value(DummyObject2.ID, 1),
@@ -68,8 +68,8 @@ public class ReplicationGlobRepositoryTest {
                        "<dummyObject2 id='1' label='label 1'/>" +
                        "<dummyObject2 id='2' label='label 2'/>");
 
-      repository.update(DefaultKey.create(DummyObject2.TYPE, 1), DummyObject2.LABEL, "new label 1");
-      repository.delete(DefaultKey.create(DummyObject2.TYPE, 2));
+      repository.update(AbstractKey.create(DummyObject2.TYPE, 1), DummyObject2.LABEL, "new label 1");
+      repository.delete(AbstractKey.create(DummyObject2.TYPE, 2));
       new GlobChecker()
          .assertEquals(repository,
                        "<dummyObject id='0' name='name'/>" +

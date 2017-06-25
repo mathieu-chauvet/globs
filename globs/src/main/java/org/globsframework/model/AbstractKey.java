@@ -8,7 +8,7 @@ import org.globsframework.model.impl.ThreeFieldKey;
 import org.globsframework.model.impl.TwoFieldKey;
 import org.globsframework.utils.exceptions.ItemNotFound;
 
-public abstract class DefaultKey implements Key {
+public abstract class AbstractKey implements Key {
 
   public static Key create(GlobType type, Object singleFieldValue) {
     return KeyBuilder.newKey(type, singleFieldValue);

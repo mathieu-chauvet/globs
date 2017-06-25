@@ -28,8 +28,8 @@ public class DebugTest extends TestCase {
     repository.create(DummyObject2.TYPE,
                       value(DummyObject2.ID, 2),
                       value(DummyObject2.LABEL, "lbl"));
-    repository.update(DefaultKey.create(DummyObject.TYPE, 2), DummyObject.NAME, "newObj2");
-    repository.delete(DefaultKey.create(DummyObject.TYPE, 1));
+    repository.update(AbstractKey.create(DummyObject.TYPE, 2), DummyObject.NAME, "newObj2");
+    repository.delete(AbstractKey.create(DummyObject.TYPE, 1));
     repository.completeChangeSet();
 
     Debug.exit();

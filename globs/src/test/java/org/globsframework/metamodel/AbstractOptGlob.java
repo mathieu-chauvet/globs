@@ -5,13 +5,10 @@ import org.globsframework.model.*;
 import org.globsframework.utils.exceptions.ItemNotFound;
 import org.globsframework.metamodel.fields.*;
 
-import java.time.ZonedDateTime;
-import java.util.Date;
-
-public abstract class AbstractOptGlob extends DefaultKey implements Glob, MutableGlob {
+public abstract class AbstractOptGlob extends AbstractKey implements Glob, MutableGlob {
   public abstract GlobType getType();
 
-  public DefaultKey getKey() {
+  public AbstractKey getKey() {
     return this;
   }
 

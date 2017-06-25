@@ -57,7 +57,7 @@ public class GlobUtils {
   public static Set<Key> createKeys(GlobType type, Set<Integer> ids) {
     Set<Key> keys = new HashSet<Key>();
     for (Integer id : ids) {
-      keys.add(DefaultKey.create(type, id));
+      keys.add(AbstractKey.create(type, id));
     }
     return keys;
   }
