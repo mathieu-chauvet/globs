@@ -6,6 +6,7 @@ import org.globsframework.metamodel.fields.*;
 import org.globsframework.model.impl.FourFieldKey;
 import org.globsframework.model.impl.ThreeFieldKey;
 import org.globsframework.model.impl.TwoFieldKey;
+import org.globsframework.utils.exceptions.InvalidState;
 import org.globsframework.utils.exceptions.ItemNotFound;
 
 public abstract class AbstractKey implements Key {
@@ -51,14 +52,62 @@ public abstract class AbstractKey implements Key {
     return value == null ? valueIfNull : value;
   }
 
-   public long get(LongField field, long valueIfNull) throws ItemNotFound {
+  public byte[] get(BlobField field) {
+     checkIsKeyField(field);
+     return (byte[])getSwithValue(field);
+  }
+
+  public Boolean get(BooleanField field) {
+     checkIsKeyField(field);
+     return (Boolean)getSwithValue(field);
+  }
+
+  public Double get(DoubleField field) {
+     checkIsKeyField(field);
+     return (Double)getSwithValue(field);
+  }
+
+  public Object getValue(Field field) {
+     checkIsKeyField(field);
+     return getSwithValue(field);
+  }
+
+  public Integer get(IntegerField field) {
+     checkIsKeyField(field);
+     return (Integer)getSwithValue(field);
+  }
+
+  public Long get(LongField field) {
+     checkIsKeyField(field);
+     return (Long)getSwithValue(field);
+  }
+
+  public long get(LongField field, long valueIfNull) throws ItemNotFound {
     Long value = get(field);
     return value == null ? valueIfNull : value;
   }
 
   protected final void checkIsKeyField(Field field) {
-    if (!contains(field)) {
+    if (getGlobType() != field.getGlobType()){
+      throw new InvalidState("For " + field.getName() + " tpye are differents : " + field.getGlobType() + " != " + getGlobType());
+    }
+    if (!field.isKeyField()) {
       throw new ItemNotFound("'" + field.getName() + "' is not a key of type " + getGlobType().getName());
     }
   }
+
+  public String get(StringField field) {
+     checkIsKeyField(field);
+     return (String)getSwithValue(field);
+  }
+
+  public boolean isTrue(BooleanField field) {
+     return isTrue(field);
+  }
+
+   public boolean contains(Field field) {
+      return field.getGlobType() == getGlobType() && field.isKeyField();
+   }
+
+   protected abstract Object getSwithValue(Field field);
 }

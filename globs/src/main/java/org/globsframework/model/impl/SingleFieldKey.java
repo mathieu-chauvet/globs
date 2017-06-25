@@ -2,7 +2,6 @@ package org.globsframework.model.impl;
 
 import org.globsframework.metamodel.Field;
 import org.globsframework.metamodel.GlobType;
-import org.globsframework.metamodel.fields.*;
 import org.globsframework.model.AbstractKey;
 import org.globsframework.model.FieldValue;
 import org.globsframework.model.FieldValues;
@@ -14,15 +13,16 @@ import org.globsframework.utils.exceptions.MissingInfo;
 import java.util.Arrays;
 
 public class SingleFieldKey extends AbstractKey {
-   private Object value;
-   private Field keyField;
-   private int hashCode = 0;
+   private final Object value;
+   private final Field keyField;
+   private final int hashCode;
 
    public SingleFieldKey(Field field, Object value) throws MissingInfo {
       checkValue(field, value);
       this.keyField = field;
       this.keyField.checkValue(value);
       this.value = value;
+      hashCode = computeHash();
    }
 
    static void checkValue(Field field, Object value) throws MissingInfo {
@@ -53,10 +53,6 @@ public class SingleFieldKey extends AbstractKey {
       functor.process(keyField, value);
    }
 
-   public boolean contains(Field field) {
-      return keyField.equals(field);
-   }
-
    public void safeApply(FieldValues.Functor functor) {
       try {
          functor.process(keyField, value);
@@ -70,45 +66,6 @@ public class SingleFieldKey extends AbstractKey {
       return 1;
    }
 
-   public byte[] get(BlobField field) {
-      checkIsKeyField(field);
-      return (byte[])value;
-   }
-
-   public Boolean get(BooleanField field) {
-      checkIsKeyField(field);
-      return (Boolean)value;
-   }
-
-   public boolean isTrue(BooleanField field) {
-      return Boolean.TRUE.equals(get(field));
-   }
-
-   public Double get(DoubleField field) {
-      checkIsKeyField(field);
-      return (Double)value;
-   }
-
-   public Object getValue(Field field) {
-      checkIsKeyField(field);
-      return value;
-   }
-
-   public Integer get(IntegerField field) {
-      checkIsKeyField(field);
-      return (Integer)value;
-   }
-
-   public Long get(LongField field) {
-      checkIsKeyField(field);
-      return (Long)value;
-   }
-
-   public String get(StringField field) {
-      checkIsKeyField(field);
-      return (String)value;
-   }
-
    // optimized - do not use generated code
    public boolean equals(Object o) {
       if (this == o) {
@@ -119,7 +76,7 @@ public class SingleFieldKey extends AbstractKey {
       }
       if (o.getClass().equals(SingleFieldKey.class)) {
          SingleFieldKey otherSingleFieldKey = (SingleFieldKey)o;
-         return otherSingleFieldKey.keyField.equals(keyField) &&
+         return otherSingleFieldKey.keyField == keyField &&
                 Utils.equal(otherSingleFieldKey.value, value);
       }
 
@@ -127,31 +84,35 @@ public class SingleFieldKey extends AbstractKey {
          return false;
       }
       Key otherKey = (Key)o;
-      return keyField.getGlobType().equals(otherKey.getGlobType())
+      return keyField.getGlobType() == otherKey.getGlobType()
              && Utils.equal(value, otherKey.getValue(keyField));
    }
 
    // optimized - do not use generated code
    public int hashCode() {
-      if (hashCode != 0) {
-         return hashCode;
-      }
+      return hashCode;
+   }
+
+   private int computeHash() {
       int hash = getGlobType().hashCode();
       hash = 31 * hash + (value != null ? value.hashCode() : 0);
-      if (hash == 0){
+      if (hash == 0) {
          hash = 31;
       }
-      this.hashCode = hash;
-      return hashCode;
+      return hash;
    }
 
    public FieldValue[] toArray() {
       return new FieldValue[]{
          new FieldValue(keyField, value),
-      };
+         };
    }
 
    public String toString() {
       return getGlobType().getName() + "[" + keyField.getName() + "=" + value + "]";
+   }
+
+   protected Object getSwithValue(Field field) {
+      return value;
    }
 }

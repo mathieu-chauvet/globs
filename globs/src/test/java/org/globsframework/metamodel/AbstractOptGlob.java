@@ -140,4 +140,9 @@ public abstract class AbstractOptGlob extends AbstractKey implements Glob, Mutab
   public GlobType getGlobType() {
     return getType();
   }
+
+
+  protected Object getSwithValue(Field field) {
+    return getValue(field);
+  }
 }

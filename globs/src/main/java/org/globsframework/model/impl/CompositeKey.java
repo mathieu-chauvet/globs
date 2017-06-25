@@ -2,7 +2,6 @@ package org.globsframework.model.impl;
 
 import org.globsframework.metamodel.Field;
 import org.globsframework.metamodel.GlobType;
-import org.globsframework.metamodel.fields.*;
 import org.globsframework.model.AbstractKey;
 import org.globsframework.model.FieldValue;
 import org.globsframework.model.Key;
@@ -13,9 +12,9 @@ import org.globsframework.utils.exceptions.MissingInfo;
 import java.util.Arrays;
 
 public class CompositeKey extends AbstractKey {
-   private GlobType type;
-   private Object[] values;
-   private int hashCode = 0;
+   private final GlobType type;
+   private final Object[] values;
+   private final int hashCode;
 
    public CompositeKey(GlobType type, FieldValueGetter getter) {
       this.type = type;
@@ -29,6 +28,7 @@ public class CompositeKey extends AbstractKey {
          }
          values[index++] = getter.get(field);
       }
+      hashCode = computeHash();
    }
 
    CompositeKey(GlobType type, Object[] globValues) {
@@ -39,20 +39,11 @@ public class CompositeKey extends AbstractKey {
       for (Field field : keyFields) {
          values[index++] = globValues[field.getIndex()];
       }
+      hashCode = computeHash();
    }
 
    public GlobType getGlobType() {
       return type;
-   }
-
-   public boolean contains(Field field) {
-      Field[] keyFields = type.getKeyFields();
-      for (Field keyField : keyFields) {
-         if (keyField == field) {
-            return true;
-         }
-      }
-      return false;
    }
 
    public int size() {
@@ -77,19 +68,6 @@ public class CompositeKey extends AbstractKey {
       catch (Exception e) {
          throw new RuntimeException(e);
       }
-   }
-
-   protected Object doGet(Field field) {
-      Field[] fields = type.getKeyFields();
-      int index = 0;
-      for (Field keyField : fields) {
-         if (keyField.equals(field)) {
-            return values[index];
-         }
-         index++;
-      }
-
-      return null;
    }
 
    // optimized - do not use generated code
@@ -124,10 +102,11 @@ public class CompositeKey extends AbstractKey {
 
    // optimized - do not use generated code
    public int hashCode() {
-      if (hashCode != 0) {
-         return hashCode;
-      }
-      int hashCode = getGlobType().hashCode();
+      return hashCode;
+   }
+
+   private int computeHash() {
+      int hashCode = type.hashCode();
       for (Field keyField : type.getKeyFields()) {
          Object value = getValue(keyField);
          hashCode = 31 * hashCode + (value != null ? value.hashCode() : 0);
@@ -135,7 +114,6 @@ public class CompositeKey extends AbstractKey {
       if (hashCode == 0) {
          hashCode = 31;
       }
-      this.hashCode = hashCode;
       return hashCode;
    }
 
@@ -159,38 +137,6 @@ public class CompositeKey extends AbstractKey {
       return builder.toString();
    }
 
-   public Double get(DoubleField field) {
-      return (Double)doGet(field);
-   }
-
-   public Integer get(IntegerField field) {
-      return (Integer)doGet(field);
-   }
-
-   public String get(StringField field) {
-      return (String)doGet(field);
-   }
-
-   public Boolean get(BooleanField field) {
-      return (Boolean)doGet(field);
-   }
-
-   public boolean isTrue(BooleanField field) {
-      return Boolean.TRUE.equals(doGet(field));
-   }
-
-   public Object getValue(Field field) {
-      return doGet(field);
-   }
-
-   public byte[] get(BlobField field) {
-      return (byte[])doGet(field);
-   }
-
-   public Long get(LongField field) {
-      return (Long)doGet(field);
-   }
-
    public FieldValue[] toArray() {
       Field[] keyFields = type.getKeyFields();
       FieldValue[] array = new FieldValue[keyFields.length];
@@ -200,5 +146,9 @@ public class CompositeKey extends AbstractKey {
          index++;
       }
       return array;
+   }
+
+   protected Object getSwithValue(Field field) {
+      return values[field.getIndex()];
    }
 }

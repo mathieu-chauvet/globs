@@ -2,27 +2,22 @@ package org.globsframework.model.impl;
 
 import org.globsframework.metamodel.Field;
 import org.globsframework.metamodel.GlobType;
-import org.globsframework.metamodel.fields.*;
 import org.globsframework.model.AbstractKey;
 import org.globsframework.model.FieldValue;
 import org.globsframework.model.Key;
 import org.globsframework.utils.Utils;
 import org.globsframework.utils.exceptions.InvalidParameter;
-import org.globsframework.utils.exceptions.ItemNotFound;
 import org.globsframework.utils.exceptions.MissingInfo;
 
 import java.util.Arrays;
 
 public class FourFieldKey extends AbstractKey {
-   private Field keyField1;
-   private Object value1;
-   private Field keyField2;
-   private Object value2;
-   private Field keyField3;
-   private Object value3;
-   private Field keyField4;
-   private Object value4;
-   private int hashCode = 0;
+   private final GlobType type;
+   private final Object value1;
+   private final Object value2;
+   private final Object value3;
+   private final Object value4;
+   private final int hashCode;
 
    public FourFieldKey(Field keyField1, Object value1,
                        Field keyField2, Object value2,
@@ -32,6 +27,7 @@ public class FourFieldKey extends AbstractKey {
       SingleFieldKey.checkValue(keyField2, value2);
       SingleFieldKey.checkValue(keyField3, value3);
       SingleFieldKey.checkValue(keyField4, value4);
+      type = keyField1.getGlobType();
 
       Field[] keyFields = keyField1.getGlobType().getKeyFields();
       if (keyFields.length != 4) {
@@ -40,48 +36,42 @@ public class FourFieldKey extends AbstractKey {
       }
       Field field;
       field = keyFields[0];
-      this.keyField1 = field;
       this.value1 = field == keyField4 ? value4 : field == keyField3 ? value3 : field == keyField2 ? value2 : value1;
+      field.checkValue(this.value1);
 
       field = keyFields[1];
-      this.keyField2 = field;
       this.value2 = field == keyField4 ? value4 : field == keyField3 ? value3 : field == keyField2 ? value2 : value1;
+      field.checkValue(this.value2);
 
       field = keyFields[2];
-      this.keyField3 = field;
       this.value3 = field == keyField4 ? value4 : field == keyField3 ? value3 : field == keyField2 ? value2 : value1;
+      field.checkValue(this.value3);
 
       field = keyFields[3];
-      this.keyField4 = field;
       this.value4 = field == keyField4 ? value4 : field == keyField3 ? value3 : field == keyField2 ? value2 : value1;
-
-      this.keyField1.checkValue(value1);
-      this.keyField2.checkValue(value2);
-      this.keyField3.checkValue(value3);
-      this.keyField4.checkValue(value4);
+      field.checkValue(this.value4);
+      hashCode = computeHash();
    }
 
    public GlobType getGlobType() {
-      return keyField1.getGlobType();
+      return type;
    }
 
    public void apply(Functor functor) throws Exception {
-      functor.process(keyField1, value1);
-      functor.process(keyField2, value2);
-      functor.process(keyField3, value3);
-      functor.process(keyField4, value4);
-   }
-
-   public boolean contains(Field field) {
-      return keyField1.equals(field) || keyField2.equals(field) || keyField3.equals(field) || keyField4.equals(field);
+      Field[] fields = type.getFields();
+      functor.process(fields[0], value1);
+      functor.process(fields[1], value2);
+      functor.process(fields[2], value3);
+      functor.process(fields[3], value4);
    }
 
    public void safeApply(Functor functor) {
       try {
-         functor.process(keyField1, value1);
-         functor.process(keyField2, value2);
-         functor.process(keyField3, value3);
-         functor.process(keyField4, value4);
+         Field[] fields = type.getFields();
+         functor.process(fields[0], value1);
+         functor.process(fields[1], value2);
+         functor.process(fields[2], value3);
+         functor.process(fields[3], value4);
       }
       catch (Exception e) {
          throw new RuntimeException(e);
@@ -92,131 +82,12 @@ public class FourFieldKey extends AbstractKey {
       return 4;
    }
 
-   public byte[] get(BlobField field) {
-      checkIsKeyField(field);
-      if (field == keyField1) {
-         return (byte[])value1;
-      }
-      if (field == keyField2) {
-         return (byte[])value2;
-      }
-      if (field == keyField3) {
-         return (byte[])value3;
-      }
-      if (field == keyField4) {
-         return (byte[])value4;
-      }
-      return null;
-   }
-
-   public Boolean get(BooleanField field) {
-      checkIsKeyField(field);
-      if (field == keyField1) {
-         return (Boolean)value1;
-      }
-      if (field == keyField2) {
-         return (Boolean)value2;
-      }
-      if (field == keyField3) {
-         return (Boolean)value3;
-      }
-      if (field == keyField4) {
-         return (Boolean)value4;
-      }
-      return null;
-   }
-
-   public boolean isTrue(BooleanField field) {
-      return Boolean.TRUE.equals(get(field));
-   }
-
-   public Double get(DoubleField field) {
-      checkIsKeyField(field);
-      if (field == keyField1) {
-         return (Double)value1;
-      }
-      if (field == keyField2) {
-         return (Double)value2;
-      }
-      if (field == keyField3) {
-         return (Double)value3;
-      }
-      if (field == keyField4) {
-         return (Double)value4;
-      }
-      return null;
-   }
-
-   public Object getValue(Field field) {
-      checkIsKeyField(field);
-      if (field == keyField1) {
-         return value1;
-      }
-      if (field == keyField2) {
-         return value2;
-      }
-      if (field == keyField3) {
-         return value3;
-      }
-      if (field == keyField4) {
-         return value4;
-      }
-      return null;
-   }
-
-   public Integer get(IntegerField field) {
-      checkIsKeyField(field);
-      if (field == keyField1) {
-         return (Integer)value1;
-      }
-      if (field == keyField2) {
-         return (Integer)value2;
-      }
-      if (field == keyField3) {
-         return (Integer)value3;
-      }
-      if (field == keyField4) {
-         return (Integer)value4;
-      }
-      return null;
-   }
-
-   public Long get(LongField field) {
-      checkIsKeyField(field);
-      if (field == keyField1) {
-         return (Long)value1;
-      }
-      if (field == keyField2) {
-         return (Long)value2;
-      }
-      if (field == keyField3) {
-         return (Long)value3;
-      }
-      if (field == keyField4) {
-         return (Long)value4;
-      }
-      return null;
-
-   }
-
-   public long get(LongField field, long valueIfNull) throws ItemNotFound {
-      Long value = get(field);
-      return value == null ? valueIfNull : value;
-   }
-
-   public String get(StringField field) {
-      checkIsKeyField(field);
-      if (field == keyField1) {
-         return (String)value1;
-      }
-      if (field == keyField2) {
-         return (String)value2;
-      }
-      if (field == keyField3) {
-         return (String)value3;
-      }
-      if (field == keyField4) {
-         return (String)value4;
+   protected Object getSwithValue(Field field) {
+      switch (field.getIndex()){
+         case 0: return value1;
+         case 1: return value2;
+         case 2: return value3;
+         case 3: return value4;
       }
       return null;
    }
@@ -229,33 +100,35 @@ public class FourFieldKey extends AbstractKey {
       if (o == null) {
          return false;
       }
-      if (o.getClass() == FourFieldKey.class || o.getClass().equals(FourFieldKey.class)) {
+      if (o.getClass() == FourFieldKey.class) {
          FourFieldKey otherSingleFieldKey = (FourFieldKey)o;
-         return
-            otherSingleFieldKey.keyField1.getGlobType().equals(keyField1.getGlobType()) &&
+         return type == otherSingleFieldKey.getGlobType() &&
             Utils.equal(otherSingleFieldKey.value1, value1) &&
             Utils.equal(otherSingleFieldKey.value2, value2) &&
             Utils.equal(otherSingleFieldKey.value3, value3) &&
             Utils.equal(otherSingleFieldKey.value4, value4);
       }
 
-      if (!AbstractKey.class.isAssignableFrom(o.getClass())) {
+      if (!Key.class.isAssignableFrom(o.getClass())) {
          return false;
       }
       Key otherKey = (Key)o;
-      return keyField1.getGlobType().equals(otherKey.getGlobType())
-             && Utils.equal(value1, otherKey.getValue(keyField1))
-             && Utils.equal(value2, otherKey.getValue(keyField2))
-             && Utils.equal(value3, otherKey.getValue(keyField3))
-             && Utils.equal(value4, otherKey.getValue(keyField4));
+      Field[] fields = type.getFields();
+      return type == otherKey.getGlobType()
+             && Utils.equal(value1, otherKey.getValue(fields[0]))
+             && Utils.equal(value2, otherKey.getValue(fields[1]))
+             && Utils.equal(value3, otherKey.getValue(fields[2]))
+             && Utils.equal(value4, otherKey.getValue(fields[3]));
    }
 
    // optimized - do not use generated code
    public int hashCode() {
-      if (hashCode != 0) {
          return hashCode;
-      }
-      int h = keyField1.getGlobType().hashCode();
+   }
+
+   private int computeHash() {
+      Field[] fields = type.getFields();
+      int h = fields[0].getGlobType().hashCode();
       h = 31 * h + (value1 != null ? value1.hashCode() : 0);
       h = 31 * h + (value2 != null ? value2.hashCode() : 0);
       h = 31 * h + (value3 != null ? value3.hashCode() : 0);
@@ -263,24 +136,25 @@ public class FourFieldKey extends AbstractKey {
       if (h == 0) {
          h = 31;
       }
-      this.hashCode = h;
       return h;
    }
 
    public FieldValue[] toArray() {
+      Field[] fields = type.getFields();
       return new FieldValue[]{
-         new FieldValue(keyField1, value1),
-         new FieldValue(keyField2, value2),
-         new FieldValue(keyField3, value3),
-         new FieldValue(keyField4, value4)
+         new FieldValue(fields[0], value1),
+         new FieldValue(fields[1], value2),
+         new FieldValue(fields[2], value3),
+         new FieldValue(fields[3], value4)
       };
    }
 
    public String toString() {
+      Field[] fields = type.getFields();
       return getGlobType().getName() + "[" +
-             keyField1.getName() + "=" + value1 + ", " +
-             keyField2.getName() + "=" + value2 + ", " +
-             keyField3.getName() + "=" + value3 + ", " +
-             keyField4.getName() + "=" + value4 + "]";
+             fields[0].getName() + "=" + value1 + ", " +
+             fields[1].getName() + "=" + value2 + ", " +
+             fields[2].getName() + "=" + value3 + ", " +
+             fields[3].getName() + "=" + value4 + "]";
    }
 }
