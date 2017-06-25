@@ -5,35 +5,19 @@ import org.globsframework.metamodel.fields.*;
 import org.globsframework.model.FieldValues;
 import org.globsframework.utils.exceptions.ItemNotFound;
 
-import java.util.Date;
+import java.time.ZonedDateTime;
 
 public abstract class AbstractFieldValues implements FieldValues {
   public Double get(DoubleField field) {
     return (Double)doGet(field);
   }
 
-  public Double get(DoubleField field, double valueIfNull) throws ItemNotFound {
+  public double get(DoubleField field, double valueIfNull) throws ItemNotFound {
     Object o = doGet(field);
     if (o == null){
       return valueIfNull;
     }
     return (Double)o;
-  }
-
-  public Date get(DateField field) {
-    return (Date)doGet(field);
-  }
-
-  public Date get(DateField field, Date valueIfNull) {
-    Object date = doGet(field);
-    if (date == null) {
-      return valueIfNull;
-    }
-    return (Date)date;
-  }
-
-  public Date get(TimeStampField field) {
-    return (Date)doGet(field);
   }
 
   public Integer get(IntegerField field) {
@@ -70,14 +54,17 @@ public abstract class AbstractFieldValues implements FieldValues {
 
   public Boolean get(BooleanField field, boolean defaultIfNull) {
     Object value = doGet(field);
-    if (value == null) {
-      return defaultIfNull;
-    }
-    return (Boolean)value;
+    return value == null ? Boolean.valueOf(defaultIfNull) : (Boolean)value;
   }
 
   public Long get(LongField field) {
     return (Long)doGet(field);
+  }
+
+
+  public long get(LongField field, long valueIfNull) throws ItemNotFound {
+    Object value = doGet(field);
+    return value == null ? valueIfNull : (long)value;
   }
 
   protected abstract Object doGet(Field field);

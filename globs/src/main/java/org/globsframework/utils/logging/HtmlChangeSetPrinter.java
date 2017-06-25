@@ -3,7 +3,6 @@ package org.globsframework.utils.logging;
 import org.globsframework.metamodel.Field;
 import org.globsframework.metamodel.GlobType;
 import org.globsframework.metamodel.fields.DateField;
-import org.globsframework.metamodel.fields.TimeStampField;
 import org.globsframework.model.*;
 import org.globsframework.utils.Dates;
 import org.globsframework.utils.Strings;
@@ -111,12 +110,6 @@ class HtmlChangeSetPrinter {
    private String getValue(Field field, Object value, Key key, String valueForNull) {
       if (value == null) {
          return valueForNull;
-      }
-      if ((field instanceof DateField)) {
-         return Dates.toString((Date)value);
-      }
-      if ((field instanceof TimeStampField)) {
-         return Dates.toTimestampString((Date)value);
       }
       return Strings.toString(value);
    }

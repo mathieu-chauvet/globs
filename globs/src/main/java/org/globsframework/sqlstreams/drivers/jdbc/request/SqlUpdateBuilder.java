@@ -52,16 +52,8 @@ public class SqlUpdateBuilder implements UpdateBuilder {
         update(field, (String)value);
       }
 
-      public void visitDate(DateField field) throws Exception {
-        update(field, (Date)value);
-      }
-
       public void visitBoolean(BooleanField field) throws Exception {
         update(field, (Boolean)value);
-      }
-
-      public void visitTimeStamp(TimeStampField field) throws Exception {
-        update(field, (Date)value);
       }
 
       public void visitBlob(BlobField field) throws Exception {
@@ -102,24 +94,6 @@ public class SqlUpdateBuilder implements UpdateBuilder {
 
   public UpdateBuilder update(DoubleField field, Double value) {
     return update(field, new ValueDoubleAccessor(value));
-  }
-
-  public UpdateBuilder update(DateField field, DateAccessor accessor) {
-    values.put(field, accessor);
-    return this;
-  }
-
-  public UpdateBuilder update(DateField field, Date value) {
-    return update(field, new ValueDateAccessor(value));
-  }
-
-  public UpdateBuilder update(TimeStampField field, Date value) {
-    return update(field, new ValueDateAccessor(value));
-  }
-
-  public UpdateBuilder update(TimeStampField field, DateAccessor accessor) {
-    values.put(field, accessor);
-    return this;
   }
 
   public UpdateBuilder update(StringField field, StringAccessor accessor) {

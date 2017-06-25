@@ -24,8 +24,6 @@ public class EncoderTest extends TestCase {
     output.writeBytes(null);
     output.writeDouble(1.3);
     output.writeDouble(null);
-    output.writeDate(new Date(123));
-    output.writeDate(null);
     output.writeByte(-12);
     output.writeByte(-1);
 
@@ -38,8 +36,6 @@ public class EncoderTest extends TestCase {
     assertNull(input.readBytes());
     assertEquals(1.3, input.readDouble());
     assertNull(input.readDouble());
-    assertEquals(new Date(123), input.readDate());
-    assertNull(input.readDate());
     assertEquals(-12, input.readByte());
     assertEquals(-1, input.readByte());
   }
@@ -57,12 +53,10 @@ public class EncoderTest extends TestCase {
     Glob glob = GlobBuilder
       .init(TYPE)
       .set(ID, id)
-      .set(DATE, date)
       .set(LINK_ID, linkId)
       .set(NAME, name)
       .set(PASSWORD, blob)
       .set(PRESENT, present)
-      .set(TIMESTAMP, timestamp)
       .set(VALUE, value).get();
 
     SerializedByteArrayOutput output = new SerializedByteArrayOutput();
@@ -71,12 +65,10 @@ public class EncoderTest extends TestCase {
     Glob decodedGlob = input.readGlob(DummyModel.get());
 
     assertEquals(1, decodedGlob.get(ID).intValue());
-    assertEquals(date, decodedGlob.get(DATE));
     assertEquals(linkId, decodedGlob.get(LINK_ID).intValue());
     assertEquals(name, decodedGlob.get(NAME));
     assertTrue(Arrays.equals(blob, decodedGlob.get(PASSWORD)));
     assertEquals(present, decodedGlob.get(PRESENT).booleanValue());
-    assertEquals(timestamp, decodedGlob.get(TIMESTAMP));
     assertEquals(value, decodedGlob.get(VALUE));
   }
 

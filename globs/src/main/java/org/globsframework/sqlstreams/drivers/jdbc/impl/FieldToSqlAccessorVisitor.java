@@ -26,16 +26,8 @@ public class FieldToSqlAccessorVisitor implements FieldVisitor {
     accessor = new StringSqlAccessor();
   }
 
-  public void visitDate(DateField field) throws Exception {
-    accessor = new DateSqlAccessor();
-  }
-
   public void visitBoolean(BooleanField field) throws Exception {
     accessor = new BooleanSqlAccessor();
-  }
-
-  public void visitTimeStamp(TimeStampField field) throws Exception {
-    accessor = new TimestampSqlAccessor();
   }
 
   public void visitBlob(BlobField field) throws Exception {

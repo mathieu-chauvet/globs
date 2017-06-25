@@ -8,6 +8,7 @@ import org.globsframework.model.GlobRepository;
 import org.globsframework.model.format.utils.GlobListFieldStringifier;
 import org.globsframework.model.utils.GlobMatcher;
 import org.globsframework.utils.Strings;
+import org.omg.CORBA.DoubleHolder;
 
 import java.text.DecimalFormat;
 import java.util.Comparator;
@@ -92,6 +93,10 @@ public class GlobListStringifiers {
     };
   }
 
+  static class DoubleRef {
+    public double value;
+  }
+
   public static GlobListStringifier conditionalSum(final GlobMatcher matcher,
                                                    final DecimalFormat format,
                                                    final DoubleField... fields) {
@@ -101,14 +106,19 @@ public class GlobListStringifiers {
           return "";
         }
 
+
         double total = 0;
+//        total = list.stream().filter(glob -> matcher.matches(glob, repository))
+//           .collect(DoubleRef::new, (ref, glob) -> {
+//             for (DoubleField field : fields) {
+//               ref.value += glob.get(field, 0.);
+//             }
+//           }, (ref, ref2) -> ref.value += ref2.value).value;
+
         for (Glob glob : list) {
           if (matcher.matches(glob, repository)) {
             for (DoubleField field : fields) {
-              final Double value = glob.get(field);
-              if (value != null) {
-                total += glob.get(field);
-              }
+                total += glob.get(field, 0.);
             }
           }
         }

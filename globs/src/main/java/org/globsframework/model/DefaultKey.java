@@ -2,20 +2,15 @@ package org.globsframework.model;
 
 import org.globsframework.metamodel.Field;
 import org.globsframework.metamodel.GlobType;
-import org.globsframework.metamodel.fields.BooleanField;
-import org.globsframework.metamodel.fields.DateField;
-import org.globsframework.metamodel.fields.DoubleField;
-import org.globsframework.metamodel.fields.IntegerField;
+import org.globsframework.metamodel.fields.*;
 import org.globsframework.model.impl.FourFieldKey;
 import org.globsframework.model.impl.ThreeFieldKey;
 import org.globsframework.model.impl.TwoFieldKey;
 import org.globsframework.utils.exceptions.ItemNotFound;
 
-import java.util.Date;
-
 public abstract class DefaultKey implements Key {
 
-    public static Key create(GlobType type, Object singleFieldValue) {
+  public static Key create(GlobType type, Object singleFieldValue) {
     return KeyBuilder.newKey(type, singleFieldValue);
   }
 
@@ -43,15 +38,7 @@ public abstract class DefaultKey implements Key {
     return value;
   }
 
-  public Date get(DateField field, Date valueIfNull) throws ItemNotFound {
-    Date value = get(field);
-    if (value == null) {
-      return valueIfNull;
-    }
-    return value;
-  }
-
-  public Double get(DoubleField field, double valueIfNull) throws ItemNotFound {
+  public double get(DoubleField field, double valueIfNull) throws ItemNotFound {
     Double value = get(field);
     if (value == null) {
       return valueIfNull;
@@ -61,6 +48,11 @@ public abstract class DefaultKey implements Key {
 
   public int get(IntegerField field, int valueIfNull) throws ItemNotFound {
     Integer value = get(field);
+    return value == null ? valueIfNull : value;
+  }
+
+   public long get(LongField field, long valueIfNull) throws ItemNotFound {
+    Long value = get(field);
     return value == null ? valueIfNull : value;
   }
 

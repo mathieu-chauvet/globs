@@ -25,11 +25,7 @@ public interface SelectBuilder {
 
   SelectBuilder select(StringField field, Ref<StringAccessor> accessor);
 
-  SelectBuilder select(DateField field, Ref<DateAccessor> accessor);
-
   SelectBuilder select(DoubleField field, Ref<DoubleAccessor> accessor);
-
-  SelectBuilder select(TimeStampField field, Ref<TimestampAccessor> accessor);
 
   SelectBuilder select(BlobField field, Ref<BlobAccessor> accessor);
 
@@ -38,8 +34,6 @@ public interface SelectBuilder {
   LongAccessor retrieve(LongField field);
 
   StringAccessor retrieve(StringField field);
-
-  DateAccessor retrieve(DateField field);
 
   BooleanAccessor retrieve(BooleanField field);
 

@@ -60,30 +60,12 @@ public class SqlValueFieldVisitor implements FieldVisitor {
     }
   }
 
-  public void visitDate(DateField field) throws Exception {
-    if (value == null) {
-      preparedStatement.setNull(index, Types.DATE);
-    }
-    else {
-      preparedStatement.setDate(index, new java.sql.Date(((Date)value).getTime()));
-    }
-  }
-
   public void visitBoolean(BooleanField field) throws Exception {
     if (value == null) {
       preparedStatement.setNull(index, Types.BOOLEAN);
     }
     else {
       preparedStatement.setBoolean(index, (Boolean)value);
-    }
-  }
-
-  public void visitTimeStamp(TimeStampField field) throws Exception {
-    if (value == null) {
-      preparedStatement.setNull(index, Types.TIMESTAMP);
-    }
-    else {
-      preparedStatement.setTimestamp(index, new Timestamp(((Date)value).getTime()));
     }
   }
 

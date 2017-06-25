@@ -102,16 +102,8 @@ public class FieldConverter {
       value = null;
     }
 
-    public void visitDate(DateField field) throws Exception {
-      value = toDate(stringValue);
-    }
-
     public void visitBoolean(BooleanField field) throws Exception {
       value = stringValue.equalsIgnoreCase("true");
-    }
-
-    public void visitTimeStamp(TimeStampField field) throws Exception {
-      value = toTimestamp(stringValue);
     }
 
     public void visitBlob(BlobField field) throws Exception {
@@ -155,10 +147,6 @@ public class FieldConverter {
       return stringValue;
     }
 
-    public void visitDate(DateField field) throws Exception {
-      stringValue = dateFormat.format(value);
-    }
-
     public void visitBoolean(BooleanField field) throws Exception {
       if (((Boolean)value)) {
         stringValue = "true";
@@ -166,10 +154,6 @@ public class FieldConverter {
       else {
         stringValue = "false";
       }
-    }
-
-    public void visitTimeStamp(TimeStampField field) throws Exception {
-      stringValue = TIMESTAMP_FORMAT.format(value);
     }
 
     public void visitBlob(BlobField field) throws Exception {

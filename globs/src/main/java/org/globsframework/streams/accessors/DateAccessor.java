@@ -1,8 +1,8 @@
 package org.globsframework.streams.accessors;
 
-import java.util.Date;
+import java.time.ZonedDateTime;
 
 public interface DateAccessor extends Accessor {
 
-  Date getDate();
+  ZonedDateTime getDate();
 }

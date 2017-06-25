@@ -2,6 +2,8 @@ package org.globsframework.utils;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -116,4 +118,13 @@ public class Dates {
     }
     return date1.after(date2) ? date1 : date2;
   }
+
+  public interface DateDecomposed {
+    void push(int year, int month, int day);
+  }
+
+  public static void decomposeDate(LocalDate localDate, DateDecomposed dateDecomposed){
+    dateDecomposed.push(localDate.getYear(), localDate.getMonthValue(), localDate.getDayOfMonth());
+  }
+
 }

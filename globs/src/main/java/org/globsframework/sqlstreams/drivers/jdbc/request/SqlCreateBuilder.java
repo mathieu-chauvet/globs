@@ -60,16 +60,8 @@ public class SqlCreateBuilder implements CreateBuilder {
         setObject(field, new ValueStringAccessor((String)value));
       }
 
-      public void visitDate(DateField field) throws Exception {
-        setObject(field, new ValueDateAccessor((Date)value));
-      }
-
       public void visitBoolean(BooleanField field) throws Exception {
         setObject(field, new ValueBooleanAccessor((Boolean)value));
-      }
-
-      public void visitTimeStamp(TimeStampField field) throws Exception {
-        setObject(field, new ValueDateAccessor((Date)value));
       }
 
       public void visitBlob(BlobField field) throws Exception {
@@ -92,19 +84,7 @@ public class SqlCreateBuilder implements CreateBuilder {
     return setObject(field, accessor);
   }
 
-  public CreateBuilder set(TimeStampField field, DateAccessor accessor) {
-    return setObject(field, accessor);
-  }
-
-  public CreateBuilder set(TimeStampField field, Date date) {
-    return setObject(field, new ValueDateAccessor(date));
-  }
-
   public CreateBuilder set(BlobField field, BlobAccessor accessor) {
-    return setObject(field, accessor);
-  }
-
-  public CreateBuilder set(DateField field, DateAccessor accessor) {
     return setObject(field, accessor);
   }
 
@@ -122,10 +102,6 @@ public class SqlCreateBuilder implements CreateBuilder {
 
   public CreateBuilder set(IntegerField field, Integer value) {
     return setObject(field, new ValueIntegerAccessor(value));
-  }
-
-  public CreateBuilder set(DateField field, Date date) {
-    return setObject(field, new ValueDateAccessor(date));
   }
 
   public LongAccessor getKeyGeneratedAccessor() {

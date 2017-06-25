@@ -3,7 +3,6 @@ package org.globsframework.model.format;
 import org.globsframework.metamodel.Field;
 import org.globsframework.metamodel.GlobType;
 import org.globsframework.metamodel.fields.DateField;
-import org.globsframework.metamodel.fields.TimeStampField;
 import org.globsframework.metamodel.utils.GlobTypeComparator;
 import org.globsframework.model.FieldValues;
 import org.globsframework.model.Glob;
@@ -175,12 +174,6 @@ public class GlobPrinter {
    private String getValue(Glob glob, Field field, Object value) {
       if (value == null) {
          return "";
-      }
-      if ((field instanceof DateField)) {
-         return Dates.toString((Date)value);
-      }
-      if ((field instanceof TimeStampField)) {
-         return Dates.toTimestampString((Date)value);
       }
       return Strings.toString(value);
    }

@@ -6,6 +6,7 @@ import org.globsframework.model.FieldValues;
 import org.globsframework.model.FieldValuesWithPrevious;
 import org.globsframework.utils.exceptions.ItemNotFound;
 
+import java.time.ZonedDateTime;
 import java.util.Date;
 
 public abstract class AbstractFieldValuesWithPrevious implements FieldValuesWithPrevious {
@@ -21,25 +22,12 @@ public abstract class AbstractFieldValuesWithPrevious implements FieldValuesWith
     return (Double)doGet(field);
   }
 
-  public Double get(DoubleField field, double valueIfNull) throws ItemNotFound {
+  public double get(DoubleField field, double valueIfNull) throws ItemNotFound {
     Object value = doGet(field);
     if (value == null){
       return valueIfNull;
     }
     return (Double)value;
-  }
-
-  public Date get(DateField field) throws ItemNotFound {
-    return (Date)doGet(field);
-  }
-
-  public Date get(DateField field, Date valueIfNull) throws ItemNotFound {
-    Date value = get(field);
-    return value == null ? valueIfNull : value;
-  }
-
-  public Date get(TimeStampField field) throws ItemNotFound {
-    return (Date)doGet(field);
   }
 
   public Integer get(IntegerField field) throws ItemNotFound {
@@ -71,6 +59,11 @@ public abstract class AbstractFieldValuesWithPrevious implements FieldValuesWith
     return (Long)doGet(field);
   }
 
+  public long get(LongField field, long valueIfNull) throws ItemNotFound {
+    Long ret = (Long)doGet(field);
+    return ret == null ? valueIfNull : ret;
+  }
+
   public byte[] get(BlobField field) throws ItemNotFound {
     return (byte[])doGet(field);
   }
@@ -91,12 +84,9 @@ public abstract class AbstractFieldValuesWithPrevious implements FieldValuesWith
     return previous;
   }
 
-  public Date getPrevious(DateField field) throws ItemNotFound {
-    return (Date)doGetPrevious(field);
-  }
-
-  public Date getPrevious(TimeStampField field) throws ItemNotFound {
-    return (Date)doGetPrevious(field);
+  public long getPrevious(LongField field, long valueIfNull) throws ItemNotFound {
+    Object previous = doGetPrevious(field);
+    return previous == null ? valueIfNull : (long)previous;
   }
 
   public Integer getPrevious(IntegerField field) throws ItemNotFound {

@@ -2,7 +2,6 @@ package org.globsframework.metamodel.utils;
 
 import org.globsframework.metamodel.Field;
 import org.globsframework.model.Glob;
-import org.globsframework.model.GlobList;
 import org.globsframework.model.Key;
 
 import java.util.Collection;

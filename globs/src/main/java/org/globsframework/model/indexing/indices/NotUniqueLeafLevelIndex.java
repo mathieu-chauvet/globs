@@ -9,6 +9,7 @@ import org.globsframework.utils.exceptions.UnexpectedApplicationState;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.stream.Stream;
 
 public class NotUniqueLeafLevelIndex implements UpdatableMultiFieldIndex, GlobRepository.MultiFieldIndexed {
   private Map<Object, GlobList> indexedGlob = new HashMap<Object, GlobList>();
@@ -37,6 +38,11 @@ public class NotUniqueLeafLevelIndex implements UpdatableMultiFieldIndex, GlobRe
     catch (Exception e) {
       throw new UnexpectedApplicationState(e);
     }
+  }
+
+  public Stream<Glob> streamByIndex(Object value) {
+    GlobList globs = indexedGlob.get(value);
+    return globs == null ? Stream.empty() : globs.stream();
   }
 
   public GlobList findByIndex(Object value) {
@@ -71,7 +77,11 @@ public class NotUniqueLeafLevelIndex implements UpdatableMultiFieldIndex, GlobRe
         return NotUniqueLeafLevelIndex.this.findByIndex(value);
       }
 
-      public void saveApply(GlobFunctor functor, GlobRepository repository) {
+       public Stream<Glob> streamByIndex(Object value) {
+          return Stream.empty();
+       }
+
+       public void saveApply(GlobFunctor functor, GlobRepository repository) {
         try {
           GlobList globs = indexedGlob.get(value);
           if (globs == null){

@@ -135,16 +135,8 @@ public class SqlCreateRequest implements SqlRequest {
       convertValue = "'" + value.toString() + "'";
     }
 
-    public void visitDate(DateField field) throws Exception {
-      convertValue = "'" + new SimpleDateFormat("yyyyMMdd").format(value) + "'";
-    }
-
     public void visitBoolean(BooleanField field) throws Exception {
       convertValue = value.toString();
-    }
-
-    public void visitTimeStamp(TimeStampField field) throws Exception {
-      convertValue = "'" + new SimpleDateFormat("yyyyMMdd HH:mm:ss").format(value) + "'";
     }
 
     public void visitBlob(BlobField field) throws Exception {

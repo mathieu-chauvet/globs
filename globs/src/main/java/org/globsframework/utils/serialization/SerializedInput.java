@@ -1,13 +1,15 @@
 package org.globsframework.utils.serialization;
 
+import com.sun.xml.internal.ws.server.sei.SEIInvokerTube;
 import org.globsframework.metamodel.GlobModel;
 import org.globsframework.model.ChangeSet;
 import org.globsframework.model.Glob;
 
-import java.util.Date;
+import java.time.ZonedDateTime;
 
 public interface SerializedInput {
-  Date readDate();
+
+  ZonedDateTime readDate();
 
   Integer readInteger();
 
@@ -40,4 +42,15 @@ public interface SerializedInput {
   long[] readLongArray();
 
   void close();
+
+//  interface FieldExtension {
+//    <T> T read(SerializedInput input);
+//  }
+//
+//  interface AsyncFieldExtension {
+//    interface Receive<T> {
+//       void readed(T value);
+//    }
+//    <T> Receive<T> read(SerializedInput input);
+//  }
 }

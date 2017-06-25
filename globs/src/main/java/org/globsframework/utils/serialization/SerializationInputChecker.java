@@ -5,7 +5,7 @@ import org.globsframework.model.ChangeSet;
 import org.globsframework.model.Glob;
 import org.globsframework.utils.exceptions.UnexpectedApplicationState;
 
-import java.util.Date;
+import java.time.ZonedDateTime;
 
 public class SerializationInputChecker implements SerializedInput {
   private SerializedInput serializedInput;
@@ -59,7 +59,7 @@ public class SerializationInputChecker implements SerializedInput {
     serializedInput.close();
   }
 
-  public Date readDate() {
+  public ZonedDateTime readDate() {
     String value = serializedInput.readJavaString();
     if ("Date".equals(value)) {
       return serializedInput.readDate();

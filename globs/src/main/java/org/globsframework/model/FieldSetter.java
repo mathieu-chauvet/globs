@@ -9,10 +9,6 @@ import java.util.Date;
 public interface FieldSetter {
   FieldSetter set(DoubleField field, Double value) throws ItemNotFound;
 
-  FieldSetter set(DateField field, Date value) throws ItemNotFound;
-
-  FieldSetter set(TimeStampField field, Date value) throws ItemNotFound;
-
   FieldSetter set(IntegerField field, Integer value) throws ItemNotFound;
 
    FieldSetter set(StringField field, String value) throws ItemNotFound;

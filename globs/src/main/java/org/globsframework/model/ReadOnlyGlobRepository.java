@@ -12,6 +12,7 @@ import org.globsframework.utils.exceptions.ItemNotFound;
 
 import java.util.Comparator;
 import java.util.Set;
+import java.util.stream.Stream;
 
 public interface ReadOnlyGlobRepository {
 
@@ -58,6 +59,8 @@ public interface ReadOnlyGlobRepository {
 
     interface MultiFieldIndexed {
         GlobList getGlobs();
+
+//        Stream<Glob> streamByIndex(Object value);
 
         GlobList findByIndex(Object value);
 

@@ -15,8 +15,6 @@ public interface MutableGlob extends Glob {
 
   MutableGlob set(StringField field, String value);
 
-  MutableGlob set(DateField field, Date value);
-
   MutableGlob set(BooleanField field, Boolean value);
 
   MutableGlob set(BlobField field, byte[] value);

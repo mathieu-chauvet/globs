@@ -10,6 +10,7 @@ import org.globsframework.utils.exceptions.UnexpectedApplicationState;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.stream.Stream;
 
 public class UniqueLeafLevelIndex implements UpdatableMultiFieldIndex, GlobRepository.MultiFieldIndexed {
   private Map<Object, Glob> indexedGlob = new HashMap<Object, Glob>();
@@ -27,7 +28,12 @@ public class UniqueLeafLevelIndex implements UpdatableMultiFieldIndex, GlobRepos
     return globs;
   }
 
-  public void saveApply(GlobFunctor functor, GlobRepository repository) {
+   public Stream<Glob> streamByIndex(Object value) {
+     Glob glob = indexedGlob.get(value);
+      return glob == null ? Stream.empty() : Stream.of(glob);
+   }
+
+   public void saveApply(GlobFunctor functor, GlobRepository repository) {
     try {
       for (Glob glob : indexedGlob.values()) {
         functor.run(glob, repository);

@@ -10,13 +10,9 @@ import org.globsframework.sqlstreams.constraints.Constraints;
 import org.globsframework.sqlstreams.constraints.impl.KeyConstraint;
 import org.globsframework.sqlstreams.drivers.jdbc.DbServicesTestCase;
 import org.globsframework.streams.GlobStream;
-import org.globsframework.streams.accessors.utils.ValueDateAccessor;
 import org.globsframework.streams.accessors.utils.ValueDoubleAccessor;
 import org.globsframework.streams.accessors.utils.ValueIntegerAccessor;
 import org.globsframework.streams.xml.XmlGlobStreamReader;
-import org.globsframework.utils.Dates;
-
-import java.util.Date;
 
 public class SqlUpdateBuilderTest extends DbServicesTestCase {
 
@@ -30,11 +26,7 @@ public class SqlUpdateBuilderTest extends DbServicesTestCase {
     ValueIntegerAccessor keyValue = new ValueIntegerAccessor();
     UpdateBuilder updateBuilder = sqlConnection.getUpdateBuilder(DummyObject.TYPE, Constraints.equal(DummyObject.ID, keyValue));
 
-    Date date = Dates.parse("2000/01/01");
-    updateBuilder.update(DummyObject.DATE, date);
-
-    Date timestamp = Dates.parseTimestamp("03/10/2002 12:34:20");
-    updateBuilder.update(DummyObject.TIMESTAMP, new ValueDateAccessor(timestamp));
+    updateBuilder.update(DummyObject.DATE, 19991201);
 
     ValueDoubleAccessor valueAccessor = new ValueDoubleAccessor(2.2);
     updateBuilder.updateUntyped(DummyObject.VALUE, valueAccessor);
@@ -45,7 +37,7 @@ public class SqlUpdateBuilderTest extends DbServicesTestCase {
 
     keyValue.setValue(1);
     updateRequest.run();
-    checkDb(key1, DummyObject.DATE, date, sqlConnection);
+    checkDb(key1, DummyObject.DATE, 19991201, sqlConnection);
     checkDb(key1, DummyObject.VALUE, 2.2, sqlConnection);
     assertEquals(new String((byte[])getNextValue(key1, sqlConnection, DummyObject.PASSWORD)), "some blog");
 

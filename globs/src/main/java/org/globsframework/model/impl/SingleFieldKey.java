@@ -11,11 +11,10 @@ import org.globsframework.utils.Utils;
 import org.globsframework.utils.exceptions.InvalidParameter;
 import org.globsframework.utils.exceptions.MissingInfo;
 
+import java.time.ZonedDateTime;
 import java.util.Arrays;
-import java.util.Date;
 
 public class SingleFieldKey extends DefaultKey {
-
    private Object value;
    private Field keyField;
    private int hashCode = 0;
@@ -86,11 +85,6 @@ public class SingleFieldKey extends DefaultKey {
       return Boolean.TRUE.equals(get(field));
    }
 
-   public Date get(DateField field) {
-      checkIsKeyField(field);
-      return (Date)value;
-   }
-
    public Double get(DoubleField field) {
       checkIsKeyField(field);
       return (Double)value;
@@ -114,11 +108,6 @@ public class SingleFieldKey extends DefaultKey {
    public String get(StringField field) {
       checkIsKeyField(field);
       return (String)value;
-   }
-
-   public Date get(TimeStampField field) {
-      checkIsKeyField(field);
-      return (Date)value;
    }
 
    // optimized - do not use generated code

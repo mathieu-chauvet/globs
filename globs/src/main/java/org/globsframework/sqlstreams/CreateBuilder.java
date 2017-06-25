@@ -21,14 +21,6 @@ public interface CreateBuilder {
 
   CreateBuilder set(StringField field, StringAccessor accessor);
 
-  CreateBuilder set(TimeStampField field, DateAccessor accessor);
-
-  CreateBuilder set(TimeStampField field, Date date);
-
-  CreateBuilder set(DateField field, Date date);
-
-  CreateBuilder set(DateField field, DateAccessor accessor);
-
   CreateBuilder set(BlobField field, BlobAccessor accessor);
 
   CreateBuilder setObject(Field field, Accessor accessor);

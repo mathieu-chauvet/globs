@@ -8,10 +8,11 @@ import org.globsframework.model.FieldValue;
 import org.globsframework.model.Key;
 import org.globsframework.utils.Utils;
 import org.globsframework.utils.exceptions.InvalidParameter;
+import org.globsframework.utils.exceptions.ItemNotFound;
 import org.globsframework.utils.exceptions.MissingInfo;
 
+import java.time.ZonedDateTime;
 import java.util.Arrays;
-import java.util.Date;
 
 public class FourFieldKey extends DefaultKey {
    private Field keyField1;
@@ -130,23 +131,6 @@ public class FourFieldKey extends DefaultKey {
       return Boolean.TRUE.equals(get(field));
    }
 
-   public Date get(DateField field) {
-      checkIsKeyField(field);
-      if (field == keyField1) {
-         return (Date)value1;
-      }
-      if (field == keyField2) {
-         return (Date)value2;
-      }
-      if (field == keyField3) {
-         return (Date)value3;
-      }
-      if (field == keyField4) {
-         return (Date)value4;
-      }
-      return null;
-   }
-
    public Double get(DoubleField field) {
       checkIsKeyField(field);
       if (field == keyField1) {
@@ -216,6 +200,11 @@ public class FourFieldKey extends DefaultKey {
 
    }
 
+   public long get(LongField field, long valueIfNull) throws ItemNotFound {
+      Long value = get(field);
+      return value == null ? valueIfNull : value;
+   }
+
    public String get(StringField field) {
       checkIsKeyField(field);
       if (field == keyField1) {
@@ -229,23 +218,6 @@ public class FourFieldKey extends DefaultKey {
       }
       if (field == keyField4) {
          return (String)value4;
-      }
-      return null;
-   }
-
-   public Date get(TimeStampField field) {
-      checkIsKeyField(field);
-      if (field == keyField1) {
-         return (Date)value1;
-      }
-      if (field == keyField2) {
-         return (Date)value2;
-      }
-      if (field == keyField3) {
-         return (Date)value3;
-      }
-      if (field == keyField4) {
-         return (Date)value4;
       }
       return null;
    }

@@ -25,10 +25,6 @@ public class DummyObjectWithDefaultValues {
   @DefaultBoolean(true)
   public static BooleanField BOOLEAN;
 
-  public static DateField DATE;
-
-  public static TimeStampField TIMESTAMP;
-
   @Target(DummyObject.class)
   public static IntegerField LINK;
 

@@ -23,7 +23,7 @@ public class DummyObjectIndex {
   public static DoubleField VALUE;
   public static IntegerField VALUE_1;
   public static IntegerField VALUE_2;
-  public static DateField DATE;
+  public static IntegerField DATE;
 
   @NamingField
   public static StringField NAME;

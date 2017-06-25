@@ -56,26 +56,6 @@ public class MultiCreateBuilder implements CreateBuilder {
     return this;
   }
 
-  public CreateBuilder set(TimeStampField field, DateAccessor accessor) {
-    createBuilders.get(field.getGlobType()).set(field, accessor);
-    return this;
-  }
-
-  public CreateBuilder set(TimeStampField field, Date date) {
-    createBuilders.get(field.getGlobType()).set(field, date);
-    return this;
-  }
-
-  public CreateBuilder set(DateField field, Date date) {
-    createBuilders.get(field.getGlobType()).set(field, date);
-    return this;
-  }
-
-  public CreateBuilder set(DateField field, DateAccessor accessor) {
-    createBuilders.get(field.getGlobType()).set(field, accessor);
-    return this;
-  }
-
   public CreateBuilder set(BlobField field, BlobAccessor accessor) {
     createBuilders.get(field.getGlobType()).set(field, accessor);
     return this;

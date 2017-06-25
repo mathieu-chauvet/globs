@@ -72,10 +72,6 @@ public class SqlQueryBuilder implements SelectBuilder {
     return this;
   }
 
-  public SelectBuilder select(DateField field, Ref<DateAccessor> ref) {
-    return createAccessor(field, ref, new DateSqlAccessor());
-  }
-
   public SelectBuilder select(IntegerField field, Ref<IntegerAccessor> ref) {
     return createAccessor(field, ref, new IntegerSqlAccessor());
   }
@@ -96,24 +92,8 @@ public class SqlQueryBuilder implements SelectBuilder {
     return createAccessor(field, ref, new DoubleSqlAccessor());
   }
 
-  public SelectBuilder select(TimeStampField field, Ref<TimestampAccessor> ref) {
-    return createAccessor(field, ref, new TimestampSqlAccessor());
-  }
-
   public SelectBuilder select(BlobField field, Ref<BlobAccessor> accessor) {
     return createAccessor(field, accessor, new BlobSqlAccessor());
-  }
-
-  public DateAccessor retrieve(DateField field) {
-    DateSqlAccessor accessor = new DateSqlAccessor();
-    fieldToAccessorHolder.put(field, accessor);
-    return accessor;
-  }
-
-  public TimestampSqlAccessor retrieve(TimeStampField field) {
-    TimestampSqlAccessor accessor = new TimestampSqlAccessor();
-    fieldToAccessorHolder.put(field, accessor);
-    return accessor;
   }
 
   public BooleanAccessor retrieve(BooleanField field) {
@@ -182,15 +162,7 @@ public class SqlQueryBuilder implements SelectBuilder {
       accessor = retrieve(field);
     }
 
-    public void visitDate(DateField field) throws Exception {
-      accessor = retrieve(field);
-    }
-
     public void visitBoolean(BooleanField field) throws Exception {
-      accessor = retrieve(field);
-    }
-
-    public void visitTimeStamp(TimeStampField field) throws Exception {
       accessor = retrieve(field);
     }
 

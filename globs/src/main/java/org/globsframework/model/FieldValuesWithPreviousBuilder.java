@@ -5,6 +5,7 @@ import org.globsframework.metamodel.GlobType;
 import org.globsframework.metamodel.fields.*;
 import org.globsframework.model.utils.DefaultFieldValuesWithPrevious;
 
+import java.time.ZonedDateTime;
 import java.util.Date;
 
 public class FieldValuesWithPreviousBuilder {
@@ -58,15 +59,7 @@ public class FieldValuesWithPreviousBuilder {
     setValue(field, newValue, previousValue);
   }
 
-  public void set(DateField field, Date newValue, Date previousValue) {
-    setValue(field, newValue, previousValue);
-  }
-
   public void set(BooleanField field, Boolean newValue, Boolean previousValue) {
-    setValue(field, newValue, previousValue);
-  }
-
-  public void set(TimeStampField field, Date newValue, Date previousValue) {
     setValue(field, newValue, previousValue);
   }
 

@@ -7,7 +7,7 @@ import org.globsframework.model.FieldValue;
 import org.globsframework.model.Key;
 import org.globsframework.utils.exceptions.ItemNotFound;
 
-import java.util.Date;
+import java.time.ZonedDateTime;
 
 public class EmptyKey implements Key {
    private final GlobType type;
@@ -28,19 +28,7 @@ public class EmptyKey implements Key {
       throw new RuntimeException("Empty key '" + field.getFullName() + " not available");
    }
 
-   public Double get(DoubleField field, double valueIfNull) throws ItemNotFound {
-      throw new RuntimeException("Empty key '" + field.getFullName() + " not available");
-   }
-
-   public Date get(DateField field) throws ItemNotFound {
-      throw new RuntimeException("Empty key '" + field.getFullName() + " not available");
-   }
-
-   public Date get(DateField field, Date valueIfNull) throws ItemNotFound {
-      throw new RuntimeException("Empty key '" + field.getFullName() + " not available");
-   }
-
-   public Date get(TimeStampField field) throws ItemNotFound {
+   public double get(DoubleField field, double valueIfNull) throws ItemNotFound {
       throw new RuntimeException("Empty key '" + field.getFullName() + " not available");
    }
 
@@ -69,6 +57,10 @@ public class EmptyKey implements Key {
    }
 
    public Long get(LongField field) throws ItemNotFound {
+      throw new RuntimeException("Empty key '" + field.getFullName() + " not available");
+   }
+
+   public long get(LongField field, long valueIfNull) throws ItemNotFound {
       throw new RuntimeException("Empty key '" + field.getFullName() + " not available");
    }
 

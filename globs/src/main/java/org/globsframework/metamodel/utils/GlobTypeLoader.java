@@ -272,16 +272,10 @@ public class GlobTypeLoader {
          return fieldFactory.addBoolean(name, isKeyField, index,
                                         defaultBoolean != null ? defaultBoolean.value() : null);
       }
-      else if (DateField.class.isAssignableFrom(fieldClass)) {
-         return fieldFactory.addDate(name, isKeyField, index);
-      }
       else if (DoubleField.class.isAssignableFrom(fieldClass)) {
          DefaultDouble defaultDouble = field.getAnnotation(DefaultDouble.class);
          return fieldFactory.addDouble(name, isKeyField, index,
                                        defaultDouble != null ? defaultDouble.value() : null);
-      }
-      else if (TimeStampField.class.isAssignableFrom(fieldClass)) {
-         return fieldFactory.addTimestamp(name, isKeyField, index);
       }
       else if (BlobField.class.isAssignableFrom(fieldClass)) {
          return fieldFactory.addBlob(name, index);

@@ -37,16 +37,8 @@ public abstract class SqlFieldCreationVisitor implements FieldVisitor {
     add("VARCHAR", field);
   }
 
-  public void visitDate(DateField field) throws Exception {
-    add("DATE", field);
-  }
-
   public void visitBoolean(BooleanField field) throws Exception {
     add("BOOLEAN", field);
-  }
-
-  public void visitTimeStamp(TimeStampField field) throws Exception {
-    add("TIMESTAMP", field);
   }
 
   public void visitBlob(BlobField field) throws Exception {

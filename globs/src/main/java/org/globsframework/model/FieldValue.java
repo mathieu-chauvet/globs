@@ -13,14 +13,6 @@ public class FieldValue {
     return new FieldValue(field, value);
   }
 
-  public static FieldValue value(DateField field, Date value) {
-    return new FieldValue(field, value);
-  }
-
-  public static FieldValue value(TimeStampField field, Date value) {
-    return new FieldValue(field, value);
-  }
-
   public static FieldValue value(IntegerField field, Integer value) {
     return new FieldValue(field, value);
   }

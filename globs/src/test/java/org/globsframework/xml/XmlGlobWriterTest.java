@@ -42,12 +42,12 @@ public class XmlGlobWriterTest {
             .init()
             .add(GlobBuilder.init(DummyObject.TYPE)
                     .set(DummyObject.ID, 1)
-                    .set(DummyObject.DATE, Dates.parse("2006/12/05"))
+                    .set(DummyObject.DATE, 20061205)
                     .get())
             .get();
 
       GlobTestUtils.assertEquals(globRepository,
-                                 "<dummyObject id='1' date='2006/12/05'/>");
+                                 "<dummyObject id='1' date='20061205'/>");
    }
 
 

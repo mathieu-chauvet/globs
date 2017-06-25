@@ -19,6 +19,7 @@ import org.globsframework.saxstack.utils.XmlUtils;
 import org.xml.sax.Attributes;
 
 import java.io.StringReader;
+import java.time.ZonedDateTime;
 import java.util.*;
 
 public class XmlGlobStreamReader {
@@ -128,16 +129,8 @@ public class XmlGlobStreamReader {
         this.stream = stream;
       }
 
-      public void visitDate(DateField field) throws Exception {
-        accessor = new XmlDateAccessor(stream, field);
-      }
-
       public void visitBoolean(BooleanField field) throws Exception {
         accessor = new XmlBooleanAccessor(stream, field);
-      }
-
-      public void visitTimeStamp(TimeStampField field) throws Exception {
-        accessor = new XmlTimestampAccessor(stream, field);
       }
 
       public void visitBlob(BlobField field) throws Exception {
@@ -164,41 +157,6 @@ public class XmlGlobStreamReader {
         return accessor;
       }
 
-      private static class XmlDateAccessor implements DateAccessor {
-        private XmlGlobStream xmlMoStream;
-        private DateField field;
-
-        public XmlDateAccessor(XmlGlobStream xmlMoStream, DateField field) {
-          this.xmlMoStream = xmlMoStream;
-          this.field = field;
-        }
-
-        public Date getDate() {
-          return xmlMoStream.current.get(field);
-        }
-
-        public Object getObjectValue() {
-          return getDate();
-        }
-      }
-
-      private static class XmlTimestampAccessor implements DateAccessor {
-        private XmlGlobStream xmlMoStream;
-        private TimeStampField field;
-
-        public XmlTimestampAccessor(XmlGlobStream xmlMoStream, TimeStampField field) {
-          this.xmlMoStream = xmlMoStream;
-          this.field = field;
-        }
-
-        public Date getDate() {
-          return xmlMoStream.current.get(field);
-        }
-
-        public Object getObjectValue() {
-          return getDate();
-        }
-      }
 
       private static class XmlBlobAccessor implements BlobAccessor {
         private XmlGlobStream xmlMoStream;

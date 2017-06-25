@@ -17,7 +17,7 @@ import java.io.EOFException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
-import java.util.Date;
+import java.time.*;
 
 public class DefaultSerializationInput implements SerializedInput {
   private InputStream inputStream;
@@ -142,16 +142,8 @@ public class DefaultSerializationInput implements SerializedInput {
       builder.set(field, input.readJavaString());
     }
 
-    public void visitDate(DateField field) throws Exception {
-      builder.set(field, input.readDate());
-    }
-
     public void visitBoolean(BooleanField field) throws Exception {
       builder.set(field, input.readBoolean());
-    }
-
-    public void visitTimeStamp(TimeStampField field) throws Exception {
-      builder.set(field, input.readDate());
     }
 
     public void visitBlob(BlobField field) throws Exception {
@@ -185,16 +177,8 @@ public class DefaultSerializationInput implements SerializedInput {
       builder.set(field, input.readJavaString(), input.readJavaString());
     }
 
-    public void visitDate(DateField field) throws Exception {
-      builder.set(field, input.readDate(), input.readDate());
-    }
-
     public void visitBoolean(BooleanField field) throws Exception {
       builder.set(field, input.readBoolean(), input.readBoolean());
-    }
-
-    public void visitTimeStamp(TimeStampField field) throws Exception {
-      builder.set(field, input.readDate(), input.readDate());
     }
 
     public void visitBlob(BlobField field) throws Exception {
@@ -206,14 +190,30 @@ public class DefaultSerializationInput implements SerializedInput {
     }
 
   }
+/*
+      ZonedDateTime zonedDateTime = glob.get(field);
+      LocalDateTime localDateTime = zonedDateTime.toLocalDateTime();
+      LocalDate date = localDateTime.toLocalDate();
+      Dates.decomposeDate(date, (year, month, day) -> {write(year); write(((byte)month)); write(((byte)day));});
+      LocalTime time = localDateTime.toLocalTime();
+      long l = time.toNanoOfDay();
+      write(l);
+      ZoneOffset offset = zonedDateTime.getOffset();
+      int totalSeconds = offset.getTotalSeconds();
+      write(totalSeconds);
 
+ */
 
-  public Date readDate() {
+  public ZonedDateTime readDate() {
+    int year = readNotNullInt();
+    byte month = readByte();
+    byte day = readByte();
+    LocalDate localDate = LocalDate.of(year, month, day);
     long time = readNotNullLong();
-    if (time == -1) {
-      return null;
-    }
-    return new Date(time);
+    LocalTime localTime = LocalTime.ofNanoOfDay(time);
+    String zoneId = readUtf8String();
+    int totalSeconds = readNotNullInt();
+    return ZonedDateTime.of(localDate, localTime, ZoneId.ofOffset(zoneId, ZoneOffset.ofTotalSeconds(totalSeconds)));
   }
 
   public Integer readInteger() {
@@ -381,16 +381,8 @@ public class DefaultSerializationInput implements SerializedInput {
       builder.set(field, readJavaString());
     }
 
-    public void visitDate(DateField field) throws Exception {
-      builder.set(field, readDate());
-    }
-
     public void visitBoolean(BooleanField field) throws Exception {
       builder.set(field, readBoolean());
-    }
-
-    public void visitTimeStamp(TimeStampField field) throws Exception {
-      builder.set(field, readDate());
     }
 
     public void visitBlob(BlobField field) throws Exception {

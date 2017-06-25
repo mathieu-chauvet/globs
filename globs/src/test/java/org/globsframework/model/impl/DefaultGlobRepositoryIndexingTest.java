@@ -46,23 +46,23 @@ public class DefaultGlobRepositoryIndexingTest extends DefaultGlobRepositoryTest
 
    @Test
    public void testNotUniqueIndex() throws Exception {
-      init("<dummyObjectIndex id='1' uniqueName='obj1' date = '2001/01/01' name='a'/>" +
-           "<dummyObjectIndex id='2' uniqueName='obj3' date = '2001/01/01' name='b'/>");
-      assertTrue(repository.findByIndex(DummyObjectIndex.DATE_INDEX, Dates.parse("2002/01/01")).isEmpty());
-      TestUtils.assertSetEquals(Arrays.asList(1, 2), findIDByDateIndex("2001/01/01"));
+      init("<dummyObjectIndex id='1' uniqueName='obj1' date = '20010101' name='a'/>" +
+           "<dummyObjectIndex id='2' uniqueName='obj3' date = '20010101' name='b'/>");
+      assertTrue(repository.findByIndex(DummyObjectIndex.DATE_INDEX, 20020101).isEmpty());
+      TestUtils.assertSetEquals(Arrays.asList(1, 2), findIDByDateIndex(20010101));
       Glob obj1 = findGlobByNameIndex("obj1");
       Glob obj3 = findGlobByNameIndex("obj3");
-      repository.update(obj1.getKey(), DummyObjectIndex.DATE, Dates.parse("2003/01/01"));
-      assertEquals(2, findIDByDateIndex("2001/01/01").get(0).intValue());
-      assertEquals(1, findIDByDateIndex("2003/01/01").get(0).intValue());
+      repository.update(obj1.getKey(), DummyObjectIndex.DATE, 20030101);
+      assertEquals(2, findIDByDateIndex(20010101).get(0).intValue());
+      assertEquals(1, findIDByDateIndex(20030101).get(0).intValue());
       repository.delete(obj3);
       assertTrue(repository.findByIndex(DummyObjectIndex.DATE_INDEX, Dates.parse("2001/01/01")).isEmpty());
 
       repository.create(DummyObjectIndex.TYPE,
                         value(DummyObjectIndex.ID, 3),
                         value(DummyObjectIndex.NAME, "obj5"),
-                        value(DummyObjectIndex.DATE, Dates.parse("2004/01/01")));
-      assertEquals(Arrays.asList(3), findIDByDateIndex("2004/01/01"));
+                        value(DummyObjectIndex.DATE, 20040101));
+      assertEquals(Arrays.asList(3), findIDByDateIndex(20040101));
    }
 
 
@@ -274,7 +274,7 @@ public class DefaultGlobRepositoryIndexingTest extends DefaultGlobRepositoryTest
       return repository.findByIndex(DummyObjectIndex.UNIQUE_NAME_INDEX, value).get(0);
    }
 
-   private List<Integer> findIDByDateIndex(String value) {
+   private List<Integer> findIDByDateIndex(int value) {
       List<Integer> val = new ArrayList<Integer>();
       GlobList globByDateIndex = findGlobByDateIndex(value);
       for (Glob glob : globByDateIndex) {
@@ -283,8 +283,8 @@ public class DefaultGlobRepositoryIndexingTest extends DefaultGlobRepositoryTest
       return val;
    }
 
-   private GlobList findGlobByDateIndex(String value) {
-      return repository.findByIndex(DummyObjectIndex.DATE_INDEX, Dates.parse(value));
+   private GlobList findGlobByDateIndex(int value) {
+      return repository.findByIndex(DummyObjectIndex.DATE_INDEX, value);
    }
 
 }

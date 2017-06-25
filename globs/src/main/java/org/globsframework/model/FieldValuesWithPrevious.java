@@ -4,16 +4,13 @@ import org.globsframework.metamodel.Field;
 import org.globsframework.metamodel.fields.*;
 import org.globsframework.utils.exceptions.ItemNotFound;
 
+import java.time.ZonedDateTime;
 import java.util.Date;
 
 public interface FieldValuesWithPrevious extends FieldValues {
    Object getValue(Field field) throws ItemNotFound;
 
    Double get(DoubleField field) throws ItemNotFound;
-
-   Date get(DateField field) throws ItemNotFound;
-
-   Date get(TimeStampField field) throws ItemNotFound;
 
    Integer get(IntegerField field) throws ItemNotFound;
 
@@ -33,10 +30,6 @@ public interface FieldValuesWithPrevious extends FieldValues {
 
    double getPrevious(DoubleField field, double defaultIfNull) throws ItemNotFound;
 
-   Date getPrevious(DateField field) throws ItemNotFound;
-
-   Date getPrevious(TimeStampField field) throws ItemNotFound;
-
    Integer getPrevious(IntegerField field) throws ItemNotFound;
 
    String getPrevious(StringField field) throws ItemNotFound;
@@ -46,6 +39,8 @@ public interface FieldValuesWithPrevious extends FieldValues {
    Boolean getPrevious(BooleanField field, boolean defaultIfNull);
 
    Long getPrevious(LongField field) throws ItemNotFound;
+
+   long getPrevious(LongField field, long valueIfNull) throws ItemNotFound;
 
    byte[] getPrevious(BlobField field) throws ItemNotFound;
 

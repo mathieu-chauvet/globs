@@ -3,12 +3,15 @@ package org.globsframework.utils.serialization;
 import org.globsframework.metamodel.Field;
 import org.globsframework.metamodel.fields.*;
 import org.globsframework.model.*;
+import org.globsframework.utils.Dates;
 import org.globsframework.utils.exceptions.InvalidFormat;
 import org.globsframework.utils.exceptions.UnexpectedApplicationState;
 
+import java.io.DataOutput;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
+import java.time.*;
 import java.util.Date;
 
 public class DefaultSerializationOutput implements SerializedOutput, ChangeSetVisitor {
@@ -241,16 +244,8 @@ public class DefaultSerializationOutput implements SerializedOutput, ChangeSetVi
       writeJavaString(value);
     }
 
-    public void visitDate(DateField field, Date value) throws Exception {
-      writeDate(value);
-    }
-
     public void visitBoolean(BooleanField field, Boolean value) throws Exception {
       writeBoolean(value);
-    }
-
-    public void visitTimeStamp(TimeStampField field, Date value) throws Exception {
-      writeDate(value);
     }
 
     public void visitBlob(BlobField field, byte[] value) throws Exception {
@@ -288,16 +283,8 @@ public class DefaultSerializationOutput implements SerializedOutput, ChangeSetVi
       writeJavaString(value);
     }
 
-    public void visitDate(DateField field, Date value) throws Exception {
-      writeDate(value);
-    }
-
     public void visitBoolean(BooleanField field, Boolean value) throws Exception {
       writeBoolean(value);
-    }
-
-    public void visitTimeStamp(TimeStampField field, Date value) throws Exception {
-      writeDate(value);
     }
 
     public void visitBlob(BlobField field, byte[] value) throws Exception {
@@ -329,16 +316,8 @@ public class DefaultSerializationOutput implements SerializedOutput, ChangeSetVi
       writeJavaString(glob.get(field));
     }
 
-    public void visitDate(DateField field) throws Exception {
-      writeDate(glob.get(field));
-    }
-
     public void visitBoolean(BooleanField field) throws Exception {
       writeBoolean(glob.get(field));
-    }
-
-    public void visitTimeStamp(TimeStampField field) throws Exception {
-      writeDate(glob.get(field));
     }
 
     public void visitBlob(BlobField field) throws Exception {

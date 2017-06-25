@@ -11,10 +11,6 @@ public interface FieldVisitor {
 
     void visitLong(LongField field) throws Exception;
 
-    void visitDate(DateField field) throws Exception;
-
-    void visitTimeStamp(TimeStampField field) throws Exception;
-
    void visitBlob(BlobField field) throws Exception;
 
 
@@ -33,12 +29,6 @@ public interface FieldVisitor {
         }
 
         public void visitLong(LongField field) throws Exception {
-        }
-
-        public void visitDate(DateField field) throws Exception {
-        }
-
-        public void visitTimeStamp(TimeStampField field) throws Exception {
         }
 
        public void visitBlob(BlobField field) throws Exception {

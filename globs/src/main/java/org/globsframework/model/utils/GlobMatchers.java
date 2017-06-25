@@ -83,10 +83,6 @@ public class GlobMatchers {
       return fieldEqualsObject(field, value);
    }
 
-   public static GlobMatcher fieldEquals(DateField field, Date value) {
-      return fieldEqualsObject(field, value);
-   }
-
    public static GlobMatcher isTrue(BooleanField field) {
       return fieldEqualsObject(field, true);
    }
@@ -118,22 +114,6 @@ public class GlobMatchers {
 
    public static GlobMatcher fieldEqualsObject(Field field, Object value) {
       return new SingleFieldMatcher(field, value);
-   }
-
-   public static GlobMatcher fieldBefore(final DateField field, final Date date) {
-      return new GlobMatcher() {
-         public boolean matches(Glob item, GlobRepository repository) {
-            return item.get(field).before(date);
-         }
-      };
-   }
-
-   public static GlobMatcher fieldAfter(final DateField field, final Date date) {
-      return new GlobMatcher() {
-         public boolean matches(Glob item, GlobRepository repository) {
-            return item.get(field).after(date);
-         }
-      };
    }
 
    public static GlobMatcher fieldContainsIgnoreCaseAndAccents(final StringField field, final String value) {

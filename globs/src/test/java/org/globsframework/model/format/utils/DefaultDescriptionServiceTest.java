@@ -31,7 +31,7 @@ public class DefaultDescriptionServiceTest {
       descriptionService = new DefaultDescriptionService();
       GlobChecker checker = new GlobChecker();
       repository = checker.parse("<dummyObject id='0'/>" +
-                                 "<dummyObject id='1' name='name1' value='1.23456' date='2006/12/24'" +
+                                 "<dummyObject id='1' name='name1' value='1.23456' date='20061224'" +
                                  "             present='true' linkId='2'/>" +
                                  "<dummyObject id='2' name='name2'/>");
       emptyObject = repository.get(newKey(TYPE, 0));
@@ -42,7 +42,7 @@ public class DefaultDescriptionServiceTest {
    public void testFieldStringifier() throws Exception {
       checkToString(NAME, "name1");
       checkToString(VALUE, "1.23");
-      checkToString(DATE, "2006-12-24");
+      checkToString(DATE, "20061224");
       checkToString(PRESENT, Formats.DEFAULT_YES_VALUE);
       checkToString(LINK, "name2");
    }

@@ -138,16 +138,8 @@ public class ConstraintSerializer {
       output.writeJavaString((String)value);
     }
 
-    public void visitDate(DateField field) throws Exception {
-      output.writeDate((Date)value);
-    }
-
     public void visitBoolean(BooleanField field) throws Exception {
       output.write((Boolean)value);
-    }
-
-    public void visitTimeStamp(TimeStampField field) throws Exception {
-      output.writeDate((Date)value);
     }
 
     public void visitBlob(BlobField field) throws Exception {

@@ -110,8 +110,8 @@ public class SqlSelectQueryTest extends DbServicesTestCase {
   public void testLessBigger() throws Exception {
     populate(sqlConnection,
              XmlGlobStreamReader.parse(directory,
-                                       "<dummyObject id='1' name='hello' value='1.1' present='true' date='2000/10/10'/>" +
-                                       "<dummyObject id='2' name='world' value='2.2' present='false' date='2000/09/10'/>"));
+                                       "<dummyObject id='1' name='hello' value='1.1' present='true' />" +
+                                       "<dummyObject id='2' name='world' value='2.2' present='false' />"));
 
     assertEquals(1, execute(Constraints.lessUncheck(DummyObject.VALUE, 1.2)).get(DummyObject.ID).intValue());
     assertEquals(1, execute(Constraints.lessUncheck(DummyObject.VALUE, 1.1)).get(DummyObject.ID).intValue());

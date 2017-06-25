@@ -10,8 +10,8 @@ import org.globsframework.model.utils.FieldValueGetter;
 import org.globsframework.utils.Utils;
 import org.globsframework.utils.exceptions.MissingInfo;
 
+import java.time.ZonedDateTime;
 import java.util.Arrays;
-import java.util.Date;
 
 public class CompositeKey extends DefaultKey {
    private GlobType type;
@@ -162,14 +162,6 @@ public class CompositeKey extends DefaultKey {
 
    public Double get(DoubleField field) {
       return (Double)doGet(field);
-   }
-
-   public Date get(DateField field) {
-      return (Date)doGet(field);
-   }
-
-   public Date get(TimeStampField field) {
-      return (Date)doGet(field);
    }
 
    public Integer get(IntegerField field) {

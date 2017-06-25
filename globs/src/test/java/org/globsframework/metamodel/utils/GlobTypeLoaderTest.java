@@ -44,7 +44,6 @@ public class GlobTypeLoaderTest {
       public static StringField STRING;
       public static DoubleField DOUBLE;
       public static BooleanField BOOLEAN;
-      public static DateField DATE;
       public static LongField LONG;
       public static BlobField BLOB;
 
@@ -62,7 +61,6 @@ public class GlobTypeLoaderTest {
             .set(DOUBLE, 1.1)
             .set(BOOLEAN, false)
             .set(LONG, 15L)
-            .set(DATE, Dates.parse("2006/12/25"))
             .set(BLOB, TestUtils.SAMPLE_BYTE_ARRAY)
             .get();
    }
@@ -75,13 +73,12 @@ public class GlobTypeLoaderTest {
       assertEquals(1.1, AnObject.glob.get(AnObject.DOUBLE), 0.00001);
       assertEquals(Boolean.FALSE, AnObject.glob.get(AnObject.BOOLEAN));
       assertFalse(AnObject.glob.isTrue(AnObject.BOOLEAN));
-      assertEquals(Dates.parse("2006/12/25"), AnObject.glob.get(AnObject.DATE));
       assertEquals(new Long(15), AnObject.glob.get(AnObject.LONG));
       assertEquals(TestUtils.SAMPLE_BYTE_ARRAY, AnObject.glob.get(AnObject.BLOB));
 
       assertEquals(0, AnObject.ID.getIndex());
       assertEquals(3, AnObject.BOOLEAN.getIndex());
-      assertEquals(6, AnObject.BLOB.getIndex());
+      assertEquals(5, AnObject.BLOB.getIndex());
 
       assertTrue(AnObject.ID.isKeyField());
       assertFalse(AnObject.STRING.isKeyField());

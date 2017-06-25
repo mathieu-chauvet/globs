@@ -7,6 +7,7 @@ import org.globsframework.model.*;
 import org.globsframework.model.impl.DefaultGlob;
 import org.globsframework.utils.exceptions.ItemNotFound;
 
+import java.time.ZonedDateTime;
 import java.util.Date;
 
 public class GlobBuilder implements FieldValues.Functor, FieldSetter, FieldValues {
@@ -50,16 +51,6 @@ public class GlobBuilder implements FieldValues.Functor, FieldSetter, FieldValue
   }
 
   public GlobBuilder set(DoubleField field, Double value) {
-    fieldValuesBuilder.set(field, value);
-    return this;
-  }
-
-  public GlobBuilder set(DateField field, Date value) {
-    fieldValuesBuilder.set(field, value);
-    return this;
-  }
-
-  public GlobBuilder set(TimeStampField field, Date value) {
     fieldValuesBuilder.set(field, value);
     return this;
   }
@@ -122,20 +113,8 @@ public class GlobBuilder implements FieldValues.Functor, FieldSetter, FieldValue
     return fieldValuesBuilder.get().get(field);
   }
 
-  public Double get(DoubleField field, double valueIfNull) throws ItemNotFound {
+  public double get(DoubleField field, double valueIfNull) throws ItemNotFound {
     return fieldValuesBuilder.get().get(field, valueIfNull);
-  }
-
-  public Date get(DateField field) throws ItemNotFound {
-    return fieldValuesBuilder.get().get(field);
-  }
-
-  public Date get(DateField field, Date valueIfNull) throws ItemNotFound {
-    return fieldValuesBuilder.get().get(field, valueIfNull);
-  }
-
-  public Date get(TimeStampField field) throws ItemNotFound {
-    return fieldValuesBuilder.get().get(field);
   }
 
   public Integer get(IntegerField field) throws ItemNotFound {
@@ -164,6 +143,10 @@ public class GlobBuilder implements FieldValues.Functor, FieldSetter, FieldValue
 
   public Long get(LongField field) throws ItemNotFound {
     return fieldValuesBuilder.get().get(field);
+  }
+
+  public long get(LongField field, long valueIfNull) throws ItemNotFound {
+    return fieldValuesBuilder.get().get(field, valueIfNull);
   }
 
   public byte[] get(BlobField field) throws ItemNotFound {

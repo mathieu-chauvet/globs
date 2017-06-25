@@ -33,11 +33,6 @@ public abstract class AbstractMutableGlob extends AbstractGlob implements Mutabl
     return this;
   }
 
-  public MutableGlob set(DateField field, Date value) {
-    setObject(field, value);
-    return this;
-  }
-
   public MutableGlob set(LongField field, Long value) {
     setObject(field, value);
     return this;

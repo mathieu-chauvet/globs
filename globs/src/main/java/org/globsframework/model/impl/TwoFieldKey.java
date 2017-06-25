@@ -11,6 +11,7 @@ import org.globsframework.utils.exceptions.InvalidParameter;
 import org.globsframework.utils.exceptions.ItemNotFound;
 import org.globsframework.utils.exceptions.MissingInfo;
 
+import java.time.ZonedDateTime;
 import java.util.Arrays;
 import java.util.Date;
 
@@ -107,25 +108,6 @@ public class TwoFieldKey extends DefaultKey {
     return Boolean.TRUE.equals(get(field));
   }
 
-  public Date get(DateField field) {
-    checkIsKeyField(field);
-    if (field == keyField1) {
-      return (Date)value1;
-    }
-    if (field == keyField2) {
-      return (Date)value2;
-    }
-    return null;
-  }
-
-  public Date get(DateField field, Date valueIfNull) throws ItemNotFound {
-    Date value = get(field);
-    if (value == null) {
-      return valueIfNull;
-    }
-    return value;
-  }
-
   public Double get(DoubleField field) {
     checkIsKeyField(field);
     if (field == keyField1) {
@@ -137,7 +119,7 @@ public class TwoFieldKey extends DefaultKey {
     return null;
   }
 
-  public Double get(DoubleField field, double valueIfNull) throws ItemNotFound {
+  public double get(DoubleField field, double valueIfNull) throws ItemNotFound {
     return get(field);
   }
 
@@ -190,17 +172,6 @@ public class TwoFieldKey extends DefaultKey {
     }
     if (field == keyField2) {
       return (String)value2;
-    }
-    return null;
-  }
-
-  public Date get(TimeStampField field) {
-    checkIsKeyField(field);
-    if (field == keyField1) {
-      return (Date)value1;
-    }
-    if (field == keyField2) {
-      return (Date)value2;
     }
     return null;
   }

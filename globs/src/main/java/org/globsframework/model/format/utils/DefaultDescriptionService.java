@@ -117,26 +117,10 @@ public class DefaultDescriptionService implements DescriptionService {
         result.set(GlobStringifiers.get(field));
       }
 
-      public void visitDate(final DateField field) throws Exception {
-        result.set(new AbstractGlobFieldStringifier<DateField, Date>(field) {
-          protected String valueToString(Date value) {
-            return formats.getDateFormat().format(value);
-          }
-        });
-      }
-
       public void visitBoolean(final BooleanField field) throws Exception {
         result.set(new AbstractGlobFieldStringifier<BooleanField, Boolean>(field) {
           protected String valueToString(Boolean value) {
             return formats.convertToString(value);
-          }
-        });
-      }
-
-      public void visitTimeStamp(TimeStampField field) throws Exception {
-        result.set(new AbstractGlobFieldStringifier<TimeStampField, Date>(field) {
-          protected String valueToString(Date value) {
-            return formats.getTimestampFormat().format(value);
           }
         });
       }

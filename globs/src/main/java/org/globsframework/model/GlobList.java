@@ -61,12 +61,7 @@ public class GlobList extends ArrayList<Glob> {
     }
 
     public GlobList filterSelf(GlobMatcher matcher, GlobRepository repository) {
-        for (Iterator<Glob> iter = iterator(); iter.hasNext(); ) {
-            Glob glob = iter.next();
-            if (!matcher.matches(glob, repository)) {
-                iter.remove();
-            }
-        }
+        removeIf(glob -> !matcher.matches(glob, repository));
         return this;
     }
 
@@ -266,17 +261,6 @@ public class GlobList extends ArrayList<Glob> {
         SortedSet<String> result = new TreeSet<String>();
         for (FieldValues values : this) {
             String e = values.get(field);
-            if (e != null) {
-                result.add(e);
-            }
-        }
-        return result;
-    }
-
-    public SortedSet<Date> getSortedSet(DateField field) {
-        SortedSet<Date> result = new TreeSet<Date>();
-        for (FieldValues values : this) {
-            Date e = values.get(field);
             if (e != null) {
                 result.add(e);
             }

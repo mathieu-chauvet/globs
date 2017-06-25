@@ -32,18 +32,6 @@ public class DefaultFieldLoaderFactory {
       return add(new DefaultLongField(name, type, index, isKeyField, defaultValue), isKeyField);
    }
 
-   public DefaultTimeStampField addTimestamp(String name,
-                                      boolean isKeyField,
-                                      int index) {
-      return add(new DefaultTimeStampField(name, type, index, isKeyField), isKeyField);
-   }
-
-   public DefaultDateField addDate(String name,
-                            boolean isKeyField,
-                            int index) {
-      return add(new DefaultDateField(name, type, index, isKeyField), isKeyField);
-   }
-
    public DefaultDoubleField addDouble(String name,
                                 boolean isKeyField,
                                 int index,

@@ -24,14 +24,6 @@ public interface UpdateBuilder {
 
    UpdateBuilder update(DoubleField field, Double value);
 
-   UpdateBuilder update(DateField field, DateAccessor accessor);
-
-   UpdateBuilder update(DateField field, Date value);
-
-   UpdateBuilder update(TimeStampField field, Date value);
-
-   UpdateBuilder update(TimeStampField field, DateAccessor value);
-
    UpdateBuilder update(StringField field, StringAccessor accessor);
 
    UpdateBuilder update(StringField field, String value);

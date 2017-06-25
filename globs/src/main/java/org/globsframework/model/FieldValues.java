@@ -4,7 +4,7 @@ import org.globsframework.metamodel.Field;
 import org.globsframework.metamodel.fields.*;
 import org.globsframework.utils.exceptions.ItemNotFound;
 
-import java.util.Date;
+import java.time.ZonedDateTime;
 
 public interface FieldValues {
 
@@ -12,13 +12,7 @@ public interface FieldValues {
 
    Double get(DoubleField field) throws ItemNotFound;
 
-   Double get(DoubleField field, double valueIfNull) throws ItemNotFound;
-
-   Date get(DateField field) throws ItemNotFound;
-
-   Date get(DateField field, Date valueIfNull) throws ItemNotFound;
-
-   Date get(TimeStampField field) throws ItemNotFound;
+   double get(DoubleField field, double valueIfNull) throws ItemNotFound;
 
    Integer get(IntegerField field) throws ItemNotFound;
 
@@ -33,6 +27,8 @@ public interface FieldValues {
    boolean isTrue(BooleanField field) throws ItemNotFound;
 
    Long get(LongField field) throws ItemNotFound;
+
+   long get(LongField field, long valueIfNull) throws ItemNotFound;
 
    byte[] get(BlobField field) throws ItemNotFound;
 
@@ -69,19 +65,7 @@ public interface FieldValues {
          throw new ItemNotFound(field.getName());
       }
 
-      public Double get(DoubleField field, double valueIfNull) throws ItemNotFound {
-         throw new ItemNotFound(field.getName());
-      }
-
-      public Date get(DateField field) throws ItemNotFound {
-         throw new ItemNotFound(field.getName());
-      }
-
-      public Date get(DateField field, Date valueIfNull) throws ItemNotFound {
-         throw new ItemNotFound(field.getName());
-      }
-
-      public Date get(TimeStampField field) throws ItemNotFound {
+      public double get(DoubleField field, double valueIfNull) throws ItemNotFound {
          throw new ItemNotFound(field.getName());
       }
 
@@ -114,6 +98,10 @@ public interface FieldValues {
       }
 
       public Long get(LongField field) throws ItemNotFound {
+         throw new ItemNotFound(field.getName());
+      }
+
+      public long get(LongField field, long valueIfNull) throws ItemNotFound {
          throw new ItemNotFound(field.getName());
       }
 

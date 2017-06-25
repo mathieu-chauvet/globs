@@ -84,16 +84,6 @@ public class DefaultFieldValues extends AbstractFieldValues implements MutableFi
     return this;
   }
 
-  public DefaultFieldValues set(DateField field, Date value) {
-    setValue(field, value);
-    return this;
-  }
-
-  public DefaultFieldValues set(TimeStampField field, Date value) throws ItemNotFound {
-    setValue(field, value);
-    return this;
-  }
-
   public DefaultFieldValues set(BooleanField field, Boolean value) {
     setValue(field, value);
     return this;

@@ -130,16 +130,8 @@ public class RemoteExecutor {
       request.update(field, input.readJavaString());
     }
 
-    public void visitDate(DateField field) throws Exception {
-      request.update(field, input.readDate());
-    }
-
     public void visitBoolean(BooleanField field) throws Exception {
       request.update(field, input.readBoolean());
-    }
-
-    public void visitTimeStamp(TimeStampField field) throws Exception {
-      request.update(field, input.readDate());
     }
 
     public void visitBlob(BlobField field) throws Exception {

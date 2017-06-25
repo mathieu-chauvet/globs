@@ -1100,7 +1100,6 @@ public class DefaultGlobRepositoryTest extends DefaultGlobRepositoryTestCase {
                                "count=null\n" +
                                "present=null\n" +
                                "date=null\n" +
-                               "timestamp=null\n" +
                                "password=null\n" +
                                "linkId=null\n" +
                                "link2Id=null\n");

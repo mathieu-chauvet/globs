@@ -23,7 +23,7 @@ public class SerializationTest {
    protected OutputStream outputStream;
    protected InputStream inputStream;
    protected SerializedInput input;
-   private Date currentDate;
+   private int currentDate;
 
    @Before
    public void setUp() throws Exception {
@@ -39,7 +39,6 @@ public class SerializationTest {
       inputStream = new YANBuffereInputStream(new FileInputStream(file));
       input = new SerializationInputChecker(new DefaultSerializationInput(inputStream));
 
-      currentDate = new Date();
    }
 
    @Test
@@ -65,7 +64,6 @@ public class SerializationTest {
       output.writeJavaString("blah");
       output.writeBoolean(Boolean.TRUE);
       output.writeDouble(6.33);
-      output.writeDate(currentDate);
       output.writeInteger(4);
       output.writeLong(666L);
       outputStream.close();
@@ -73,7 +71,6 @@ public class SerializationTest {
       assertEquals("blah", input.readJavaString());
       assertEquals(Boolean.TRUE, input.readBoolean());
       assertEquals(6.33, input.readDouble(), 0.001);
-      assertEquals(currentDate, input.readDate());
       assertEquals(4, input.readInteger().intValue());
       assertEquals(666L, input.readLong().longValue());
       inputStream.close();
@@ -103,7 +100,6 @@ public class SerializationTest {
                                 FieldValuesBuilder.init()
                                    .set(DummyObject.ID, 1)
                                    .set(DummyObject.NAME, "name1")
-                                   .set(DummyObject.DATE, currentDate)
                                    .get());
       changeSet.processUpdate(KeyBuilder.newKey(DummyObject.TYPE, 2), DummyObject.NAME, "name2", null);
       changeSet.processDeletion(KeyBuilder.newKey(DummyObject.TYPE, 3),
@@ -117,7 +113,7 @@ public class SerializationTest {
 
       ChangeSet readChangeSet = input.readChangeSet(DummyModel.get());
       GlobTestUtils.assertChangesEqual(readChangeSet,
-                                       "<create type='dummyObject' id='1' name='name1' date='" + Dates.getStandardDate(currentDate) + "'/>" +
+                                       "<create type='dummyObject' id='1' name='name1'/>" +
                                        "<update type='dummyObject' id='2' name='name2' _name='(null)'/>" +
                                        "<delete type='dummyObject' id='3' _name='name3' _value='3.14'/>");
    }
@@ -152,10 +148,8 @@ public class SerializationTest {
       return FieldValuesBuilder.init()
          .set(DummyObject.ID, 1)
          .set(DummyObject.NAME, "obj1")
-         .set(DummyObject.DATE, new Date())
          .set(DummyObject.LINK_ID, 7)
          .set(DummyObject.PRESENT, false)
-         .set(DummyObject.TIMESTAMP, new Date())
          .set(DummyObject.VALUE, 6.2)
          .get();
    }

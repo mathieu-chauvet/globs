@@ -5,6 +5,7 @@ import org.globsframework.model.*;
 import org.globsframework.utils.exceptions.ItemNotFound;
 import org.globsframework.metamodel.fields.*;
 
+import java.time.ZonedDateTime;
 import java.util.Date;
 
 public abstract class AbstractOptGlob extends DefaultKey implements Glob, MutableGlob {
@@ -44,18 +45,9 @@ public abstract class AbstractOptGlob extends DefaultKey implements Glob, Mutabl
     return (Double)getValue(field);
   }
 
-  public Double get(DoubleField field, double valueIfNull) throws ItemNotFound {
+  public double get(DoubleField field, double valueIfNull) throws ItemNotFound {
     return (Double)getValue(field);
   }
-
-  public Date get(DateField field) throws ItemNotFound {
-    return (Date)getValue(field);
-  }
-
-  public Date get(TimeStampField field) throws ItemNotFound {
-    return (Date)getValue(field);
-  }
-
 
   public int get(IntegerField field, int valueIfNull) throws ItemNotFound {
     Object value = getValue(field);
@@ -131,10 +123,6 @@ public abstract class AbstractOptGlob extends DefaultKey implements Glob, Mutabl
 
   public MutableGlob set(StringField field, String value) {
     setObject(field, value);
-    return this;
-  }
-
-  public MutableGlob set(DateField field, Date value) {
     return this;
   }
 

@@ -75,10 +75,6 @@ public class FieldValuesBuilder {
     return setValue(field, value);
   }
 
-  public FieldValuesBuilder set(DateField field, Date value) {
-    return setValue(field, value);
-  }
-
   public FieldValuesBuilder set(StringField field, String value) {
     return setValue(field, value);
   }
@@ -113,9 +109,6 @@ public class FieldValuesBuilder {
     set(field, value + previous);
   }
 
-  public FieldValuesBuilder set(TimeStampField field, Date value) {
-    return setValue(field, value);
-  }
 
   public FieldValuesBuilder set(BlobField field, byte[] value) {
     return setValue(field, value);
