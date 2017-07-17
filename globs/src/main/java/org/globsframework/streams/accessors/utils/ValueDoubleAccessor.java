@@ -17,8 +17,8 @@ public class ValueDoubleAccessor implements DoubleAccessor {
     return value;
   }
 
-  public double getValue() {
-    return value;
+  public double getValue(double valueIfNull) {
+    return value == null ? valueIfNull : value;
   }
 
    public boolean wasNull() {

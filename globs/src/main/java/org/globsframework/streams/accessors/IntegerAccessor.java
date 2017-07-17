@@ -4,7 +4,7 @@ public interface IntegerAccessor extends Accessor {
 
   Integer getInteger();
 
-  int getValue();
+  int getValue(int valueIfNull);
 
   boolean wasNull();
 }

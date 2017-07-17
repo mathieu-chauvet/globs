@@ -8,8 +8,9 @@ public class LongSqlAccessor extends SqlAccessor implements LongAccessor {
     return getSqlMoStream().getLong(getIndex());
   }
 
-  public long getValue() {
-    return getLong();
+  public long getValue(long valueIfNull) {
+    Long value = getLong();
+    return value == null ? valueIfNull : value;
   }
 
   public boolean wasNull() {

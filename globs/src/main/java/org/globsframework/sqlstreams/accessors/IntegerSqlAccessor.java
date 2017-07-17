@@ -8,8 +8,9 @@ public class IntegerSqlAccessor extends SqlAccessor implements IntegerAccessor {
     return getSqlMoStream().getInteger(getIndex());
   }
 
-  public int getValue() {
-    return getInteger();
+  public int getValue(int valueIfNull) {
+     Integer value = getInteger();
+     return value == null ? valueIfNull : value;
   }
 
    public boolean wasNull() {

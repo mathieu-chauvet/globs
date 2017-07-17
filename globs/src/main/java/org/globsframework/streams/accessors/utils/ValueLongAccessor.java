@@ -16,8 +16,8 @@ public class ValueLongAccessor implements LongAccessor {
     return value;
   }
 
-  public long getValue() {
-    return value;
+  public long getValue(long valueIfNull) {
+    return value == null ? valueIfNull : value;
   }
 
    public boolean wasNull() {

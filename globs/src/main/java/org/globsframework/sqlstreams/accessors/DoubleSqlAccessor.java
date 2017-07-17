@@ -8,8 +8,9 @@ public class DoubleSqlAccessor extends SqlAccessor implements DoubleAccessor {
     return getSqlMoStream().getDouble(getIndex());
   }
 
-  public double getValue() {
-    return getDouble();
+  public double getValue(double valueIfNull) {
+     Double value = getDouble();
+     return value == null ? valueIfNull : value;
   }
 
    public boolean wasNull() {

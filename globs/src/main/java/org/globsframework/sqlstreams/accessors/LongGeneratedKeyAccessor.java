@@ -21,10 +21,10 @@ public class LongGeneratedKeyAccessor implements GeneratedKeyAccessor, LongAcces
   }
 
   public Long getLong() {
-    return getValue();
+    return getValue(0);
   }
 
-  public long getValue() {
+  public long getValue(long valueIfNull) {
     if (hasGeneratedKey) {
       try {
         return generatedKeys.getLong(1);

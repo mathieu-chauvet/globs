@@ -4,7 +4,7 @@ public interface LongAccessor extends Accessor {
 
   Long getLong();
 
-  long getValue();
+  long getValue(long valueIfNull);
 
   boolean wasNull();
 }

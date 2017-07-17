@@ -41,7 +41,7 @@ public class SqlSelectQueryTest extends DbServicesTestCase {
 
     GlobStream requestStream = query.execute();
     assertTrue(requestStream.next());
-    assertEquals(1, idAccessor.get().getValue());
+    assertEquals(1, idAccessor.get().getValue(0));
     assertEquals("hello", nameAccessor.get().getString());
     assertEquals(1.1, requestStream.getAccessor(DummyObject.VALUE).getObjectValue());
     assertEquals(true, requestStream.getAccessor(DummyObject.PRESENT).getObjectValue());
@@ -152,7 +152,7 @@ public class SqlSelectQueryTest extends DbServicesTestCase {
     TestUtils.assertFails(new Functor() {
       public void run() throws Exception {
         firstGlobStream.next();
-        firstAccessor.getValue();
+        firstAccessor.getValue(0);
       }
     }, SqlException.class);
   }

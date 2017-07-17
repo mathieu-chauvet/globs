@@ -38,7 +38,7 @@ public class DbGlobIdGenerator {
           .select(idField, idRef).getQuery().execute();
         int id;
         if (globStream.next()) {
-          id = idRef.get().getValue() + idCount;
+          id = idRef.get().getInteger() + idCount;
           sqlConnection.getUpdateBuilder(globType, Constraints.equal(tableNameField, tableName))
             .update(idField, id).getRequest().run();
         }

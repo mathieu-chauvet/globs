@@ -19,7 +19,6 @@ import org.globsframework.saxstack.utils.XmlUtils;
 import org.xml.sax.Attributes;
 
 import java.io.StringReader;
-import java.time.ZonedDateTime;
 import java.util.*;
 
 public class XmlGlobStreamReader {
@@ -229,8 +228,9 @@ public class XmlGlobStreamReader {
           return xmlMoStream.current.get(field);
         }
 
-        public double getValue() {
-          return getDouble();
+        public double getValue(double valueIfNull) {
+          Double value = getDouble();
+          return value == null ? valueIfNull : value;
         }
 
         public boolean wasNull() {
@@ -255,8 +255,9 @@ public class XmlGlobStreamReader {
           return xmlMoStream.current.get(field);
         }
 
-        public int getValue() {
-          return getInteger();
+        public int getValue(int valueIfNull) {
+          Integer value = getInteger();
+          return value == null ? valueIfNull : value;
         }
 
         public boolean wasNull() {
@@ -281,8 +282,9 @@ public class XmlGlobStreamReader {
           return xmlMoStream.current.get(field);
         }
 
-        public long getValue() {
-          return getLong();
+        public long getValue(long valueIfNull) {
+          Long value = getLong();
+          return value == null ? valueIfNull : value;
         }
 
          public boolean wasNull() {
