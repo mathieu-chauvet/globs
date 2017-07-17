@@ -21,7 +21,11 @@ public class ValueDoubleAccessor implements DoubleAccessor {
     return value;
   }
 
-  public Object getObjectValue() {
+   public boolean wasNull() {
+      return value == null;
+   }
+
+   public Object getObjectValue() {
     return value;
   }
 }

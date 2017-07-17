@@ -38,7 +38,11 @@ public class LongGeneratedKeyAccessor implements GeneratedKeyAccessor, LongAcces
     }
   }
 
-  public Object getObjectValue() {
+   public boolean wasNull() {
+      return false;
+   }
+
+   public Object getObjectValue() {
     return getLong();
   }
 }

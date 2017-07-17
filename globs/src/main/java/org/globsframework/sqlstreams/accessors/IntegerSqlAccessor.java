@@ -12,7 +12,11 @@ public class IntegerSqlAccessor extends SqlAccessor implements IntegerAccessor {
     return getInteger();
   }
 
-  public Object getObjectValue() {
+   public boolean wasNull() {
+      return getInteger() == null;
+   }
+
+   public Object getObjectValue() {
     return getInteger();
   }
 }

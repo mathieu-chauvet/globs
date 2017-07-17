@@ -233,6 +233,10 @@ public class XmlGlobStreamReader {
           return getDouble();
         }
 
+        public boolean wasNull() {
+          return getDouble() == null;
+        }
+
         public Object getObjectValue() {
           return getDouble();
         }
@@ -253,6 +257,10 @@ public class XmlGlobStreamReader {
 
         public int getValue() {
           return getInteger();
+        }
+
+        public boolean wasNull() {
+          return getInteger() == null;
         }
 
         public Object getObjectValue() {
@@ -277,7 +285,11 @@ public class XmlGlobStreamReader {
           return getLong();
         }
 
-        public Object getObjectValue() {
+         public boolean wasNull() {
+            return getLong() == null;
+         }
+
+         public Object getObjectValue() {
           return getLong();
         }
       }

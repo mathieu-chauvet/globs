@@ -20,6 +20,10 @@ public class ValueIntegerAccessor implements IntegerAccessor {
     return value;
   }
 
+  public boolean wasNull() {
+    return value == null;
+  }
+
   public Object getObjectValue() {
     return value;
   }

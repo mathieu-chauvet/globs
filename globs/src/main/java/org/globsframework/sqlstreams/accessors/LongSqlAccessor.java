@@ -12,6 +12,10 @@ public class LongSqlAccessor extends SqlAccessor implements LongAccessor {
     return getLong();
   }
 
+  public boolean wasNull() {
+    return getLong() == null;
+  }
+
   public Object getObjectValue() {
     return getLong();
   }

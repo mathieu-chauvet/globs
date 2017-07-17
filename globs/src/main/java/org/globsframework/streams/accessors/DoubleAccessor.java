@@ -4,4 +4,6 @@ public interface DoubleAccessor extends Accessor {
   Double getDouble();
 
   double getValue();
+
+  boolean wasNull();
 }

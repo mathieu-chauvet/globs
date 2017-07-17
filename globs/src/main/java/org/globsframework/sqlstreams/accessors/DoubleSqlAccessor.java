@@ -12,7 +12,11 @@ public class DoubleSqlAccessor extends SqlAccessor implements DoubleAccessor {
     return getDouble();
   }
 
-  public Object getObjectValue() {
+   public boolean wasNull() {
+      return getDouble() == null;
+   }
+
+   public Object getObjectValue() {
     return getDouble();
   }
 }

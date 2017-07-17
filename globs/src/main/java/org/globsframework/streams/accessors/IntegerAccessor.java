@@ -5,4 +5,6 @@ public interface IntegerAccessor extends Accessor {
   Integer getInteger();
 
   int getValue();
+
+  boolean wasNull();
 }
