@@ -135,8 +135,8 @@ public class ThreeFieldKey extends AbstractKey {
              fields[2].getName() + "=" + value3 + "]";
    }
 
-   protected Object getSwithValue(Field field) {
-      switch (field.getIndex()) {
+   protected Object getSwitchValue(Field field) {
+      switch (field.getKeyIndex()) {
          case 0:
             return value1;
          case 1:
@@ -144,6 +144,6 @@ public class ThreeFieldKey extends AbstractKey {
          case 2:
             return value3;
       }
-      return null;
+      throw new InvalidParameter(field + " is not a key field");
    }
 }

@@ -9,8 +9,8 @@ import org.globsframework.utils.exceptions.UnexpectedApplicationState;
 
 public class DefaultStringField extends AbstractField implements StringField {
 
-   public DefaultStringField(String name, GlobType globType, int index, boolean isKeyField, String defaultValue) {
-      super(name, globType, String.class, index, isKeyField, defaultValue, DataType.String);
+   public DefaultStringField(String name, GlobType globType, int index, boolean isKeyField, int keyIndex, String defaultValue) {
+      super(name, globType, String.class, index, keyIndex, isKeyField, defaultValue, DataType.String);
    }
 
    public void visit(FieldVisitor visitor) throws Exception {

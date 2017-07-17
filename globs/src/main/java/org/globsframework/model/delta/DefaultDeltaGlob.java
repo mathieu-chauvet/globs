@@ -27,7 +27,7 @@ class DefaultDeltaGlob extends AbstractFieldValuesWithPrevious implements DeltaG
   }
 
   private void initWithKey(Key key) {
-    key.safeApply(new FieldValues.Functor() {
+    key.safeApplyOnKeyField(new FieldValues.Functor() {
       public void process(Field field, Object value) throws Exception {
         values[field.getIndex()] = value;
         previousValues[field.getIndex()] = value;

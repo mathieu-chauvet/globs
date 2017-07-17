@@ -202,21 +202,21 @@ public class DefaultSerializationOutput implements SerializedOutput, ChangeSetVi
 
   public void visitCreation(Key key, FieldValues values) throws Exception {
     writeJavaString(key.getGlobType().getName());
-    writeValues(key);
+    writeValues(key.asFieldValues());
     writeByte(1);
     writeValues(values);
   }
 
   public void visitUpdate(Key key, FieldValuesWithPrevious values) throws Exception {
     writeJavaString(key.getGlobType().getName());
-    writeValues(key);
+    writeValues(key.asFieldValues());
     writeByte(2);
     writeValues(values);
   }
 
   public void visitDeletion(Key key, FieldValues values) throws Exception {
     writeJavaString(key.getGlobType().getName());
-    writeValues(key);
+    writeValues(key.asFieldValues());
     writeByte(3);
     writeValues(values);
   }

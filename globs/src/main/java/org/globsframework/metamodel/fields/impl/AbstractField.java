@@ -7,7 +7,6 @@ import org.globsframework.metamodel.properties.Property;
 import org.globsframework.metamodel.properties.PropertyHolder;
 import org.globsframework.metamodel.type.DataType;
 import org.globsframework.metamodel.utils.Annotations;
-import org.globsframework.metamodel.utils.DefaultAnnotations;
 import org.globsframework.metamodel.utils.MutableAnnotations;
 import org.globsframework.model.Glob;
 import org.globsframework.model.Key;
@@ -26,14 +25,16 @@ abstract public class AbstractField implements Field, MutableAnnotations, Proper
    private final Map<Key, Glob> annotations = new HashMap<Key, Glob>();
    private final String name;
    private final Class valueClass;
+   private final int keyIndex;
    private final Object defaultValue;
    private final DataType dataType;
    private static Object NULL_OBJECT = new Object();
    private volatile Object properties[] = new Object[]{NULL_OBJECT, NULL_OBJECT};
 
    protected AbstractField(String name, GlobType globType,
-                           Class valueClass, int index, boolean isKeyField,
+                           Class valueClass, int index, int keyIndex, boolean isKeyField,
                            Object defaultValue, DataType dataType) {
+      this.keyIndex = keyIndex;
       this.defaultValue = defaultValue;
       this.name = name;
       this.keyField = isKeyField;
@@ -61,6 +62,10 @@ abstract public class AbstractField implements Field, MutableAnnotations, Proper
 
    public int getIndex() {
       return index;
+   }
+
+   public int getKeyIndex() {
+      return keyIndex;
    }
 
    public boolean isKeyField() {

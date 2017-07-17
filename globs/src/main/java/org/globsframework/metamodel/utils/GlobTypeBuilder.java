@@ -29,7 +29,7 @@ public interface GlobTypeBuilder {
    GlobType get();
 
    default GlobTypeBuilder addIntegerKey(String fieldName){
-      addIntegerField(fieldName, KeyAnnotationType.create(1));
+      addIntegerField(fieldName, KeyAnnotationType.UNINITIALIZED);
       return this;
    }
 }

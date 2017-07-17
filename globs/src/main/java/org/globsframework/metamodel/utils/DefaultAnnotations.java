@@ -27,7 +27,7 @@ public class DefaultAnnotations implements MutableAnnotations {
    }
 
    public MutableAnnotations addAnnotation(Glob glob) {
-       if (glob != null){
+       if (glob != null) {
           annotations.put(glob.getKey(), glob);
        }
       return this;

@@ -30,6 +30,7 @@ public interface SerializedOutput {
 
   void writeBytes(byte[] value);
 
+  // TODO: 6/25/17 ==> remove.
   void writeJavaString(String value);
 
   void writeUtf8String(String value);

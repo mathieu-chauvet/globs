@@ -37,7 +37,7 @@ public class SqlSelectQuery implements SelectQuery {
     this.constraint = constraint;
     this.blobUpdater = blobUpdater;
     this.autoClose = autoClose;
-    this.fieldToAccessorHolder = new HashMap<Field, SqlAccessor>(fieldToAccessorHolder);
+    this.fieldToAccessorHolder = new HashMap<>(fieldToAccessorHolder);
     this.sqlService = sqlService;
     sql = prepareSqlRequest();
     try {

@@ -9,7 +9,7 @@ import org.globsframework.model.impl.TwoFieldKey;
 import org.globsframework.utils.exceptions.InvalidState;
 import org.globsframework.utils.exceptions.ItemNotFound;
 
-public abstract class AbstractKey implements Key {
+public abstract class AbstractKey implements Key, FieldValues {
 
   public static Key create(GlobType type, Object singleFieldValue) {
     return KeyBuilder.newKey(type, singleFieldValue);
@@ -54,32 +54,36 @@ public abstract class AbstractKey implements Key {
 
   public byte[] get(BlobField field) {
      checkIsKeyField(field);
-     return (byte[])getSwithValue(field);
+     return (byte[])getSwitchValue(field);
   }
 
   public Boolean get(BooleanField field) {
      checkIsKeyField(field);
-     return (Boolean)getSwithValue(field);
+     return (Boolean)getSwitchValue(field);
   }
 
   public Double get(DoubleField field) {
      checkIsKeyField(field);
-     return (Double)getSwithValue(field);
+     return (Double)getSwitchValue(field);
   }
 
-  public Object getValue(Field field) {
+   public boolean isNull(Field field) throws ItemNotFound {
+      return getValue(field) == null;
+   }
+
+   public Object getValue(Field field) {
      checkIsKeyField(field);
-     return getSwithValue(field);
+     return getSwitchValue(field);
   }
 
   public Integer get(IntegerField field) {
      checkIsKeyField(field);
-     return (Integer)getSwithValue(field);
+     return (Integer)getSwitchValue(field);
   }
 
   public Long get(LongField field) {
      checkIsKeyField(field);
-     return (Long)getSwithValue(field);
+     return (Long)getSwitchValue(field);
   }
 
   public long get(LongField field, long valueIfNull) throws ItemNotFound {
@@ -98,7 +102,7 @@ public abstract class AbstractKey implements Key {
 
   public String get(StringField field) {
      checkIsKeyField(field);
-     return (String)getSwithValue(field);
+     return (String)getSwitchValue(field);
   }
 
   public boolean isTrue(BooleanField field) {
@@ -109,5 +113,21 @@ public abstract class AbstractKey implements Key {
       return field.getGlobType() == getGlobType() && field.isKeyField();
    }
 
-   protected abstract Object getSwithValue(Field field);
+   public void applyOnKeyField(Functor functor) throws Exception {
+      apply(functor);
+   }
+
+   public void safeApplyOnKeyField(Functor functor) {
+      safeApply(functor);
+   }
+
+   public boolean containsKey(Field field) {
+      return field.isKeyField();
+   }
+
+   public FieldValues asFieldValues() {
+      return this;
+   }
+
+   protected abstract Object getSwitchValue(Field field);
 }

@@ -36,15 +36,15 @@ public class FourFieldKey extends AbstractKey {
       }
       Field field;
       field = keyFields[0];
-      this.value1 = field == keyField4 ? value4 : field == keyField3 ? value3 : field == keyField2 ? value2 : value1;
+      this.value1 = field == keyField1 ? value1 : field == keyField2 ? value2 : field == keyField3 ? value3 : value4;
       field.checkValue(this.value1);
 
       field = keyFields[1];
-      this.value2 = field == keyField4 ? value4 : field == keyField3 ? value3 : field == keyField2 ? value2 : value1;
+      this.value2 = field == keyField2 ? value2 : field == keyField1 ? value1 : field == keyField3 ? value3 : value4;
       field.checkValue(this.value2);
 
       field = keyFields[2];
-      this.value3 = field == keyField4 ? value4 : field == keyField3 ? value3 : field == keyField2 ? value2 : value1;
+      this.value3 = field == keyField3 ? value3 : field == keyField4 ? value4 : field == keyField2 ? value2 : value1;
       field.checkValue(this.value3);
 
       field = keyFields[3];
@@ -82,14 +82,18 @@ public class FourFieldKey extends AbstractKey {
       return 4;
    }
 
-   protected Object getSwithValue(Field field) {
-      switch (field.getIndex()){
-         case 0: return value1;
-         case 1: return value2;
-         case 2: return value3;
-         case 3: return value4;
+   protected Object getSwitchValue(Field field) {
+      switch (field.getKeyIndex()) {
+         case 0:
+            return value1;
+         case 1:
+            return value2;
+         case 2:
+            return value3;
+         case 3:
+            return value4;
       }
-      return null;
+      throw new InvalidParameter(field + " is not a key field");
    }
 
    // optimized - do not use generated code
@@ -103,10 +107,10 @@ public class FourFieldKey extends AbstractKey {
       if (o.getClass() == FourFieldKey.class) {
          FourFieldKey otherSingleFieldKey = (FourFieldKey)o;
          return type == otherSingleFieldKey.getGlobType() &&
-            Utils.equal(otherSingleFieldKey.value1, value1) &&
-            Utils.equal(otherSingleFieldKey.value2, value2) &&
-            Utils.equal(otherSingleFieldKey.value3, value3) &&
-            Utils.equal(otherSingleFieldKey.value4, value4);
+                Utils.equal(otherSingleFieldKey.value1, value1) &&
+                Utils.equal(otherSingleFieldKey.value2, value2) &&
+                Utils.equal(otherSingleFieldKey.value3, value3) &&
+                Utils.equal(otherSingleFieldKey.value4, value4);
       }
 
       if (!Key.class.isAssignableFrom(o.getClass())) {
@@ -123,7 +127,7 @@ public class FourFieldKey extends AbstractKey {
 
    // optimized - do not use generated code
    public int hashCode() {
-         return hashCode;
+      return hashCode;
    }
 
    private int computeHash() {

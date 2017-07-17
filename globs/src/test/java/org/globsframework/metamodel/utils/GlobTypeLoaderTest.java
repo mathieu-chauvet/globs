@@ -507,6 +507,8 @@ public class GlobTypeLoaderTest {
    @Test
    public void testAnObjectWithDefaultValues() throws Exception {
       assertEquals(7, DummyObjectWithDefaultValues.INTEGER.getDefaultValue());
+      assertEquals(7, DummyObjectWithDefaultValues.INTEGER.getAnnotation(DefaultIntegerAnnotationType.UNIQUE_KEY)
+         .get(DefaultIntegerAnnotationType.DEFAULT_VALUE).intValue());
       assertEquals(3.14159265, DummyObjectWithDefaultValues.DOUBLE.getDefaultValue());
       assertEquals(5l, DummyObjectWithDefaultValues.LONG.getDefaultValue());
       assertEquals(true, DummyObjectWithDefaultValues.BOOLEAN.getDefaultValue());
@@ -520,6 +522,7 @@ public class GlobTypeLoaderTest {
       public static GlobType TYPE;
       @KeyField
       public static IntegerField ID;
+
       @DefaultBoolean(true)
       public static IntegerField COUNT;
    }

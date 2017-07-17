@@ -3,6 +3,7 @@ package org.globsframework.sqlstreams.constraints.impl;
 import org.globsframework.metamodel.Field;
 import org.globsframework.metamodel.GlobType;
 import org.globsframework.model.FieldValue;
+import org.globsframework.model.FieldValues;
 import org.globsframework.model.Key;
 import org.globsframework.utils.exceptions.UnexpectedApplicationState;
 
@@ -18,9 +19,9 @@ public class KeyConstraint {
   }
 
   public void setValue(Key key) {
-    for (FieldValue fieldValue : key.toArray()) {
-      this.values.put(fieldValue.getField(), fieldValue.getValue());
-    }
+    key.safeApplyOnKeyField((field, value) -> {
+        this.values.put(field, value);
+    });
     if (key.getGlobType() != globType) {
       throw new UnexpectedApplicationState("Bad key received was " + key.getGlobType().getName() +
                                            " but " + globType.getName() + " was expected");

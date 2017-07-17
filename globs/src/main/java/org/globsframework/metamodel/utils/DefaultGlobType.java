@@ -2,6 +2,7 @@ package org.globsframework.metamodel.utils;
 
 import org.globsframework.metamodel.Field;
 import org.globsframework.metamodel.GlobType;
+import org.globsframework.metamodel.annotations.KeyAnnotationType;
 import org.globsframework.metamodel.fields.impl.AbstractField;
 import org.globsframework.metamodel.index.Index;
 import org.globsframework.metamodel.index.MultiFieldIndex;
@@ -183,6 +184,21 @@ public class DefaultGlobType implements MutableGlobType, MutableAnnotations, Pro
       fields = new Field[fieldsByName.size()];
       for (Field field : fieldsByName.values()) {
          fields[field.getIndex()] = field;
+      }
+      int keyFieldCount = 0;
+      for (Field field : fields) {
+         Glob annotation = field.findAnnotation(KeyAnnotationType.UNIQUE_KEY);
+         if (annotation != null) {
+            int index = annotation.get(KeyAnnotationType.INDEX, -1);
+            if (index == -1) {
+               ((MutableAnnotations)field).addAnnotation(KeyAnnotationType.create(keyFieldCount));
+            }
+            else if (index != keyFieldCount) {
+               throw new InvalidState("For " + field + " internal index '" + index
+                                      + "' is different from computed '" + keyFieldCount + "'");
+            }
+            keyFieldCount++;
+         }
       }
    }
 

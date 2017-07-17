@@ -7,8 +7,6 @@ import org.globsframework.model.utils.ChangeVisitor;
 import org.globsframework.utils.serialization.SerializedByteArrayOutput;
 import org.globsframework.utils.serialization.SerializedOutput;
 
-import java.util.Date;
-
 public class SerializedRemoteAccess {
 
   public byte[] apply(ChangeSet changeSet) {
@@ -40,7 +38,7 @@ public class SerializedRemoteAccess {
         if (values.contains(field)) {
           value = values.getValue(field);
         }
-        if (!key.contains(field)) {
+        if (!key.containsKey(field)) {
           field.safeVisit(GlobChangeVisitorSerializer.this);
         }
       }

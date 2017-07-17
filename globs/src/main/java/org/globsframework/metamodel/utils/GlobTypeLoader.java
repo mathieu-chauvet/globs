@@ -86,7 +86,7 @@ public class GlobTypeLoader {
             annotations.addAnnotation(FieldNameAnnotationType.create(getFieldName(classField)));
             applyProcessor(targetClass, classField, processor, annotations);
          }
-         else{
+         else {
             try {
                Object value = classField.get(null);
                if (value == null) {
@@ -104,7 +104,7 @@ public class GlobTypeLoader {
                                DefaultAnnotations annotations) {
       for (FieldProcessor fieldProcessor : processor) {
          Object value = fieldProcessor.getValue(type, annotations, classField.getAnnotations());
-         if (value instanceof MutableAnnotations){
+         if (value instanceof MutableAnnotations) {
             for (Glob glob : annotations.list()) {
                ((MutableAnnotations)value).addAnnotation(glob);
             }
@@ -184,7 +184,7 @@ public class GlobTypeLoader {
 
    private Glob processAnnotation(Annotation annotation) {
       try {
-         if (annotation.annotationType().isAnnotationPresent(NoType.class)){
+         if (annotation.annotationType().isAnnotationPresent(NoType.class)) {
             return null;
          }
          java.lang.reflect.Field[] fields = annotation.getClass().getFields();
@@ -218,7 +218,7 @@ public class GlobTypeLoader {
                return registered.create(annotation);
             }
             throw new RuntimeException("For " + annotation.annotationType() + " no GlobCreateFromAnnotation registered. Code like following is missing \n" +
-            "       loader.register(GlobCreateFromAnnotation.class, annotation -> create((theAnnotation)annotation))\n");
+                                       "       loader.register(GlobCreateFromAnnotation.class, annotation -> create((theAnnotation)annotation))\n");
          }
       }
       catch (IllegalAccessException e) {
@@ -239,11 +239,11 @@ public class GlobTypeLoader {
             else {
                fieldName = getFieldName(classField);
             }
-            AbstractField field = create(fieldName, classField.getType(), isKeyField, fieldIndex, classField);
+            AbstractField field = create(fieldName, classField.getType(), isKeyField, keyCount, fieldIndex, classField);
             field.addAnnotation(FieldNameAnnotationType.create(fieldName));
             if (isKeyField) {
-               keyCount++;
                field.addAnnotation(KeyAnnotationType.create(keyCount));
+               keyCount++;
             }
             setClassField(classField, field, targetClass);
             fieldIndex++;
@@ -252,29 +252,30 @@ public class GlobTypeLoader {
       }
    }
 
-   AbstractField create(String name, Class<?> fieldClass, boolean isKeyField, int index, java.lang.reflect.Field field) {
+   AbstractField create(String name, Class<?> fieldClass, boolean isKeyField, int keyIndex, int index, java.lang.reflect.Field field) {
       if (StringField.class.isAssignableFrom(fieldClass)) {
-         DefaultString annotation1 = field.getAnnotation(DefaultString.class);
-         String defaultValue = annotation1 != null ? annotation1.value() : null;
-         return fieldFactory.addString(name, isKeyField, index, defaultValue);
+         DefaultString defaultString = field.getAnnotation(DefaultString.class);
+         String defaultValue = defaultString != null ? defaultString.value() : null;
+         return fieldFactory.addString(name, isKeyField, keyIndex, index, defaultValue);
       }
       else if (IntegerField.class.isAssignableFrom(fieldClass)) {
          DefaultInteger defaultInteger = field.getAnnotation(DefaultInteger.class);
-         return fieldFactory.addInteger(name, isKeyField, index, defaultInteger != null ? defaultInteger.value() : null);
+         return fieldFactory.addInteger(name, isKeyField, keyIndex, index,
+                                        defaultInteger != null ? defaultInteger.value() : null);
       }
       else if (LongField.class.isAssignableFrom(fieldClass)) {
          DefaultLong defaultLong = field.getAnnotation(DefaultLong.class);
-         return fieldFactory.addLong(name, isKeyField, index,
+         return fieldFactory.addLong(name, isKeyField, keyIndex, index,
                                      defaultLong != null ? defaultLong.value() : null);
       }
       else if (BooleanField.class.isAssignableFrom(fieldClass)) {
          DefaultBoolean defaultBoolean = field.getAnnotation(DefaultBoolean.class);
-         return fieldFactory.addBoolean(name, isKeyField, index,
+         return fieldFactory.addBoolean(name, isKeyField, keyIndex, index,
                                         defaultBoolean != null ? defaultBoolean.value() : null);
       }
       else if (DoubleField.class.isAssignableFrom(fieldClass)) {
          DefaultDouble defaultDouble = field.getAnnotation(DefaultDouble.class);
-         return fieldFactory.addDouble(name, isKeyField, index,
+         return fieldFactory.addDouble(name, isKeyField, keyIndex, index,
                                        defaultDouble != null ? defaultDouble.value() : null);
       }
       else if (BlobField.class.isAssignableFrom(fieldClass)) {

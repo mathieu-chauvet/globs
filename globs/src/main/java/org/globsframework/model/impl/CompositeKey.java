@@ -20,13 +20,12 @@ public class CompositeKey extends AbstractKey {
       this.type = type;
       Field[] keyFields = type.getKeyFields();
       this.values = new Object[keyFields.length];
-      int index = 0;
       for (Field field : keyFields) {
          if (!getter.contains(field)) {
             throw new MissingInfo("Field '" + field.getName() +
                                   "' missing for identifying a Glob of type: " + type.getName());
          }
-         values[index++] = getter.get(field);
+         values[field.getKeyIndex()] = getter.get(field);
       }
       hashCode = computeHash();
    }
@@ -37,7 +36,7 @@ public class CompositeKey extends AbstractKey {
       this.values = new Object[keyFields.length];
       int index = 0;
       for (Field field : keyFields) {
-         values[index++] = globValues[field.getIndex()];
+         values[field.getKeyIndex()] = globValues[field.getIndex()];
       }
       hashCode = computeHash();
    }
@@ -54,7 +53,7 @@ public class CompositeKey extends AbstractKey {
       Field[] fields = type.getKeyFields();
       int index = 0;
       for (Field field : fields) {
-         functor.process(field, values[index++]);
+         functor.process(field, values[field.getKeyIndex()]);
       }
    }
 
@@ -148,7 +147,7 @@ public class CompositeKey extends AbstractKey {
       return array;
    }
 
-   protected Object getSwithValue(Field field) {
-      return values[field.getIndex()];
+   protected Object getSwitchValue(Field field) {
+      return values[field.getKeyIndex()];
    }
 }

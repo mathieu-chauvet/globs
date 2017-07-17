@@ -10,8 +10,8 @@ import org.globsframework.utils.exceptions.UnexpectedApplicationState;
 public class DefaultDoubleField extends AbstractField implements DoubleField {
 
    public DefaultDoubleField(String name, GlobType globType,
-                             int index, boolean isKeyField, Double defaultValue) {
-      super(name, globType, Double.class, index, isKeyField, defaultValue, DataType.Double);
+                             int index, boolean isKeyField, final int keyIndex, Double defaultValue) {
+      super(name, globType, Double.class, index, keyIndex, isKeyField, defaultValue, DataType.Double);
    }
 
    public void visit(FieldVisitor visitor) throws Exception {

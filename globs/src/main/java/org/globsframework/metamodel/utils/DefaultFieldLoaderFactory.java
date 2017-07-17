@@ -2,7 +2,6 @@ package org.globsframework.metamodel.utils;
 
 import org.globsframework.metamodel.Field;
 import org.globsframework.metamodel.annotations.*;
-import org.globsframework.metamodel.fields.*;
 import org.globsframework.metamodel.fields.impl.*;
 import org.globsframework.metamodel.index.MultiFieldNotUniqueIndex;
 import org.globsframework.metamodel.index.MultiFieldUniqueIndex;
@@ -19,38 +18,38 @@ public class DefaultFieldLoaderFactory {
    }
 
    public DefaultIntegerField addInteger(String name,
-                                  boolean isKeyField,
-                                  int index,
-                                  Integer defaultValue) {
-      return add(new DefaultIntegerField(name, type, index, isKeyField, defaultValue), isKeyField);
+                                         boolean isKeyField,
+                                         int keyIndex, int index,
+                                         Integer defaultValue) {
+      return add(new DefaultIntegerField(name, type, index, isKeyField, keyIndex, defaultValue), isKeyField);
    }
 
    public DefaultLongField addLong(String name,
-                            boolean isKeyField,
-                            int index,
-                            Long defaultValue) {
-      return add(new DefaultLongField(name, type, index, isKeyField, defaultValue), isKeyField);
+                                   boolean isKeyField,
+                                   int keyIndex, int index,
+                                   Long defaultValue) {
+      return add(new DefaultLongField(name, type, index, isKeyField, keyIndex, defaultValue), isKeyField);
    }
 
    public DefaultDoubleField addDouble(String name,
-                                boolean isKeyField,
-                                int index,
-                                Double defaultValue) {
-      return add(new DefaultDoubleField(name, type, index, isKeyField, defaultValue), isKeyField);
+                                       boolean isKeyField,
+                                       final int keyIndex, int index,
+                                       Double defaultValue) {
+      return add(new DefaultDoubleField(name, type, index, isKeyField, keyIndex, defaultValue), isKeyField);
    }
 
    public DefaultStringField addString(String name,
-                                boolean isKeyField,
-                                int index,
-                                String defaultValue) {
-      return add(new DefaultStringField(name, type, index, isKeyField, defaultValue), isKeyField);
+                                       boolean isKeyField,
+                                       int keyIndex, int index,
+                                       String defaultValue) {
+      return add(new DefaultStringField(name, type, index, isKeyField, keyIndex, defaultValue), isKeyField);
    }
 
    public DefaultBooleanField addBoolean(String name,
-                                  boolean isKeyField,
-                                  int index,
-                                  Boolean defaultValue) {
-      return add(new DefaultBooleanField(name, type, index, isKeyField, defaultValue), isKeyField);
+                                         boolean isKeyField,
+                                         final int keyIndex, int index,
+                                         Boolean defaultValue) {
+      return add(new DefaultBooleanField(name, type, index, isKeyField, keyIndex, defaultValue), isKeyField);
    }
 
    public DefaultBlobField addBlob(String name, int index) {

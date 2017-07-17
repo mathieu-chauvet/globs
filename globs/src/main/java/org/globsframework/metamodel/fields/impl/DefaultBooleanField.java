@@ -8,8 +8,8 @@ import org.globsframework.metamodel.type.DataType;
 import org.globsframework.utils.exceptions.UnexpectedApplicationState;
 
 public class DefaultBooleanField extends AbstractField implements BooleanField {
-   public DefaultBooleanField(String name, GlobType globType, int index, boolean isKeyField, Boolean defaultValue) {
-      super(name, globType, Boolean.class, index, isKeyField, defaultValue, DataType.Boolean);
+   public DefaultBooleanField(String name, GlobType globType, int index, boolean isKeyField, final int keyIndex, Boolean defaultValue) {
+      super(name, globType, Boolean.class, index, keyIndex, isKeyField, defaultValue, DataType.Boolean);
    }
 
    public void visit(FieldVisitor visitor) throws Exception {

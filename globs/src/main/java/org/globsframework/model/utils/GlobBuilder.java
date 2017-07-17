@@ -7,9 +7,6 @@ import org.globsframework.model.*;
 import org.globsframework.model.impl.DefaultGlob;
 import org.globsframework.utils.exceptions.ItemNotFound;
 
-import java.time.ZonedDateTime;
-import java.util.Date;
-
 public class GlobBuilder implements FieldValues.Functor, FieldSetter, FieldValues {
   private FieldValuesBuilder fieldValuesBuilder = new FieldValuesBuilder();
   private GlobType globType;
@@ -37,7 +34,7 @@ public class GlobBuilder implements FieldValues.Functor, FieldSetter, FieldValue
 
   public static GlobBuilder init(Key key, FieldValue... values) {
     GlobBuilder builder = new GlobBuilder(key.getGlobType());
-    key.safeApply(builder);
+    key.safeApplyOnKeyField(builder);
     FieldValues fieldValues = new ArrayFieldValues(values);
     fieldValues.safeApply(builder);
     return builder;
@@ -45,7 +42,7 @@ public class GlobBuilder implements FieldValues.Functor, FieldSetter, FieldValue
 
   public static GlobBuilder init(Key key, FieldValues values) {
     GlobBuilder builder = new GlobBuilder(key.getGlobType());
-    key.safeApply(builder);
+    key.safeApplyOnKeyField(builder);
     values.safeApply(builder);
     return builder;
   }
@@ -105,7 +102,11 @@ public class GlobBuilder implements FieldValues.Functor, FieldSetter, FieldValue
     setObject(field, value);
   }
 
-  public Object getValue(Field field) throws ItemNotFound {
+   public boolean isNull(Field field) throws ItemNotFound {
+      return getValue(field) == null;
+   }
+
+   public Object getValue(Field field) throws ItemNotFound {
     return fieldValuesBuilder.get().getValue(field);
   }
 

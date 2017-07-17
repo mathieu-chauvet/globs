@@ -64,14 +64,14 @@ public class TwoFieldKey extends AbstractKey {
       return 2;
    }
 
-   protected Object getSwithValue(Field field) {
-      switch (field.getIndex()) {
+   protected Object getSwitchValue(Field field) {
+      switch (field.getKeyIndex()) {
          case 0:
             return value1;
          case 1:
             return value2;
       }
-      return null;
+      throw new InvalidParameter(field + " is not a key field");
    }
 
    // optimized - do not use generated code

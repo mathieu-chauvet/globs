@@ -171,8 +171,8 @@ public class KeyBuilderTest  {
     values.put(DummyObject.NAME, "a");
     Key key = KeyBuilder.createFromValues(DummyObject.TYPE, values);
     assertTrue(key instanceof SingleFieldKey);
-    assertTrue(key.contains(DummyObject.ID));
-    assertFalse(key.contains(DummyObject.NAME));
+    assertTrue(key.containsKey(DummyObject.ID));
+    assertFalse(key.containsKey(DummyObject.NAME));
     assertEquals(new Integer(2), key.get(DummyObject.ID));
     try {
       key.get(DummyObject.NAME);

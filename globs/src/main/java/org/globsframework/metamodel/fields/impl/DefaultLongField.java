@@ -8,8 +8,8 @@ import org.globsframework.metamodel.type.DataType;
 import org.globsframework.utils.exceptions.UnexpectedApplicationState;
 
 public class DefaultLongField extends AbstractField implements LongField {
-   public DefaultLongField(String name, GlobType globType, int index, boolean isKeyField, Long defaultValue) {
-      super(name, globType, Long.class, index, isKeyField, defaultValue, DataType.Long);
+   public DefaultLongField(String name, GlobType globType, int index, boolean isKeyField, int keyIndex, Long defaultValue) {
+      super(name, globType, Long.class, index, keyIndex, isKeyField, defaultValue, DataType.Long);
    }
 
    public void visit(FieldVisitor visitor) throws Exception {

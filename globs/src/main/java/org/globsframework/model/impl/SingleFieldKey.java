@@ -112,7 +112,10 @@ public class SingleFieldKey extends AbstractKey {
       return getGlobType().getName() + "[" + keyField.getName() + "=" + value + "]";
    }
 
-   protected Object getSwithValue(Field field) {
-      return value;
+   protected Object getSwitchValue(Field field) {
+      if (field.getKeyIndex() == 0){
+         return value;
+      }
+      throw new InvalidParameter(field + " is not a key field");
    }
 }

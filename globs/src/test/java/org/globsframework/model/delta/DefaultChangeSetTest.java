@@ -253,7 +253,7 @@ public class DefaultChangeSetTest {
 
    @Test
    public void testChangedGlobTypesList() throws Exception {
-      changeSet.processCreation(DummyObject.TYPE, newKey(DummyObject.TYPE, 2));
+      changeSet.processCreation(newKey(DummyObject.TYPE, 2), FieldValues.EMPTY);
       changeSet.processUpdate(newKey(DummyObject2.TYPE, 1), DummyObject2.LABEL, "name", null);
       changeSet.processDeletion(newKey(DummyObjectWithLinks.TYPE, 0), FieldValues.EMPTY);
 
@@ -292,8 +292,8 @@ public class DefaultChangeSetTest {
 
    @Test
    public void testMergeOnDifferentKeys() throws Exception {
-      changeSet.processCreation(DummyObject.TYPE, key1);
-      newChangeSet.processCreation(DummyObject.TYPE, newKey(DummyObject.TYPE, 2));
+      changeSet.processCreation(key1, FieldValues.EMPTY);
+      newChangeSet.processCreation(newKey(DummyObject.TYPE, 2), FieldValues.EMPTY);
       newChangeSet.processUpdate(newKey(DummyObject.TYPE, 3), DummyObject.NAME, "name", null);
       newChangeSet.processDeletion(newKey(DummyObject.TYPE, 4), FieldValues.EMPTY);
 
@@ -307,7 +307,7 @@ public class DefaultChangeSetTest {
 
    @Test
    public void testMergeCreationAndDeletion() throws Exception {
-      changeSet.processCreation(DummyObject.TYPE, key1);
+      changeSet.processCreation(key1, FieldValues.EMPTY);
       assertFalse(changeSet.isEmpty());
 
       newChangeSet.processDeletion(key1, FieldValues.EMPTY);
@@ -318,8 +318,8 @@ public class DefaultChangeSetTest {
 
    @Test
    public void testMergeWithDoubleCreationError() throws Exception {
-      changeSet.processCreation(DummyObject.TYPE, key1);
-      newChangeSet.processCreation(DummyObject.TYPE, key1);
+      changeSet.processCreation(key1, FieldValues.EMPTY);
+      newChangeSet.processCreation(key1, FieldValues.EMPTY);
       try {
          changeSet.merge(newChangeSet);
          fail();

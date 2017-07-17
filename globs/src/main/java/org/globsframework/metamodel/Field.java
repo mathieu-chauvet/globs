@@ -38,6 +38,8 @@ public interface Field extends PropertyHolder<Field>, Annotations {
    */
   int getIndex();
 
+  int getKeyIndex();
+
   boolean valueEqual(Object o1, Object o2);
 
   Object normalize(Object value);

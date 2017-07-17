@@ -4,10 +4,9 @@ import org.globsframework.metamodel.Field;
 import org.globsframework.metamodel.GlobType;
 import org.globsframework.metamodel.fields.*;
 import org.globsframework.model.FieldValue;
+import org.globsframework.model.FieldValues;
 import org.globsframework.model.Key;
 import org.globsframework.utils.exceptions.ItemNotFound;
-
-import java.time.ZonedDateTime;
 
 public class EmptyKey implements Key {
    private final GlobType type;
@@ -18,6 +17,10 @@ public class EmptyKey implements Key {
 
    public GlobType getGlobType() {
       return type;
+   }
+
+   public boolean isNull(Field field) throws ItemNotFound {
+      throw new RuntimeException("Empty key '" + field.getFullName() + " not available");
    }
 
    public Object getValue(Field field) throws ItemNotFound {
@@ -76,10 +79,18 @@ public class EmptyKey implements Key {
       return 0;
    }
 
-   public void apply(Functor functor) throws Exception {
+   public void applyOnKeyField(FieldValues.Functor functor) throws Exception {
    }
 
-   public void safeApply(Functor functor) {
+   public void safeApplyOnKeyField(FieldValues.Functor functor) {
+   }
+
+   public boolean containsKey(Field field) {
+      return false;
+   }
+
+   public FieldValues asFieldValues() {
+      return FieldValues.EMPTY;
    }
 
    public FieldValue[] toArray() {

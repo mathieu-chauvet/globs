@@ -55,7 +55,7 @@ public class XmlChangeSetVisitor implements ChangeSetVisitor {
   private void dumpChanges(String change, Key key, FieldValues values, boolean previousValues) throws IOException {
     XmlTag tag = changesTag.createChildTag(change);
     tag.addAttribute("type", key.getGlobType().getName());
-    dumpFieldValues(tag, key, false);
+    dumpFieldValues(tag, key.asFieldValues(), false);
     dumpFieldValues(tag, values, previousValues);
     tag.end();
   }
@@ -63,29 +63,25 @@ public class XmlChangeSetVisitor implements ChangeSetVisitor {
   private void dumpChanges(String change, Key key, FieldValuesWithPrevious values) throws IOException {
     XmlTag tag = changesTag.createChildTag(change);
     tag.addAttribute("type", key.getGlobType().getName());
-    dumpFieldValues(tag, key, false);
+    dumpFieldValues(tag, key.asFieldValues(), false);
     dumpFieldValues(tag, values);
     tag.end();
   }
 
   private void dumpFieldValues(final XmlTag tag, FieldValues values, final boolean previousValues) throws IOException {
-    values.safeApply(new FieldValues.Functor() {
-      public void process(Field field, Object value) throws IOException {
-        if (value != null) {
-          final String name = previousValues ? "_" + field.getName() : field.getName();
-          tag.addAttribute(name, converter.toString(field, value));
-        }
+    values.safeApply((field, value) -> {
+      if (value != null) {
+        final String name = previousValues ? "_" + field.getName() : field.getName();
+        tag.addAttribute(name, converter.toString(field, value));
       }
     });
   }
 
   private void dumpFieldValues(final XmlTag tag, FieldValuesWithPrevious values) throws IOException {
-    values.safeApply(new FieldValuesWithPrevious.Functor() {
-      public void process(Field field, Object value, Object previousValue) throws IOException {
-        if ((value != null) || (previousValue != null)) {
-          tag.addAttribute(field.getName(), converter.toString(field, value));
-          tag.addAttribute("_" + field.getName(), converter.toString(field, previousValue));
-        }
+    values.safeApply((field, value, previousValue) -> {
+      if ((value != null) || (previousValue != null)) {
+        tag.addAttribute(field.getName(), converter.toString(field, value));
+        tag.addAttribute("_" + field.getName(), converter.toString(field, previousValue));
       }
     });
   }

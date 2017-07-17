@@ -14,6 +14,10 @@ public interface GlobRepository extends ReadOnlyGlobRepository {
   Glob create(GlobType type, FieldValue... values)
     throws MissingInfo, ItemAlreadyExists;
 
+  // todo
+//  Glob create(GlobType type, FieldValues values)
+//     throws MissingInfo, ItemAlreadyExists;
+
   Glob create(Key key, FieldValue... values)
     throws ItemAlreadyExists;
 

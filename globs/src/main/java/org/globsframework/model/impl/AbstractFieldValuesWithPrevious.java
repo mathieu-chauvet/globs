@@ -14,7 +14,11 @@ public abstract class AbstractFieldValuesWithPrevious implements FieldValuesWith
 
   protected abstract Object doGetPrevious(Field field);
 
-  public Object getValue(Field field) throws ItemNotFound {
+   public boolean isNull(Field field) throws ItemNotFound {
+      return doGet(field) == null;
+   }
+
+   public Object getValue(Field field) throws ItemNotFound {
     return doGet(field);
   }
 

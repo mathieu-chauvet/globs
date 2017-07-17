@@ -44,7 +44,11 @@ public abstract class AbstractFieldValues implements FieldValues {
     return Boolean.TRUE.equals(doGet(field));
   }
 
-  public Object getValue(Field field) {
+   public boolean isNull(Field field) throws ItemNotFound {
+      return doGet(field) == null;
+   }
+
+   public Object getValue(Field field) {
     return doGet(field);
   }
 

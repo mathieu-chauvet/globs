@@ -142,7 +142,7 @@ public abstract class AbstractOptGlob extends AbstractKey implements Glob, Mutab
   }
 
 
-  protected Object getSwithValue(Field field) {
+  protected Object getSwitchValue(Field field) {
     return getValue(field);
   }
 }

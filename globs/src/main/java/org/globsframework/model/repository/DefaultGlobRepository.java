@@ -319,7 +319,7 @@ public class DefaultGlobRepository implements GlobRepository, IndexSource {
       Object[] completedArray = new Object[type.getFieldCount()];
       addDefaultValues(type, completedArray);
       copyValues(valuesForCreate, completedArray);
-      copyValues(key, completedArray);
+      copyValues(key.asFieldValues(), completedArray);
       return create(key.getGlobType(), key, completedArray);
    }
 

@@ -28,7 +28,7 @@ public class FieldNameAnnotationType {
       DefaultGlobType globType = new DefaultGlobType("fieldNameAnnotation");
       DefaultFieldLoaderFactory factory = new DefaultFieldLoaderFactory(globType);
       DESC = globType;
-      DefaultStringField defaultStringField = factory.addString("name", false, 0, null);
+      DefaultStringField defaultStringField = factory.addString("name", false, 0, 0, null);
       NAME = defaultStringField;
       UNIQUE_KEY = KeyBuilder.newEmptyKey(DESC);
       defaultStringField.addAnnotation(create("name"));
