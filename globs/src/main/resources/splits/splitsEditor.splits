@@ -1,5 +1,0 @@
-<splits xmlns="http://www.globsframework.org/xml/splits.xsd">
-  <frame title="Splits Editor">
-     <panel ref="colorEditor"/>
-  </frame>
-</splits>

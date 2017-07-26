@@ -5,7 +5,6 @@ import junit.framework.AssertionFailedError;
 import org.globsframework.metamodel.GlobType;
 import org.globsframework.saxstack.writer.PrettyPrintRootXmlTag;
 import org.globsframework.saxstack.writer.XmlTag;
-import org.uispec4j.Window;
 
 import java.awt.*;
 import java.io.*;
@@ -195,34 +194,6 @@ public class TestUtils {
       catch (IOException e) {
          throw new RuntimeException("Unable to create file", e);
       }
-   }
-
-   public static void describe(Window window) {
-      try {
-         OutputStreamWriter outputStreamWriter = new OutputStreamWriter(System.out);
-         XmlTag tag = new PrettyPrintRootXmlTag(outputStreamWriter, 10).createChildTag("root");
-         out(window.getAwtComponent(), tag);
-         tag.end();
-         outputStreamWriter.flush();
-      }
-      catch (IOException e) {
-         e.printStackTrace();
-      }
-   }
-
-   public static void out(Component awtComponent, XmlTag tag) throws IOException {
-      String name = awtComponent.getClass().getSimpleName();
-      if (Strings.isNullOrEmpty(name)) {
-         name = awtComponent.getClass().getName();
-      }
-      XmlTag childTag = tag.createChildTag(name);
-      childTag.addAttribute("name", awtComponent.getName());
-      if (awtComponent instanceof Container) {
-         for (Component component : ((Container)awtComponent).getComponents()) {
-            out(component, childTag);
-         }
-      }
-      childTag.end();
    }
 
    public static <T> void checkEmpty(Collection<T> keys, String message) {
