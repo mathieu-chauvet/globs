@@ -2,17 +2,14 @@ package org.globsframework.utils.logging;
 
 import org.globsframework.metamodel.Field;
 import org.globsframework.metamodel.GlobType;
-import org.globsframework.metamodel.fields.DateField;
 import org.globsframework.metamodel.utils.GlobTypeComparator;
 import org.globsframework.model.Glob;
 import org.globsframework.model.GlobList;
 import org.globsframework.model.GlobRepository;
-import org.globsframework.utils.Dates;
 import org.globsframework.utils.Strings;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Date;
 import java.util.List;
 
 import static org.globsframework.utils.Utils.sort;

@@ -2,12 +2,9 @@ package org.globsframework.model;
 
 import junit.framework.Assert;
 import org.globsframework.metamodel.Field;
-import org.globsframework.metamodel.fields.DateField;
 import org.globsframework.metamodel.fields.StringField;
 import org.globsframework.model.utils.GlobMatchers;
 import org.globsframework.utils.Utils;
-
-import java.util.Date;
 
 public class GlobRepositoryChecker {
   private GlobRepository repository;

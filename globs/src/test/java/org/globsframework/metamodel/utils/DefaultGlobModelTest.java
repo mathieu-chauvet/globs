@@ -38,16 +38,6 @@ public class DefaultGlobModelTest {
       assertEquals(2, model.createGlobTypeProperty("prop3").getId());
    }
 
-   @Test
-   public void testIncludesConstantsFromInnerModel() throws Exception {
-      inner = new DefaultGlobModel(DummyObjectWithConstants.TYPE);
-      model = new DefaultGlobModel(inner, DummyObject.TYPE);
-
-      TestUtils.assertSetEquals(model.getConstants(),
-                                DummyObjectWithConstants.CONSTANT_1.getGlob(),
-                                DummyObjectWithConstants.CONSTANT_2.getGlob());
-   }
-
    public static class LargeLinkCycle1 {
       public static GlobType TYPE;
 

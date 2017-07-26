@@ -54,17 +54,6 @@ public class DefaultGlobModel implements GlobModel {
       return getAll().iterator();
    }
 
-   public GlobList getConstants() {
-      GlobList result = new GlobList();
-      for (GlobType type : typesByName.values()) {
-         result.addAll(type.getConstants());
-      }
-      if (innerModel != null) {
-         result.addAll(innerModel.getConstants());
-      }
-      return result;
-   }
-
    public GlobTypeDependencies getDependencies() {
       return dependencies;
    }

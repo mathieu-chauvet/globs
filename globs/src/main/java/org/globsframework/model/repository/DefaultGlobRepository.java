@@ -609,7 +609,6 @@ public class DefaultGlobRepository implements GlobRepository, IndexSource {
                disable(entry.getValue());
             }
             globs.removeAll(type);
-            add(type.getConstants());
          }
          for (Glob glob : newGlobs) {
             Key key = glob.getKey();

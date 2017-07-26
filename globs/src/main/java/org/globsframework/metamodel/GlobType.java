@@ -38,10 +38,6 @@ public interface GlobType extends PropertyHolder<GlobType>, Annotations {
 
    Collection<Field> getFieldsWithAnnotation(Key key);
 
-   void publishFieldWithAnnotations(Key key, BiFunction<Field, Glob, Void> function);
-
-   GlobList getConstants();
-
    Collection<Index> getIndices();
 
    Collection<MultiFieldIndex> getMultiFieldIndices();

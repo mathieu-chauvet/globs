@@ -8,9 +8,6 @@ import org.globsframework.metamodel.fields.impl.AbstractField;
 import org.globsframework.metamodel.index.*;
 import org.globsframework.metamodel.links.Link;
 import org.globsframework.model.Glob;
-import org.globsframework.model.GlobList;
-import org.globsframework.model.impl.ReadOnlyGlob;
-import org.globsframework.model.utils.GlobConstantContainer;
 import org.globsframework.utils.Strings;
 import org.globsframework.utils.exceptions.InvalidParameter;
 import org.globsframework.utils.exceptions.ItemAlreadyExists;
@@ -63,7 +60,6 @@ public class GlobTypeLoader {
       processClass(targetClass);
       processFields(targetClass);
 //      processLink(targetClass);
-      processConstants(targetClass);
       processIndex(targetClass);
       type.completeInit();
       for (Map.Entry<Class, Object> entry : registered.entrySet()) {
@@ -286,24 +282,6 @@ public class GlobTypeLoader {
       }
    }
 
-   private void processConstants(Class<?> targetClass) {
-      if (!targetClass.isEnum() && !GlobConstantContainer.class.isAssignableFrom(targetClass)) {
-         return;
-      }
-      if (!targetClass.isEnum()) {
-         throw new InvalidParameter("Class " + targetClass.getSimpleName() +
-                                    " must be an enum in order to declare constants");
-      }
-      if (!GlobConstantContainer.class.isAssignableFrom(targetClass)) {
-         throw new InvalidParameter("Class " + targetClass.getSimpleName() +
-                                    " must implement " + GlobConstantContainer.class.getSimpleName() +
-                                    " in order to declare constants");
-      }
-      for (GlobConstantContainer container : ((Class<GlobConstantContainer>)targetClass).getEnumConstants()) {
-         type.addConstant(container.getGlob());
-      }
-   }
-
    private void processIndex(Class<?> targetClass) {
       for (java.lang.reflect.Field classField : targetClass.getFields()) {
          if (isUniqueIndexField(classField)) {
@@ -399,17 +377,6 @@ public class GlobTypeLoader {
 
    private boolean isGlobLink(java.lang.reflect.Field field) {
       return Link.class.isAssignableFrom(field.getType());
-   }
-
-   public void addConstants(GlobList globs) {
-      for (Glob glob : globs) {
-         if (glob instanceof ReadOnlyGlob) {
-            type.addConstant((ReadOnlyGlob)glob);
-         }
-         else {
-            type.addConstant(new ReadOnlyGlob(glob.getType(), glob.toArray()));
-         }
-      }
    }
 
    public void defineUniqueIndex(UniqueIndex index, Field field) {

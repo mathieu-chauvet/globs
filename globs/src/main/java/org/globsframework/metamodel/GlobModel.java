@@ -13,9 +13,7 @@ public interface GlobModel extends Iterable<GlobType> {
 
   GlobType getType(String name) throws ItemNotFound;
 
-  GlobList getConstants();
-
-  GlobTypeDependencies getDependencies();
+   GlobTypeDependencies getDependencies();
 
   <T> Property<GlobType, T> createGlobTypeProperty(String name);
 

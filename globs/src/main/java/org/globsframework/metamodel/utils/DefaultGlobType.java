@@ -21,14 +21,12 @@ import org.globsframework.utils.exceptions.TooManyItems;
 
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.function.BiFunction;
 
 public class DefaultGlobType implements MutableGlobType, MutableAnnotations, PropertyHolder<GlobType> {
    private Map<String, Field> fieldsByName = new TreeMap<String, Field>();
    private Field[] fields;
    private Field[] keyFields = new Field[0];
    private String name;
-   private GlobList constants = new GlobList();
    private Map<String, Index> indices = new HashMap<String, Index>(2, 1);
    private Map<String, MultiFieldIndex> multiFieldIndices = new HashMap<String, MultiFieldIndex>(2, 1);
    private Map<Class, Object> registered = new ConcurrentHashMap<>();
@@ -157,23 +155,6 @@ public class DefaultGlobType implements MutableGlobType, MutableAnnotations, Pro
          }
       }
       return annotations;
-   }
-
-   public void publishFieldWithAnnotations(Key key, BiFunction<Field, Glob, Void> function) {
-      for (Field field : fields) {
-         Glob annotation = field.findAnnotation(key);
-         if (annotation != null) {
-            function.apply(field, annotation);
-         }
-      }
-   }
-
-   public void addConstant(ReadOnlyGlob glob) {
-      constants.add(glob);
-   }
-
-   public GlobList getConstants() {
-      return new GlobList(constants);
    }
 
    public String toString() {

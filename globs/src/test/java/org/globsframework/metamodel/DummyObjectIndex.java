@@ -2,7 +2,6 @@ package org.globsframework.metamodel;
 
 import org.globsframework.metamodel.annotations.KeyField;
 import org.globsframework.metamodel.annotations.NamingField;
-import org.globsframework.metamodel.fields.DateField;
 import org.globsframework.metamodel.fields.DoubleField;
 import org.globsframework.metamodel.fields.IntegerField;
 import org.globsframework.metamodel.fields.StringField;

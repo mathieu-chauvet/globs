@@ -9,11 +9,8 @@ import org.globsframework.metamodel.links.Link;
 import org.globsframework.metamodel.links.impl.UnInitializedLink;
 import org.globsframework.model.Glob;
 import org.globsframework.model.Key;
-import org.globsframework.model.impl.ReadOnlyGlob;
 import org.globsframework.model.utils.GlobBuilder;
-import org.globsframework.model.utils.GlobConstantContainer;
 import org.globsframework.utils.ArrayTestUtils;
-import org.globsframework.utils.Dates;
 import org.globsframework.utils.TestUtils;
 import org.globsframework.utils.exceptions.InvalidParameter;
 import org.globsframework.utils.exceptions.ItemAlreadyExists;
@@ -424,60 +421,6 @@ public class GlobTypeLoaderTest {
       assertEquals("link annotation", annotation.get(MyAnnotationType.VALUE));
    }
 
-   @Test
-   public void testAConstantsType() throws Exception {
-      assertEquals(1,
-                   DummyObjectWithConstants.CONSTANT_1.getGlob().get(DummyObjectWithConstants.ID).intValue());
-
-      TestUtils.assertSetEquals(DummyObjectWithConstants.TYPE.getConstants(),
-                                DummyObjectWithConstants.CONSTANT_1.getGlob(),
-                                DummyObjectWithConstants.CONSTANT_2.getGlob());
-   }
-
-   public static class ANonEnumConstantsType implements GlobConstantContainer {
-
-      public static GlobType TYPE;
-
-      @KeyField
-      public static IntegerField ID;
-
-      public ReadOnlyGlob getGlob() {
-         return null;
-      }
-   }
-
-   @Test
-   public void testANonEnumConstantsType() throws Exception {
-      try {
-         GlobTypeLoaderFactory.createAndLoad(ANonEnumConstantsType.class);
-         fail();
-      }
-      catch (Exception e) {
-         assertEquals("Class ANonEnumConstantsType must be an enum in order to declare constants",
-                      e.getMessage());
-      }
-   }
-
-   public static enum AnEnumTypeWithoutContainerInterface {
-      CONSTANT;
-
-      public static GlobType TYPE;
-
-      @KeyField
-      public static IntegerField ID;
-   }
-
-   @Test
-   public void testAnEnumTypeWithoutContainerInterface() throws Exception {
-      try {
-         GlobTypeLoaderFactory.createAndLoad(AnEnumTypeWithoutContainerInterface.class);
-         fail();
-      }
-      catch (Exception e) {
-         assertEquals("Class AnEnumTypeWithoutContainerInterface must implement GlobConstantContainer " +
-                      "in order to declare constants", e.getMessage());
-      }
-   }
 
    public static class AnObjectWithRequiredFields {
 

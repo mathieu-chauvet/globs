@@ -5,7 +5,6 @@ import org.globsframework.model.repository.DefaultGlobRepository;
 import org.globsframework.model.repository.*;
 import org.globsframework.model.repository.DefaultGlobIdGenerator;
 import org.globsframework.model.repository.StrictGlobRepository;
-import org.globsframework.model.utils.GlobConstantContainer;
 import org.globsframework.utils.exceptions.ExceptionHandler;
 
 public class GlobRepositoryBuilder {
@@ -41,13 +40,6 @@ public class GlobRepositoryBuilder {
 
   public GlobRepositoryBuilder add(GlobList globs) {
     globList.addAll(globs);
-    return this;
-  }
-
-  public GlobRepositoryBuilder add(GlobConstantContainer[] constants) {
-    for (GlobConstantContainer container : constants) {
-      globList.add(container.getGlob());
-    }
     return this;
   }
 
