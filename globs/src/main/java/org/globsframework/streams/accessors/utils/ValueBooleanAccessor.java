@@ -21,7 +21,7 @@ public class ValueBooleanAccessor implements BooleanAccessor {
     return value;
   }
 
-  public boolean getValue() {
+  public boolean getValue(boolean valueIfNull) {
     return value;
   }
 }

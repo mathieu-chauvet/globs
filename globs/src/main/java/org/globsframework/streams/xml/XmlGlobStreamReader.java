@@ -206,7 +206,7 @@ public class XmlGlobStreamReader {
           return xmlMoStream.current.get(field);
         }
 
-        public boolean getValue() {
+        public boolean getValue(boolean valueIfNull) {
           return getBoolean();
         }
 

@@ -4,5 +4,5 @@ public interface BooleanAccessor extends Accessor {
 
   Boolean getBoolean();
 
-  boolean getValue();
+  boolean getValue(boolean valueIfNull);
 }

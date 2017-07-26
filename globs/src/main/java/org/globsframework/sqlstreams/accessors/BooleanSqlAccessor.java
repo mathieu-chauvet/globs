@@ -4,15 +4,11 @@ import org.globsframework.sqlstreams.drivers.jdbc.SqlGlobStream;
 import org.globsframework.streams.accessors.BooleanAccessor;
 
 public class BooleanSqlAccessor extends SqlAccessor implements BooleanAccessor {
-  private boolean cachedValue;
+  private Boolean cachedValue;
   private boolean isNull;
   private int rowId;
 
   public Boolean getBoolean() {
-    return isNull ? null : getValue();
-  }
-
-  public boolean getValue() {
     SqlGlobStream moStream = getSqlMoStream();
     if (moStream.getCurrentRowId() == rowId) {
       return cachedValue;
@@ -21,9 +17,19 @@ public class BooleanSqlAccessor extends SqlAccessor implements BooleanAccessor {
       cachedValue = moStream.getBoolean(getIndex());
       rowId = moStream.getCurrentRowId();
       isNull = getSqlMoStream().isNull();
+      if (isNull){
+        cachedValue = null;
+      }
       return cachedValue;
     }
+  }
 
+  public boolean getValue(boolean valueIfNull) {
+    Boolean value = getBoolean();
+    if (value == null){
+      return valueIfNull;
+    }
+    return value;
   }
 
   public Object getObjectValue() {
