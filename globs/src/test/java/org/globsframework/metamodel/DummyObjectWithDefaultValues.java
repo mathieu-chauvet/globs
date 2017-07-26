@@ -4,7 +4,6 @@ import org.globsframework.metamodel.annotations.*;
 import org.globsframework.metamodel.fields.*;
 import org.globsframework.metamodel.utils.GlobTypeLoader;
 import org.globsframework.metamodel.utils.GlobTypeLoaderFactory;
-import org.globsframework.sqlstreams.annotations.AutoIncrement;
 
 public class DummyObjectWithDefaultValues {
   public static GlobType TYPE;
