@@ -28,7 +28,7 @@ public class DefaultSerializationInput implements SerializedInput {
   }
 
   public Glob readGlob(GlobModel model) {
-    GlobType globType = model.getType(readJavaString());
+    GlobType globType = model.getType(readUtf8String());
     GlobBuilder builder = GlobBuilder.init(globType);
     InputStreamFieldVisitor fieldVisitorInput = new InputStreamFieldVisitor(builder);
     for (Field field : globType.getFields()) {
@@ -41,7 +41,7 @@ public class DefaultSerializationInput implements SerializedInput {
     MutableChangeSet changeSet = new DefaultChangeSet();
     int count = readInteger();
     for (int i = 0; i < count; i++) {
-      GlobType type = model.getType(readJavaString());
+      GlobType type = model.getType(readUtf8String());
       Key key = KeyBuilder.createFromValues(type, readValues(type));
       int state = readByte();
       switch (state) {
@@ -139,7 +139,7 @@ public class DefaultSerializationInput implements SerializedInput {
     }
 
     public void visitString(StringField field) throws Exception {
-      builder.set(field, input.readJavaString());
+      builder.set(field, input.readUtf8String());
     }
 
     public void visitBoolean(BooleanField field) throws Exception {
@@ -174,7 +174,7 @@ public class DefaultSerializationInput implements SerializedInput {
     }
 
     public void visitString(StringField field) throws Exception {
-      builder.set(field, input.readJavaString(), input.readJavaString());
+      builder.set(field, input.readUtf8String(), input.readUtf8String());
     }
 
     public void visitBoolean(BooleanField field) throws Exception {
@@ -254,14 +254,6 @@ public class DefaultSerializationInput implements SerializedInput {
 
   public double readNotNullDouble() {
     return Double.longBitsToDouble(readNotNullLong());
-  }
-
-  public String readJavaString() {
-    byte[] bytes = readBytes();
-    if (bytes == null) {
-      return null;
-    }
-    return new String(bytes);
   }
 
   public String readUtf8String() {
@@ -378,7 +370,7 @@ public class DefaultSerializationInput implements SerializedInput {
     }
 
     public void visitString(StringField field) throws Exception {
-      builder.set(field, readJavaString());
+      builder.set(field, readUtf8String());
     }
 
     public void visitBoolean(BooleanField field) throws Exception {

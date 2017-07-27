@@ -61,14 +61,14 @@ public class SerializationTest {
    @Test
    public void testObjects() throws Exception {
 
-      output.writeJavaString("blah");
+      output.writeUtf8String("blah");
       output.writeBoolean(Boolean.TRUE);
       output.writeDouble(6.33);
       output.writeInteger(4);
       output.writeLong(666L);
       outputStream.close();
 
-      assertEquals("blah", input.readJavaString());
+      assertEquals("blah", input.readUtf8String());
       assertEquals(Boolean.TRUE, input.readBoolean());
       assertEquals(6.33, input.readDouble(), 0.001);
       assertEquals(4, input.readInteger().intValue());
@@ -81,7 +81,7 @@ public class SerializationTest {
       Glob glob = GlobBuilder.init(DummyObject.TYPE, createSampleValues()).get();
 
       output.writeGlob(glob);
-      output.writeJavaString("end");
+      output.writeUtf8String("end");
       outputStream.close();
 
       Glob newGlob = input.readGlob(DummyModel.get());
@@ -89,7 +89,7 @@ public class SerializationTest {
 
       assertEquals(glob.getValues(), newGlob.getValues());
       assertEquals(glob.getKey(), newGlob.getKey());
-      assertEquals("end", input.readJavaString());
+      assertEquals("end", input.readUtf8String());
       inputStream.close();
    }
 

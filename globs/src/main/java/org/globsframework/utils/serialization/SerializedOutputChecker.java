@@ -13,92 +13,87 @@ class SerializedOutputChecker implements SerializedOutput {
   }
 
   public void writeGlob(Glob glob) {
-    serializationOutput.writeJavaString("Glob");
+    serializationOutput.writeUtf8String("Glob");
     serializationOutput.writeGlob(glob);
   }
 
   public void writeChangeSet(ChangeSet changeSet) {
-    serializationOutput.writeJavaString("ChangeSet");
+    serializationOutput.writeUtf8String("ChangeSet");
     serializationOutput.writeChangeSet(changeSet);
   }
 
   public void write(int[] array) {
-    serializationOutput.writeJavaString("int array");
+    serializationOutput.writeUtf8String("int array");
     serializationOutput.write(array);
   }
 
   public void write(long[] array) {
-    serializationOutput.writeJavaString("long array");
+    serializationOutput.writeUtf8String("long array");
     serializationOutput.write(array);
   }
 
   public void writeDate(Date date) {
-    serializationOutput.writeJavaString("Date");
+    serializationOutput.writeUtf8String("Date");
     serializationOutput.writeDate(date);
   }
 
   public void write(int value) {
-    serializationOutput.writeJavaString("int");
+    serializationOutput.writeUtf8String("int");
     serializationOutput.write(value);
   }
 
   public void writeInteger(Integer value) {
-    serializationOutput.writeJavaString("Integer");
+    serializationOutput.writeUtf8String("Integer");
     serializationOutput.writeInteger(value);
   }
 
   public void write(double value) {
-    serializationOutput.writeJavaString("double");
+    serializationOutput.writeUtf8String("double");
     serializationOutput.write(value);
   }
 
   public void writeDouble(Double value) {
-    serializationOutput.writeJavaString("Double");
+    serializationOutput.writeUtf8String("Double");
     serializationOutput.writeDouble(value);
   }
 
-  public void writeJavaString(String value) {
-    serializationOutput.writeJavaString("String");
-    serializationOutput.writeJavaString(value);
-  }
-
   public void writeUtf8String(String value) {
-    serializationOutput.writeJavaString("StringUtf8");
+    serializationOutput.writeUtf8String("StringUtf8");
     serializationOutput.writeUtf8String(value);
   }
 
   public void write(boolean value) {
-    serializationOutput.writeJavaString("Boolean");
+    serializationOutput.writeUtf8String("Boolean");
     serializationOutput.write(value);
   }
 
   public void writeBoolean(Boolean value) {
-    serializationOutput.writeJavaString("Boolean");
+    serializationOutput.writeUtf8String("Boolean");
     serializationOutput.writeBoolean(value);
   }
 
   public void write(long value) {
-    serializationOutput.writeJavaString("long");
+    serializationOutput.writeUtf8String("long");
     serializationOutput.write(value);
   }
 
   public void writeLong(Long value) {
-    serializationOutput.writeJavaString("Long");
+    serializationOutput.writeUtf8String("Long");
     serializationOutput.writeLong(value);
   }
 
   public void writeByte(int value) {
-    serializationOutput.writeJavaString("byte");
+    serializationOutput.writeUtf8String("byte");
     serializationOutput.writeByte(value);
   }
 
   public void writeByte(byte value) {
-    serializationOutput.writeJavaString("byte");
+    serializationOutput.writeUtf8String("byte");
     serializationOutput.writeByte(value);
   }
 
   public void writeBytes(byte[] value) {
-    serializationOutput.writeJavaString("Bytes");
+    serializationOutput.writeUtf8String("Bytes");
     serializationOutput.writeBytes(value);
   }
 }

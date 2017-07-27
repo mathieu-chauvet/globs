@@ -9,7 +9,6 @@ import org.globsframework.model.GlobList;
 import org.globsframework.model.MutableGlob;
 import org.globsframework.streams.GlobStream;
 import org.globsframework.streams.accessors.*;
-import org.globsframework.utils.directory.Directory;
 import org.globsframework.saxstack.parser.DefaultXmlNode;
 import org.globsframework.saxstack.parser.ExceptionHolder;
 import org.globsframework.saxstack.parser.SaxStackParser;
@@ -25,13 +24,13 @@ public class XmlGlobStreamReader {
   private String xml;
   private XmlGlobStream xmlMoStream;
 
-  public static GlobStream parse(Directory directory, String xml) {
-    return new XmlGlobStreamReader(directory, "<root>" + xml + "</root>").parse();
+  public static GlobStream parse(String xml, final GlobModel globModel) {
+    return new XmlGlobStreamReader("<root>" + xml + "</root>", globModel).parse();
   }
 
-  private XmlGlobStreamReader(Directory directory, String xml) {
+  private XmlGlobStreamReader(String xml, final GlobModel globModel) {
     this.xml = xml;
-    globModel = directory.get(GlobModel.class);
+    this.globModel = globModel;
   }
 
   private GlobStream parse() {

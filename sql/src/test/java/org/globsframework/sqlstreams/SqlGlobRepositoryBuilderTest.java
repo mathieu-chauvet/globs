@@ -2,6 +2,7 @@ package org.globsframework.sqlstreams;
 
 import org.globsframework.metamodel.DummyObject;
 import org.globsframework.metamodel.DummyObject2;
+import org.globsframework.metamodel.GlobModel;
 import org.globsframework.model.GlobChecker;
 import org.globsframework.model.GlobRepository;
 import org.globsframework.sqlstreams.constraints.Constraints;
@@ -11,12 +12,12 @@ import org.globsframework.xml.XmlGlobStreamReader;
 public class SqlGlobRepositoryBuilderTest extends DbServicesTestCase {
 
   public void testNominal() throws Exception {
-    populate(sqlConnection, XmlGlobStreamReader.parse(directory,
-                                                      "<dummyObject id='1' name='name' value='1.1' present='true'/>" +
-                                                      "<dummyObject id='4' name='word' value='3.3' present='false'/>"));
-    populate(sqlConnection, XmlGlobStreamReader.parse(directory,
-                                                      "<dummyObject2 id='3' label='label'/>" +
-                                                      "<dummyObject2 id='4' label='label'/>"));
+    populate(sqlConnection, XmlGlobStreamReader.parse(
+       "<dummyObject id='1' name='name' value='1.1' present='true'/>" +
+                                                      "<dummyObject id='4' name='word' value='3.3' present='false'/>", directory.get(GlobModel.class)));
+    populate(sqlConnection, XmlGlobStreamReader.parse(
+       "<dummyObject2 id='3' label='label'/>" +
+                                                      "<dummyObject2 id='4' label='label'/>", directory.get(GlobModel.class)));
 
 
     SqlGlobRepositoryBuilder repositoryBuilder = SqlGlobRepositoryBuilder.init(sqlService);

@@ -1,6 +1,7 @@
 package org.globsframework.remote;
 
 import org.globsframework.metamodel.DummyObject;
+import org.globsframework.metamodel.GlobModel;
 import org.globsframework.metamodel.GlobType;
 import org.globsframework.model.*;
 import static org.globsframework.model.FieldValue.value;
@@ -21,9 +22,9 @@ public class RemoteExecutorTest extends DbServicesTestCase {
 
   public void testUpdate() throws Exception {
     populate(sqlConnection,
-             XmlGlobStreamReader.parse(directory,
-                                       "<dummyObject id='1' name='hello' value='1.1' present='true'/>" +
-                                       "<dummyObject id='3' name='word' value='3.3' present='false'/>"));
+             XmlGlobStreamReader.parse(
+                "<dummyObject id='1' name='hello' value='1.1' present='true'/>" +
+                                       "<dummyObject id='3' name='word' value='3.3' present='false'/>", directory.get(GlobModel.class)));
     GlobRepository globRepository = GlobRepositoryBuilder.init().add(sqlConnection.getQueryBuilder(DummyObject.TYPE)
       .selectAll().getQuery().executeAsGlobs()).get();
 

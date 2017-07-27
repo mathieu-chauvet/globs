@@ -61,7 +61,7 @@ public class RemoteExecutor {
   public void execute(SerializedInput input) {
     byte type = input.readByte();
     while (type != TAG.NO_MORE.getId()) {
-      GlobType globType = model.getType(input.readJavaString());
+      GlobType globType = model.getType(input.readUtf8String());
       if (TAG.CREATE.getId() == type) {
         FieldValues fieldValues = readConstraintValues(globType, input);
         CreateRequest createCreateRequest = requestBuilder.getCreate(globType, fieldValues);
@@ -127,7 +127,7 @@ public class RemoteExecutor {
     }
 
     public void visitString(StringField field) throws Exception {
-      request.update(field, input.readJavaString());
+      request.update(field, input.readUtf8String());
     }
 
     public void visitBoolean(BooleanField field) throws Exception {

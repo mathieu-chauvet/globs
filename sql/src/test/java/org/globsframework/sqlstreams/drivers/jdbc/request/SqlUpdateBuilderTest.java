@@ -1,6 +1,7 @@
 package org.globsframework.sqlstreams.drivers.jdbc.request;
 
 import org.globsframework.metamodel.DummyObject;
+import org.globsframework.metamodel.GlobModel;
 import org.globsframework.model.Key;
 import org.globsframework.model.KeyBuilder;
 import org.globsframework.sqlstreams.SqlRequest;
@@ -20,9 +21,9 @@ public class SqlUpdateBuilderTest extends DbServicesTestCase {
    @Test
    public void testUpdate() throws Exception {
       GlobStream streamToWrite =
-         XmlGlobStreamReader.parse(directory,
-                                   "<dummyObject id='1' name='hello' value='1.1' present='true' password='zerzer'/>" +
-                                   "<dummyObject id='2' name='hello' value='0.0' present='true' password='gzsefd'/>");
+         XmlGlobStreamReader.parse(
+            "<dummyObject id='1' name='hello' value='1.1' present='true' password='zerzer'/>" +
+                                   "<dummyObject id='2' name='hello' value='0.0' present='true' password='gzsefd'/>", directory.get(GlobModel.class));
       populate(sqlConnection, streamToWrite);
 
       ValueIntegerAccessor keyValue = new ValueIntegerAccessor();
@@ -56,9 +57,9 @@ public class SqlUpdateBuilderTest extends DbServicesTestCase {
    @Test
    public void testUpdateWithKey() throws Exception {
       GlobStream streamToWrite =
-         XmlGlobStreamReader.parse(directory,
-                                   "<dummyObject id='1' name='hello' value='1.1' present='true'/>" +
-                                   "<dummyObject id='2' name='hello' value='0.0' present='true'/>");
+         XmlGlobStreamReader.parse(
+            "<dummyObject id='1' name='hello' value='1.1' present='true'/>" +
+                                   "<dummyObject id='2' name='hello' value='0.0' present='true'/>", directory.get(GlobModel.class));
       populate(sqlConnection, streamToWrite);
 
       Key key1 = KeyBuilder.init(DummyObject.ID, 2).get();
