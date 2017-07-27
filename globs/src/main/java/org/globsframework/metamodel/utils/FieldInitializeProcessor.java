@@ -4,6 +4,6 @@ import org.globsframework.metamodel.GlobType;
 
 import java.lang.annotation.Annotation;
 
-public interface FieldProcessor<T> {
+public interface FieldInitializeProcessor<T> {
    T getValue(GlobType type, Annotations annotations, Annotation[] nativeAnnotations);
 }

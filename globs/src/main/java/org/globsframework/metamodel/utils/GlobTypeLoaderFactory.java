@@ -15,7 +15,7 @@ import java.lang.annotation.Annotation;
 
 public class GlobTypeLoaderFactory {
    static Object LOCK = new Object();
-   static FieldProcessorService processorService;
+   static FieldInitializeProcessorService processorService;
 
    public static void createAndLoad(Class<?> targetClass) {
       create(targetClass, null, null).load();
@@ -31,21 +31,24 @@ public class GlobTypeLoaderFactory {
 
    public static GlobTypeLoader create(Class<?> targetClass, String modelName, String name) {
       initProcessorService();
-      GlobTypeLoader loader = new GlobTypeLoader(targetClass, modelName, name, processorService);
-//      loader.run();
-      return loader;
+      return new GlobTypeLoader(targetClass, modelName, name, processorService);
    }
 
-   static public FieldProcessorService getProcessorService(){
+   static public FieldInitializeProcessorService getProcessorService() {
+      if (processorService == null) {
+         FieldInitializeProcessorServiceImpl service = new FieldInitializeProcessorServiceImpl();
+         addProcessorService(service);
+         processorService = service;
+      }
       return processorService;
    }
 
    private static void initProcessorService() {
       if (processorService == null) {
-         FieldProcessorServiceImpl newProcessorService = null;
+         FieldInitializeProcessorServiceImpl newProcessorService = null;
          synchronized (LOCK) {
             if (processorService == null) {
-               newProcessorService = new FieldProcessorServiceImpl();
+               newProcessorService = new FieldInitializeProcessorServiceImpl();
                addProcessorService(newProcessorService);
             }
          }
@@ -55,7 +58,7 @@ public class GlobTypeLoaderFactory {
       }
    }
 
-   private static void addProcessorService(FieldProcessorServiceImpl newProcessorService) {
+   private static void addProcessorService(FieldInitializeProcessorServiceImpl newProcessorService) {
       newProcessorService.add(Link.class, UnInitializedLink::new);
       newProcessorService.add(DirectLink.class, UnInitializedLink::new);
       newProcessorService.add(Key.class, (type, annotations, nativeAnnotations) -> {

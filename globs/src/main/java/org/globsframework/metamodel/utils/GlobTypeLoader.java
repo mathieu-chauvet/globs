@@ -26,7 +26,7 @@ public class GlobTypeLoader {
    private String modelName;
    private Class<?> targetClass;
    private String name;
-   private FieldProcessorService fieldProcessorService;
+   private FieldInitializeProcessorService fieldInitializeProcessorService;
    private Map<Class, Object> registered = new ConcurrentHashMap<>();
 
 
@@ -48,9 +48,9 @@ public class GlobTypeLoader {
    public GlobTypeLoader() {
    }
 
-   public GlobTypeLoader(Class<?> targetClass, String modelName, String name, FieldProcessorService fieldProcessorService) {
+   public GlobTypeLoader(Class<?> targetClass, String modelName, String name, FieldInitializeProcessorService fieldInitializeProcessorService) {
       this.modelName = modelName;
-      this.fieldProcessorService = fieldProcessorService;
+      this.fieldInitializeProcessorService = fieldInitializeProcessorService;
       this.targetClass = targetClass;
       this.name = name;
    }
@@ -75,7 +75,7 @@ public class GlobTypeLoader {
 
    private void processOther(Class<?> targetClass) {
       for (java.lang.reflect.Field classField : targetClass.getFields()) {
-         List<FieldProcessor> processor = fieldProcessorService.get(classField);
+         List<FieldInitializeProcessor> processor = fieldInitializeProcessorService.get(classField);
          if (processor != null && !processor.isEmpty()) {
             DefaultAnnotations annotations = new DefaultAnnotations();
             processFieldAnnotations(classField, annotations);
@@ -96,10 +96,10 @@ public class GlobTypeLoader {
       }
    }
 
-   private void applyProcessor(Class<?> targetClass, java.lang.reflect.Field classField, List<FieldProcessor> processor,
+   private void applyProcessor(Class<?> targetClass, java.lang.reflect.Field classField, List<FieldInitializeProcessor> processor,
                                DefaultAnnotations annotations) {
-      for (FieldProcessor fieldProcessor : processor) {
-         Object value = fieldProcessor.getValue(type, annotations, classField.getAnnotations());
+      for (FieldInitializeProcessor fieldInitializeProcessor : processor) {
+         Object value = fieldInitializeProcessor.getValue(type, annotations, classField.getAnnotations());
          if (value instanceof MutableAnnotations) {
             for (Glob glob : annotations.list()) {
                ((MutableAnnotations)value).addAnnotation(glob);
