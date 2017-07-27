@@ -75,11 +75,4 @@ public class EncoderTest {
       assertEquals(present, decodedGlob.get(PRESENT).booleanValue());
       assertEquals(value, decodedGlob.get(VALUE), 0.001);
    }
-
-   @Test
-   public void testBigString() throws Exception {
-      String text = "Some very very long long text to see what happen with cariage return. There is one cariage return.";
-      String str = Encoder.byteToString(text.getBytes());
-      assertNotNull(text, new String(Encoder.stringToByte(str)));
-   }
 }

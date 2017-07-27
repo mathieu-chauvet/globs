@@ -15,11 +15,13 @@ import org.globsframework.sqlstreams.constraints.Constraints;
 import org.globsframework.sqlstreams.drivers.jdbc.DbServicesTestCase;
 import org.globsframework.xml.XmlGlobStreamReader;
 import org.globsframework.utils.serialization.SerializedInputOutputFactory;
+import org.junit.Test;
 
 import java.util.Set;
 
 public class RemoteExecutorTest extends DbServicesTestCase {
 
+  @Test
   public void testUpdate() throws Exception {
     populate(sqlConnection,
              XmlGlobStreamReader.parse(

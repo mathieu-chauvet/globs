@@ -1,14 +1,10 @@
 package org.globsframework.utils;
 
-import org.globsframework.model.Glob;
-import org.globsframework.model.Key;
 import org.globsframework.utils.exceptions.InvalidParameter;
 import org.globsframework.utils.exceptions.ItemNotFound;
 
 import java.lang.reflect.Array;
 import java.util.*;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 public class Utils {
   private Utils() {
@@ -337,39 +333,6 @@ public class Utils {
       pos = nextPos;
     }
     return result;
-  }
-
-  public static String replace(Matcher groupMatcher, final Pattern placementRegexp, final String targetString) {
-    StringBuffer buffer = new StringBuffer();
-    Matcher matcher = placementRegexp.matcher(targetString);
-    while (matcher.find()) {
-      int group;
-      try {
-        group = Integer.parseInt(matcher.group(1));
-        try {
-          matcher.appendReplacement(buffer, groupMatcher.group(group));
-        }
-        catch (IndexOutOfBoundsException e) {
-          Log.write("Missing group '" + group + "' on " + targetString + " for patern " +
-                    placementRegexp.toString() + " and " + groupMatcher.pattern().toString());
-          return null;
-        }
-      }
-      catch (IndexOutOfBoundsException e) {
-        Log.write("Pattern error : " + matcher.pattern().toString() + " on " + targetString);
-        return null;
-      }
-    }
-    matcher.appendTail(buffer);
-    return buffer.toString();
-  }
-
-  public static String replace(Pattern sourcePattern, Pattern placementRegexp, String sourceString, String targetString) {
-    Matcher matcher = sourcePattern.matcher(sourceString);
-    if (!matcher.matches()) {
-      return null;
-    }
-    return replace(matcher, placementRegexp, targetString);
   }
 
   public static String toNiceUpperCase(String value) {

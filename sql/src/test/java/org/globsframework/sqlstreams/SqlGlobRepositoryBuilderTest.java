@@ -8,9 +8,11 @@ import org.globsframework.model.GlobRepository;
 import org.globsframework.sqlstreams.constraints.Constraints;
 import org.globsframework.sqlstreams.drivers.jdbc.DbServicesTestCase;
 import org.globsframework.xml.XmlGlobStreamReader;
+import org.junit.Test;
 
 public class SqlGlobRepositoryBuilderTest extends DbServicesTestCase {
 
+  @Test
   public void testNominal() throws Exception {
     populate(sqlConnection, XmlGlobStreamReader.parse(
        "<dummyObject id='1' name='name' value='1.1' present='true'/>" +
