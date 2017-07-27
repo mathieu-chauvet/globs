@@ -1,15 +1,14 @@
 package org.globsframework.utils;
 
-import junit.framework.Assert;
 import junit.framework.AssertionFailedError;
 import org.globsframework.metamodel.GlobType;
-import org.globsframework.saxstack.writer.PrettyPrintRootXmlTag;
-import org.globsframework.saxstack.writer.XmlTag;
+import org.junit.Assert;
 
-import java.awt.*;
-import java.io.*;
+import java.io.File;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.util.*;
-import java.util.List;
 
 public class TestUtils {
 
@@ -26,7 +25,7 @@ public class TestUtils {
       }
    }
 
-   public static void assertFails(Functor functor, Class<? extends Exception> expectedException) {
+   public static void assertFails(Runnable functor, Class<? extends Exception> expectedException) {
       try {
          functor.run();
       }

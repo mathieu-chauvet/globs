@@ -6,7 +6,6 @@ import org.globsframework.metamodel.GlobType;
 import org.globsframework.metamodel.annotations.KeyField;
 import org.globsframework.metamodel.fields.IntegerField;
 import org.globsframework.metamodel.properties.Property;
-import org.globsframework.utils.Functor;
 import org.globsframework.utils.TestUtils;
 import org.globsframework.utils.exceptions.UnexpectedApplicationState;
 import org.junit.Test;
@@ -49,11 +48,7 @@ public class DefaultGlobTypeTest {
       assertNotNull(globType.findField("field1"));
       assertNull(globType.findField("Field1"));
       assertNotNull(field);
-      TestUtils.assertFails(new Functor() {
-         public void run() throws Exception {
-            globType.getFields();
-         }
-      }, UnexpectedApplicationState.class);
+      TestUtils.assertFails(() -> globType.getFields(), UnexpectedApplicationState.class);
    }
 
    @Test

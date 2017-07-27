@@ -20,7 +20,6 @@ import org.globsframework.streams.accessors.IntegerAccessor;
 import org.globsframework.streams.accessors.StringAccessor;
 import org.globsframework.streams.accessors.utils.ValueIntegerAccessor;
 import org.globsframework.xml.XmlGlobStreamReader;
-import org.globsframework.utils.Functor;
 import org.globsframework.utils.Ref;
 import org.globsframework.utils.TestUtils;
 import org.junit.Test;
@@ -162,11 +161,9 @@ public class SqlSelectQueryTest extends DbServicesTestCase {
     final IntegerAccessor firstAccessor = ref.get();
     GlobStream secondGlobStream = query.execute();
     IntegerAccessor secondAccessor = ref.get();
-    TestUtils.assertFails(new Functor() {
-      public void run() throws Exception {
-        firstGlobStream.next();
-        firstAccessor.getValue(0);
-      }
+    TestUtils.assertFails(() -> {
+      firstGlobStream.next();
+      firstAccessor.getValue(0);
     }, SqlException.class);
   }
 

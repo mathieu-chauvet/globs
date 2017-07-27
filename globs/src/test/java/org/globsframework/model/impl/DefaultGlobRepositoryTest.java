@@ -14,8 +14,8 @@ import org.junit.Test;
 
 import java.util.*;
 
-import static junit.framework.Assert.*;
 import static org.globsframework.model.FieldValue.value;
+import static org.junit.Assert.*;
 
 public class DefaultGlobRepositoryTest extends DefaultGlobRepositoryTestCase {
 
@@ -263,7 +263,7 @@ public class DefaultGlobRepositoryTest extends DefaultGlobRepositoryTestCase {
 
       Glob glob = repository.create(DummyObjectWithDefaultValues.TYPE);
       assertEquals(7, glob.get(DummyObjectWithDefaultValues.INTEGER).intValue());
-      assertEquals(3.14159265, glob.get(DummyObjectWithDefaultValues.DOUBLE));
+      assertEquals(3.14159265, glob.get(DummyObjectWithDefaultValues.DOUBLE), 0.01);
       assertEquals(5l, glob.get(DummyObjectWithDefaultValues.LONG).longValue());
       assertEquals(true, glob.get(DummyObjectWithDefaultValues.BOOLEAN).booleanValue());
       assertTrue(glob.isTrue(DummyObjectWithDefaultValues.BOOLEAN));
@@ -711,7 +711,7 @@ public class DefaultGlobRepositoryTest extends DefaultGlobRepositoryTestCase {
       repository.create(key1, FieldValue.value(DummyObject.VALUE, 3.3));
       repository.completeChangeSet();
       assertSame(glob1, repository.get(key1));
-      assertEquals(3.3, glob1.get(DummyObject.VALUE));
+      assertEquals(3.3, glob1.get(DummyObject.VALUE), 0.01);
    }
 
    @Test
@@ -1215,13 +1215,13 @@ public class DefaultGlobRepositoryTest extends DefaultGlobRepositoryTestCase {
       initRepository();
       Glob glob = repository.create(DummyObject2.TYPE, FieldValue.value(DummyObject2.ID, 1),
                                     FieldValue.value(DummyObject2.VALUE, 1.2343999));
-      assertEquals(glob.get(DummyObject2.VALUE), 1.2344);
+      assertEquals(glob.get(DummyObject2.VALUE), 1.2344, 0.01);
       repository.update(glob.getKey(), DummyObject2.VALUE, 0.12312222);
       assertEquals(glob.get(DummyObject2.VALUE), 0, 1231);
       repository.update(glob.getKey(), DummyObject2.VALUE, -0.12312222);
       assertEquals(glob.get(DummyObject2.VALUE), -0, 1231);
       repository.update(glob.getKey(), DummyObject2.VALUE, -1.2343999);
-      assertEquals(glob.get(DummyObject2.VALUE), -1.2344);
+      assertEquals(glob.get(DummyObject2.VALUE), -1.2344, 0.01);
    }
 
 }

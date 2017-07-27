@@ -1,6 +1,5 @@
 package org.globsframework.metamodel.utils;
 
-import junit.framework.Assert;
 import org.globsframework.metamodel.*;
 import org.globsframework.metamodel.annotations.*;
 import org.globsframework.metamodel.fields.*;
@@ -396,9 +395,9 @@ public class GlobTypeLoaderTest {
 
    @Test
    public void testRetrievingAnnotatedFields() throws Exception {
-      Assert.assertEquals(AnObjectWithCustomAnnotations.ID,
-                          AnObjectWithCustomAnnotations.TYPE.getFieldWithAnnotation(
-                             MyAnnotationType.UNIQUE_KEY));
+      assertEquals(AnObjectWithCustomAnnotations.ID,
+                   AnObjectWithCustomAnnotations.TYPE.getFieldWithAnnotation(
+                      MyAnnotationType.UNIQUE_KEY));
    }
 
    public static class AnObjectWithCustomLinkAnnotations {

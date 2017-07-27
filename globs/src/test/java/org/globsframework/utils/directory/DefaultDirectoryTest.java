@@ -1,52 +1,58 @@
 package org.globsframework.utils.directory;
 
-import junit.framework.TestCase;
+import org.junit.Test;
 
-public class DefaultDirectoryTest extends TestCase {
-  public void testStandardUsage() throws Exception {
+import static org.junit.Assert.*;
 
-    String s = "blah";
+public class DefaultDirectoryTest {
 
-    Directory directory = new DefaultDirectory();
-    directory.add(s);
+   @Test
+   public void testStandardUsage() throws Exception {
 
-    assertSame(s, directory.get(String.class));
-  }
+      String s = "blah";
 
-  public void testWrapper() throws Exception {
+      Directory directory = new DefaultDirectory();
+      directory.add(s);
 
-    String s1 = "blah";
-    Integer i = 1;
+      assertSame(s, directory.get(String.class));
+   }
 
-    Directory directory = new DefaultDirectory();
-    directory.add(s1);
-    directory.add(i);
+   @Test
+   public void testWrapper() throws Exception {
 
-    Directory wrapper = new DefaultDirectory(directory);
+      String s1 = "blah";
+      Integer i = 1;
 
-    String s2 = "yadda";
-    Boolean b = Boolean.FALSE;
-    wrapper.add(s2);
-    wrapper.add(b);
+      Directory directory = new DefaultDirectory();
+      directory.add(s1);
+      directory.add(i);
 
-    assertSame(s1, directory.get(String.class));
-    assertSame(s2, wrapper.get(String.class));
+      Directory wrapper = new DefaultDirectory(directory);
 
-    assertSame(i, wrapper.get(Integer.class));
-    assertSame(i, wrapper.get(Integer.class));
+      String s2 = "yadda";
+      Boolean b = Boolean.FALSE;
+      wrapper.add(s2);
+      wrapper.add(b);
 
-    assertSame(b, wrapper.get(Boolean.class));
-    assertNull(directory.find(Boolean.class));
-  }
+      assertSame(s1, directory.get(String.class));
+      assertSame(s2, wrapper.get(String.class));
+
+      assertSame(i, wrapper.get(Integer.class));
+      assertSame(i, wrapper.get(Integer.class));
+
+      assertSame(b, wrapper.get(Boolean.class));
+      assertNull(directory.find(Boolean.class));
+   }
 
 
-  public void testFactory() throws Exception {
-    Directory directory = new DefaultDirectory();
-    directory.addFactory(String.class, new Directory.Factory<String>() {
-      public String create() {
-        return "my instance";
-      }
-    });
-    assertEquals("my instance", directory.find(String.class));
-  }
+   @Test
+   public void testFactory() throws Exception {
+      Directory directory = new DefaultDirectory();
+      directory.addFactory(String.class, new Directory.Factory<String>() {
+         public String create() {
+            return "my instance";
+         }
+      });
+      assertEquals("my instance", directory.find(String.class));
+   }
 }

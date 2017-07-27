@@ -5,10 +5,13 @@ import org.globsframework.metamodel.DummyObject;
 import org.globsframework.model.FieldValuesBuilder;
 import static org.globsframework.model.KeyBuilder.newKey;
 import org.globsframework.model.delta.DefaultChangeSet;
+import org.junit.Test;
 
 import java.io.StringWriter;
 
-public class XmlChangeSetWriterTest extends TestCase {
+public class XmlChangeSetWriterTest {
+
+  @Test
   public void test() throws Exception {
     DefaultChangeSet changeSet = new DefaultChangeSet();
     changeSet.processCreation(DummyObject.TYPE,
