@@ -104,7 +104,7 @@ public class DefaultGlobModelTest {
    @Test
    public void testDependencies() throws Exception {
       GlobModel model =
-         GlobModelBuilder.init(LargeLinkCycle1.TYPE, LargeLinkCycle2.TYPE, LargeLinkCycle3.TYPE).get();
+         GlobModelBuilder.create(LargeLinkCycle1.TYPE, LargeLinkCycle2.TYPE, LargeLinkCycle3.TYPE).get();
       GlobTypeDependencies dependencies = model.getDependencies();
       TestUtils.assertEquals(dependencies.getCreationSequence(), LargeLinkCycle3.TYPE, LargeLinkCycle2.TYPE,
                              LargeLinkCycle1.TYPE);
@@ -120,8 +120,8 @@ public class DefaultGlobModelTest {
 
    @Test
    public void testDependenciesWithInnerModel() throws Exception {
-      GlobModel inner = GlobModelBuilder.init(LargeLinkCycle1.TYPE).get();
-      GlobModel model = GlobModelBuilder.init(inner, LargeLinkCycle2.TYPE, LargeLinkCycle3.TYPE).get();
+      GlobModel inner = org.globsframework.metamodel.GlobModelBuilder.create(LargeLinkCycle1.TYPE).get();
+      GlobModel model = org.globsframework.metamodel.GlobModelBuilder.create(inner, LargeLinkCycle2.TYPE, LargeLinkCycle3.TYPE).get();
 
       GlobTypeDependencies dependencies = model.getDependencies();
       TestUtils.assertEquals(dependencies.getCreationSequence(), LargeLinkCycle3.TYPE, LargeLinkCycle2.TYPE,
@@ -205,9 +205,7 @@ public class DefaultGlobModelTest {
    @Test
    public void testDependenciesWithLinkCycleWithRequiredFieldError() throws Exception {
       try {
-         GlobModelBuilder.init(LargeLinkCycleWithRequiredFieldError1.TYPE,
-                               LargeLinkCycleWithRequiredFieldError2.TYPE,
-                               LargeLinkCycleWithRequiredFieldError3.TYPE)
+         org.globsframework.metamodel.GlobModelBuilder.create(LargeLinkCycleWithRequiredFieldError1.TYPE, LargeLinkCycleWithRequiredFieldError2.TYPE, LargeLinkCycleWithRequiredFieldError3.TYPE)
             .get();
          fail();
       }

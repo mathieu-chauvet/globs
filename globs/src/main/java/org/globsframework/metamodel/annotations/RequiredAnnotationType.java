@@ -1,13 +1,9 @@
 package org.globsframework.metamodel.annotations;
 
 import org.globsframework.metamodel.GlobType;
-import org.globsframework.metamodel.utils.DefaultGlobTypeBuilder;
-import org.globsframework.metamodel.utils.GlobTypeBuilder;
-import org.globsframework.metamodel.utils.GlobTypeLoader;
-import org.globsframework.metamodel.utils.GlobTypeLoaderFactory;
+import org.globsframework.metamodel.GlobTypeLoaderFactory;
 import org.globsframework.model.Glob;
 import org.globsframework.model.Key;
-import org.globsframework.model.KeyBuilder;
 
 public class RequiredAnnotationType {
    public static GlobType TYPE;

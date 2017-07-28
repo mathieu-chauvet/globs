@@ -1,11 +1,9 @@
-package org.globsframework.metamodel.utils;
+package org.globsframework.metamodel;
 
-import org.globsframework.metamodel.GlobType;
 import org.globsframework.metamodel.annotations.KeyAnnotationType;
 import org.globsframework.metamodel.fields.IntegerField;
 import org.globsframework.metamodel.fields.StringField;
 import org.globsframework.model.Glob;
-import org.globsframework.model.KeyBuilder;
 
 public interface GlobTypeBuilder {
    GlobTypeBuilder addStringField(String fieldName, Glob... annotations);

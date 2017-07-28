@@ -1,4 +1,4 @@
-package org.globsframework.metamodel.utils;
+package org.globsframework.metamodel;
 
 import org.globsframework.metamodel.Field;
 import org.globsframework.metamodel.GlobType;
@@ -6,6 +6,7 @@ import org.globsframework.metamodel.annotations.DefaultDoubleAnnotationType;
 import org.globsframework.metamodel.annotations.NamingFieldAnnotationType;
 import org.globsframework.metamodel.fields.*;
 import org.globsframework.metamodel.type.DataType;
+import org.globsframework.metamodel.utils.GlobTypeUtils;
 import org.globsframework.utils.exceptions.InvalidParameter;
 import org.globsframework.utils.exceptions.ItemAlreadyExists;
 import org.junit.Ignore;
@@ -17,7 +18,7 @@ public class GlobTypeBuilderTest {
 
    @Test
    public void test() throws Exception {
-      GlobType type = DefaultGlobTypeBuilder.init("aType")
+      GlobType type = GlobTypeBuilderFactory.create("aType")
          .addIntegerKey("id")
          .addStringField("string")
          .addIntegerField("int")
@@ -54,7 +55,7 @@ public class GlobTypeBuilderTest {
    @Test
    public void testCannotUseTheSameNameTwice() throws Exception {
       try {
-         DefaultGlobTypeBuilder.init("aType")
+         GlobTypeBuilderFactory.create("aType")
             .addIntegerKey("id")
             .addStringField("field")
             .addIntegerField("field");
@@ -69,7 +70,7 @@ public class GlobTypeBuilderTest {
    @Test
    public void testAtLeastOneKeyMustBeDefined() throws Exception {
       try {
-         DefaultGlobTypeBuilder.init("type").get();
+         GlobTypeBuilderFactory.create("type").get();
          fail();
       }
       catch (InvalidParameter e) {
@@ -79,7 +80,7 @@ public class GlobTypeBuilderTest {
 
    @Test
    public void testNamingField() throws Exception {
-      GlobType type = DefaultGlobTypeBuilder.init("aType")
+      GlobType type = GlobTypeBuilderFactory.create("aType")
          .addIntegerKey("id")
          .addStringField("name", NamingFieldAnnotationType.UNIQUE_GLOB)
          .get();
@@ -91,7 +92,7 @@ public class GlobTypeBuilderTest {
 
    @Test
    public void testWithAnnotations() throws Exception {
-      DefaultGlobTypeBuilder.init("aType")
+      GlobTypeBuilderFactory.create("aType")
          .addDoubleField("aDouble", DefaultDoubleAnnotationType.create(2.2));
 
    }

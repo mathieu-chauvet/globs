@@ -1,6 +1,7 @@
 package org.globsframework.metamodel.utils;
 
 import org.globsframework.metamodel.GlobType;
+import org.globsframework.metamodel.GlobTypeBuilder;
 import org.globsframework.metamodel.annotations.*;
 import org.globsframework.metamodel.fields.IntegerField;
 import org.globsframework.metamodel.fields.StringField;

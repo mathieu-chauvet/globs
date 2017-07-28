@@ -1,6 +1,7 @@
-package org.globsframework.metamodel.utils;
+package org.globsframework.metamodel;
 
 import org.globsframework.metamodel.GlobType;
+import org.globsframework.metamodel.utils.Annotations;
 
 import java.lang.annotation.Annotation;
 

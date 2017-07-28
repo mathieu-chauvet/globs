@@ -1,5 +1,7 @@
 package org.globsframework.metamodel.utils;
 
+import org.globsframework.metamodel.FieldInitializeProcessor;
+import org.globsframework.metamodel.FieldInitializeProcessorService;
 import org.globsframework.utils.collections.MultiMap;
 
 import java.lang.reflect.Field;

@@ -1,6 +1,5 @@
-package org.globsframework.metamodel.utils;
+package org.globsframework.metamodel;
 
-import org.globsframework.metamodel.*;
 import org.globsframework.metamodel.annotations.*;
 import org.globsframework.metamodel.fields.*;
 import org.globsframework.metamodel.index.UniqueIndex;
@@ -27,8 +26,9 @@ import static org.junit.Assert.*;
 
 public class GlobTypeLoaderTest {
 
-   static GlobModel globModel = GlobModelBuilder.init(AnObjectWithALinkField.TYPE, AnObjectWithASingleIntegerFieldUsedAsALink.TYPE,
-                                                      AnObjectWithRequiredLinks.TYPE, AnObjectWithRequiredLinkField.TYPE).get();
+   static GlobModel globModel =
+      GlobModelBuilder.create(AnObjectWithALinkField.TYPE, AnObjectWithASingleIntegerFieldUsedAsALink.TYPE,
+                              AnObjectWithRequiredLinks.TYPE, AnObjectWithRequiredLinkField.TYPE).get();
 
    public static class AnObject {
 
@@ -100,7 +100,7 @@ public class GlobTypeLoaderTest {
       }
    }
 
-   private static class AnObjectWithSeveralTypeDefs {
+   public static class AnObjectWithSeveralTypeDefs {
       public static GlobType TYPE1;
       public static GlobType TYPE2;
       public static IntegerField ID;
@@ -135,7 +135,7 @@ public class GlobTypeLoaderTest {
       }
    }
 
-   private static class AnObjectWithNoKey {
+   public static class AnObjectWithNoKey {
       public static GlobType TYPE;
       public static IntegerField ID;
    }
@@ -152,7 +152,7 @@ public class GlobTypeLoaderTest {
       }
    }
 
-   private static class AnObjectWithACompositeKey {
+   public static class AnObjectWithACompositeKey {
       public static GlobType TYPE;
       @KeyField
       public static IntegerField ID1;
@@ -170,7 +170,7 @@ public class GlobTypeLoaderTest {
                                 AnObjectWithACompositeKey.ID1, AnObjectWithACompositeKey.ID2);
    }
 
-   private static class AnObjectWithALinkField {
+   public static class AnObjectWithALinkField {
       public static GlobType TYPE;
 
       @KeyField
@@ -206,7 +206,7 @@ public class GlobTypeLoaderTest {
       assertEquals(type, AnObjectWithALinkField.LINK.getSourceType());
    }
 
-   private static class AnObjectWithALinkFieldWithoutTheTargetAnnotation {
+   public static class AnObjectWithALinkFieldWithoutTheTargetAnnotation {
       public static GlobType TYPE;
       @KeyField
       public static IntegerField ID;
@@ -230,7 +230,7 @@ public class GlobTypeLoaderTest {
       }
    }
 
-   private static class AnObjectWithALinkFieldTargettingAMultiKeyObject {
+   public static class AnObjectWithALinkFieldTargettingAMultiKeyObject {
       public static GlobType TYPE;
       @KeyField
       public static IntegerField ID;
@@ -248,7 +248,7 @@ public class GlobTypeLoaderTest {
                mutableGlobLinkModel.getDirectLinkBuilder(AnObjectWithALinkFieldTargettingAMultiKeyObject.LINK)
                   .add(AnObjectWithALinkFieldTargettingAMultiKeyObject.ID, AnObjectWithACompositeKey.ID1).publish());
          loader.load();
-         GlobModelBuilder.init(AnObjectWithALinkFieldTargettingAMultiKeyObject.TYPE);
+         GlobModelBuilder.create(AnObjectWithALinkFieldTargettingAMultiKeyObject.TYPE).get();
          fail();
       }
       catch (InvalidParameter e) {
@@ -257,7 +257,7 @@ public class GlobTypeLoaderTest {
       }
    }
 
-   private static class AnObjectWithALinkFieldTargettingANonGlobsObject {
+   public static class AnObjectWithALinkFieldTargettingANonGlobsObject {
       public static GlobType TYPE;
       @KeyField
       public static IntegerField ID;
@@ -281,7 +281,7 @@ public class GlobTypeLoaderTest {
       }
    }
 
-   private static class AnObjectWithAStringId {
+   public static class AnObjectWithAStringId {
       public static GlobType TYPE;
       @KeyField
       public static StringField ID;
@@ -291,7 +291,7 @@ public class GlobTypeLoaderTest {
       }
    }
 
-   private static class AnObjectWithALinkFieldTargettingAnObjectWithAStringId {
+   public static class AnObjectWithALinkFieldTargettingAnObjectWithAStringId {
       public static GlobType TYPE;
       @KeyField
       public static IntegerField ID;
@@ -312,7 +312,7 @@ public class GlobTypeLoaderTest {
 
    }
 
-   private static class AnObjectWithASingleIntegerFieldUsedAsALink {
+   public static class AnObjectWithASingleIntegerFieldUsedAsALink {
       public static GlobType TYPE;
       @KeyField
       public static IntegerField ID;
@@ -460,7 +460,7 @@ public class GlobTypeLoaderTest {
 //      TestUtils.assertDatesEqual(new Date(), (Date)DummyObjectWithDefaultValues.TIMESTAMP.getDefaultValue(), 360000);
    }
 
-   private static class AnObjectWithADefaultValueTypeError {
+   public static class AnObjectWithADefaultValueTypeError {
       public static GlobType TYPE;
       @KeyField
       public static IntegerField ID;

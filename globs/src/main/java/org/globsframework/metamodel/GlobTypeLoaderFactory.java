@@ -1,4 +1,4 @@
-package org.globsframework.metamodel.utils;
+package org.globsframework.metamodel;
 
 import org.globsframework.metamodel.annotations.InitUniqueGlob;
 import org.globsframework.metamodel.annotations.InitUniqueKey;
@@ -7,6 +7,8 @@ import org.globsframework.metamodel.annotations.KeyIndex;
 import org.globsframework.metamodel.links.DirectLink;
 import org.globsframework.metamodel.links.Link;
 import org.globsframework.metamodel.links.impl.UnInitializedLink;
+import org.globsframework.metamodel.utils.FieldInitializeProcessorServiceImpl;
+import org.globsframework.metamodel.utils.GlobTypeLoaderImpl;
 import org.globsframework.model.Glob;
 import org.globsframework.model.Key;
 import org.globsframework.model.KeyBuilder;
@@ -31,7 +33,7 @@ public class GlobTypeLoaderFactory {
 
    public static GlobTypeLoader create(Class<?> targetClass, String modelName, String name) {
       initProcessorService();
-      return new GlobTypeLoader(targetClass, modelName, name, processorService);
+      return new GlobTypeLoaderImpl(targetClass, modelName, name, processorService);
    }
 
    static public FieldInitializeProcessorService getProcessorService() {

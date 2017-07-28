@@ -5,8 +5,6 @@ import org.globsframework.metamodel.annotations.LinkModelName;
 import org.globsframework.metamodel.annotations.Target;
 import org.globsframework.metamodel.fields.IntegerField;
 import org.globsframework.metamodel.links.Link;
-import org.globsframework.metamodel.utils.GlobTypeLoader;
-import org.globsframework.metamodel.utils.GlobTypeLoaderFactory;
 
 public class DummyObjectWithLinkFieldId {
    public static GlobType TYPE;

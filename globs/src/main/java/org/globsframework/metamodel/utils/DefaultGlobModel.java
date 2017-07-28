@@ -1,9 +1,6 @@
 package org.globsframework.metamodel.utils;
 
-import org.globsframework.metamodel.Field;
-import org.globsframework.metamodel.GlobLinkModel;
-import org.globsframework.metamodel.GlobModel;
-import org.globsframework.metamodel.GlobType;
+import org.globsframework.metamodel.*;
 import org.globsframework.metamodel.links.impl.DefaultMutableGlobLinkModel;
 import org.globsframework.metamodel.properties.Property;
 import org.globsframework.model.GlobList;
@@ -11,7 +8,7 @@ import org.globsframework.utils.exceptions.ItemNotFound;
 
 import java.util.*;
 
-public class DefaultGlobModel implements GlobModel {
+public class DefaultGlobModel implements MutableGlobModel {
    private Map<String, GlobType> typesByName = new HashMap<String, GlobType>();
    private int objectTypeSpecificCount;
    private int fieldSpecificCount;
@@ -26,8 +23,6 @@ public class DefaultGlobModel implements GlobModel {
    public DefaultGlobModel(GlobModel innerModel, GlobType... types) {
       add(types);
       this.innerModel = innerModel;
-      globLinkModel = new DefaultMutableGlobLinkModel(this);
-      this.dependencies = new GlobTypeDependencies(getAll(), globLinkModel);
    }
 
    public GlobType getType(String name) throws ItemNotFound {
@@ -79,8 +74,15 @@ public class DefaultGlobModel implements GlobModel {
    }
 
    private void add(GlobType... types) {
-      for (GlobType type : types) {
-         typesByName.put(type.getName(), type);
-      }
+      Arrays.stream(types).forEach(this::add);
+   }
+
+   public void add(GlobType type) {
+      typesByName.put(type.getName(), type);
+   }
+
+   public void complete() {
+      globLinkModel = new DefaultMutableGlobLinkModel(this);
+      this.dependencies = new GlobTypeDependencies(getAll(), globLinkModel);
    }
 }

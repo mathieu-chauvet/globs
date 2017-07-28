@@ -12,7 +12,7 @@ public class DummyModel {
    }
 
    static {
-      globModel = new DefaultGlobModel(
+      globModel = GlobModelBuilder.create(
          DummyObject.TYPE,
          DummyObject2.TYPE,
          DummyObjectWithLinks.TYPE,
@@ -22,7 +22,7 @@ public class DummyModel {
          DummyObjectIndex.TYPE,
          DummyObjectWithDefaultValues.TYPE,
          DummyObjectWithRequiredLink.TYPE
-      );
+      ).get();
 
       globLinkModel = new DefaultMutableGlobLinkModel(globModel);
    }

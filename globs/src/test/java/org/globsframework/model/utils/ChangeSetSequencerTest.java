@@ -9,9 +9,8 @@ import org.globsframework.metamodel.annotations.Target;
 import org.globsframework.metamodel.fields.IntegerField;
 import org.globsframework.metamodel.fields.StringField;
 import org.globsframework.metamodel.links.Link;
-import org.globsframework.metamodel.utils.GlobModelBuilder;
-import org.globsframework.metamodel.utils.GlobTypeLoader;
-import org.globsframework.metamodel.utils.GlobTypeLoaderFactory;
+import org.globsframework.metamodel.GlobTypeLoader;
+import org.globsframework.metamodel.GlobTypeLoaderFactory;
 import org.globsframework.model.ChangeSet;
 import org.globsframework.xml.XmlChangeSetParser;
 import org.globsframework.xml.XmlChangeSetVisitor;
@@ -319,14 +318,6 @@ public class ChangeSetSequencerTest {
    }
 
    private static class Model {
-      static final GlobModel MODEL = GlobModelBuilder.init(ObjectWithCompositeKey.TYPE,
-                                                           LinkedToObjectWithCompositeKey.TYPE,
-                                                           ObjectWithSelfReference.TYPE,
-                                                           LinkCycle1.TYPE,
-                                                           LinkCycle2.TYPE,
-                                                           LargeLinkCycle1.TYPE,
-                                                           LargeLinkCycle2.TYPE,
-                                                           LargeLinkCycle3.TYPE
-      ).get();
+      static final GlobModel MODEL = org.globsframework.metamodel.GlobModelBuilder.create(ObjectWithCompositeKey.TYPE, LinkedToObjectWithCompositeKey.TYPE, ObjectWithSelfReference.TYPE, LinkCycle1.TYPE, LinkCycle2.TYPE, LargeLinkCycle1.TYPE, LargeLinkCycle2.TYPE, LargeLinkCycle3.TYPE).get();
    }
 }

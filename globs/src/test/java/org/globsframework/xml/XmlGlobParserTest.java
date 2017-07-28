@@ -6,8 +6,8 @@ import org.globsframework.metamodel.annotations.Target;
 import org.globsframework.metamodel.fields.IntegerField;
 import org.globsframework.metamodel.links.Link;
 import org.globsframework.metamodel.utils.DefaultGlobModel;
-import org.globsframework.metamodel.utils.GlobTypeLoader;
-import org.globsframework.metamodel.utils.GlobTypeLoaderFactory;
+import org.globsframework.metamodel.GlobTypeLoader;
+import org.globsframework.metamodel.GlobTypeLoaderFactory;
 import org.globsframework.model.*;
 import org.globsframework.utils.exceptions.InvalidParameter;
 import org.globsframework.utils.exceptions.ItemAmbiguity;
@@ -166,7 +166,7 @@ public class XmlGlobParserTest {
 
    @Test
    public void testUsingALinkFieldWithAnObjectThatHasNoNamingField() throws Exception {
-      parse(new DefaultGlobModel(DummyObject2.TYPE, AnObjectLinkingToATypeWithNoNamingField.TYPE),
+      parse(GlobModelBuilder.create(DummyObject2.TYPE, AnObjectLinkingToATypeWithNoNamingField.TYPE).get(),
             "<dummyObject2 id='11'>" +
             "  <anObjectLinkingToATypeWithNoNamingField id='1'/>" +
             "</dummyObject2>");
@@ -257,7 +257,7 @@ public class XmlGlobParserTest {
    @Test
    public void testContainmentWithTooManyRelationshipsError() throws Exception {
       try {
-         parse(new DefaultGlobModel(AnObject.TYPE, AnObjectWithTwoLinks.TYPE),
+         parse(GlobModelBuilder.create(AnObject.TYPE, AnObjectWithTwoLinks.TYPE).get(),
                "<anObject id='1'>" +
                "  <anObjectWithTwoLinks id='1'/>" +
                "</anObject>");

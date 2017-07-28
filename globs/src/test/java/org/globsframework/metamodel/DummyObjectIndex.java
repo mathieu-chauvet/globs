@@ -9,8 +9,6 @@ import org.globsframework.metamodel.index.MultiFieldNotUniqueIndex;
 import org.globsframework.metamodel.index.MultiFieldUniqueIndex;
 import org.globsframework.metamodel.index.NotUniqueIndex;
 import org.globsframework.metamodel.index.UniqueIndex;
-import org.globsframework.metamodel.utils.GlobTypeLoader;
-import org.globsframework.metamodel.utils.GlobTypeLoaderFactory;
 
 public class DummyObjectIndex {
 

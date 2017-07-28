@@ -5,8 +5,6 @@ import org.globsframework.metamodel.annotations.MaxSize;
 import org.globsframework.metamodel.annotations.NamingField;
 import org.globsframework.metamodel.fields.IntegerField;
 import org.globsframework.metamodel.fields.StringField;
-import org.globsframework.metamodel.utils.GlobTypeLoader;
-import org.globsframework.metamodel.utils.GlobTypeLoaderFactory;
 
 public class DummyObjectWithMaxSizeString {
   public static GlobType TYPE;

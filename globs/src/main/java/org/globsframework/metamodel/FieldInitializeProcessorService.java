@@ -1,4 +1,4 @@
-package org.globsframework.metamodel.utils;
+package org.globsframework.metamodel;
 
 import java.lang.reflect.Field;
 import java.util.List;

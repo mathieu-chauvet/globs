@@ -2,8 +2,6 @@ package org.globsframework.metamodel;
 
 import org.globsframework.metamodel.annotations.*;
 import org.globsframework.metamodel.fields.*;
-import org.globsframework.metamodel.utils.GlobTypeLoader;
-import org.globsframework.metamodel.utils.GlobTypeLoaderFactory;
 
 public class DummyObjectWithDefaultValues {
   public static GlobType TYPE;

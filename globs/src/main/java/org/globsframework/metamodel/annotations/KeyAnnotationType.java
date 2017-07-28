@@ -2,17 +2,11 @@ package org.globsframework.metamodel.annotations;
 
 import org.globsframework.metamodel.GlobType;
 import org.globsframework.metamodel.fields.IntegerField;
-import org.globsframework.metamodel.fields.impl.DefaultIntegerField;
-import org.globsframework.metamodel.fields.impl.DefaultStringField;
 import org.globsframework.metamodel.utils.DefaultFieldLoaderFactory;
 import org.globsframework.metamodel.utils.DefaultGlobType;
-import org.globsframework.metamodel.utils.GlobTypeLoader;
-import org.globsframework.metamodel.utils.GlobTypeLoaderFactory;
 import org.globsframework.model.Glob;
 import org.globsframework.model.Key;
 import org.globsframework.model.KeyBuilder;
-
-import java.util.Map;
 
 public class KeyAnnotationType {
    public static GlobType TYPE;
