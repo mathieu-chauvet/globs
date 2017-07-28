@@ -6,7 +6,7 @@ import org.globsframework.metamodel.annotations.RequiredAnnotationType;
 import org.globsframework.metamodel.properties.Property;
 import org.globsframework.metamodel.properties.PropertyHolder;
 import org.globsframework.metamodel.type.DataType;
-import org.globsframework.metamodel.utils.Annotations;
+import org.globsframework.metamodel.Annotations;
 import org.globsframework.metamodel.utils.MutableAnnotations;
 import org.globsframework.model.Glob;
 import org.globsframework.model.Key;

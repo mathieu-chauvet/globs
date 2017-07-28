@@ -1,4 +1,4 @@
-package org.globsframework.utils.directory;
+package org.globsframework.directory;
 
 import org.globsframework.utils.exceptions.ItemAlreadyExists;
 

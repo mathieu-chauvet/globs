@@ -1,11 +1,12 @@
-package org.globsframework.metamodel.utils;
+package org.globsframework.metamodel.impl;
 
 import org.globsframework.metamodel.GlobType;
 import org.globsframework.metamodel.GlobTypeBuilder;
 import org.globsframework.metamodel.annotations.*;
-import org.globsframework.metamodel.fields.IntegerField;
-import org.globsframework.metamodel.fields.StringField;
+import org.globsframework.metamodel.fields.*;
 import org.globsframework.metamodel.fields.impl.*;
+import org.globsframework.metamodel.Annotations;
+import org.globsframework.metamodel.utils.MutableAnnotations;
 import org.globsframework.model.Glob;
 import org.globsframework.utils.exceptions.InvalidState;
 
@@ -76,6 +77,11 @@ public class DefaultGlobTypeBuilder implements GlobTypeBuilder {
    }
 
    public GlobTypeBuilder addDoubleField(String fieldName, Glob... globAnnotations) {
+      createDoubleField(fieldName, globAnnotations);
+      return this;
+   }
+
+   private DefaultDoubleField createDoubleField(String fieldName, Glob[] globAnnotations) {
       MutableAnnotations annotations = adaptAnnotation(globAnnotations);
       Double defaultValue = annotations.getValueOrDefault(DefaultDoubleAnnotationType.UNIQUE_KEY, DefaultDoubleAnnotationType.DEFAULT_VALUE, null);
       boolean isKey = annotations.hasAnnotation(KeyAnnotationType.UNIQUE_KEY);
@@ -85,10 +91,15 @@ public class DefaultGlobTypeBuilder implements GlobTypeBuilder {
       }
       doubleField.addAll(annotations);
       index++;
-      return this;
+      return doubleField;
    }
 
    public GlobTypeBuilder addLongField(String fieldName, Glob... globAnnotations) {
+      createLongField(fieldName, globAnnotations);
+      return this;
+   }
+
+   private DefaultLongField createLongField(String fieldName, Glob[] globAnnotations) {
       MutableAnnotations annotations = adaptAnnotation(globAnnotations);
       Long defaultValue = annotations.getValueOrDefault(DefaultLongAnnotationType.UNIQUE_KEY,
                                                         DefaultLongAnnotationType.DEFAULT_VALUE, null);
@@ -99,10 +110,15 @@ public class DefaultGlobTypeBuilder implements GlobTypeBuilder {
       }
       longField.addAll(annotations);
       index++;
-      return this;
+      return longField;
    }
 
    public GlobTypeBuilder addBooleanField(String fieldName, Glob... globAnnotations) {
+      createBooleanField(fieldName, globAnnotations);
+      return this;
+   }
+
+   private DefaultBooleanField createBooleanField(String fieldName, Glob[] globAnnotations) {
       MutableAnnotations annotations = adaptAnnotation(globAnnotations);
       Boolean defaultValue = annotations.getValueOrDefault(DefaultBooleanAnnotationType.UNIQUE_KEY,
                                                            DefaultBooleanAnnotationType.DEFAULT_VALUE, null);
@@ -113,7 +129,7 @@ public class DefaultGlobTypeBuilder implements GlobTypeBuilder {
       }
       field.addAll(annotations);
       index++;
-      return this;
+      return field;
    }
 
    private void updateKeyIndex(MutableAnnotations annotations) {
@@ -144,11 +160,16 @@ public class DefaultGlobTypeBuilder implements GlobTypeBuilder {
    }
 
    public GlobTypeBuilder addBlobField(String fieldName, Glob... globAnnotations) {
+      createBlobField(fieldName, globAnnotations);
+      return this;
+   }
+
+   private DefaultBlobField createBlobField(String fieldName, Glob[] globAnnotations) {
       Annotations annotations = adaptAnnotation(globAnnotations);
       DefaultBlobField field = factory.addBlob(fieldName, index);
       field.addAll(annotations);
       index++;
-      return this;
+      return field;
    }
 
    public StringField declareStringField(String fieldName, Glob... globAnnotations) {
@@ -157,6 +178,22 @@ public class DefaultGlobTypeBuilder implements GlobTypeBuilder {
 
    public IntegerField declareIntegerField(String fieldName, Glob... annotations) {
       return createIntegerField(fieldName, annotations);
+   }
+
+   public DoubleField declareDoubleField(String fieldName, Glob... annotations) {
+      return createDoubleField(fieldName, annotations);
+   }
+
+   public BooleanField declareBooleanField(String fieldName, Glob... annotations) {
+      return createBooleanField(fieldName, annotations);
+   }
+
+   public LongField declareLongField(String fieldName, Glob... annotations) {
+      return createLongField(fieldName, annotations);
+   }
+
+   public BlobField declareBlobField(String fieldName, Glob... annotations) {
+      return createBlobField(fieldName, annotations);
    }
 
    public <T> void register(Class<T> klass, T t) {

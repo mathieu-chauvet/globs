@@ -1,4 +1,4 @@
-package org.globsframework.metamodel.utils;
+package org.globsframework.metamodel.impl;
 
 import org.globsframework.metamodel.Field;
 import org.globsframework.metamodel.GlobType;
@@ -8,12 +8,13 @@ import org.globsframework.metamodel.index.Index;
 import org.globsframework.metamodel.index.MultiFieldIndex;
 import org.globsframework.metamodel.properties.Property;
 import org.globsframework.metamodel.properties.PropertyHolder;
+import org.globsframework.metamodel.Annotations;
+import org.globsframework.metamodel.utils.MutableAnnotations;
+import org.globsframework.metamodel.utils.MutableGlobType;
 import org.globsframework.model.Glob;
-import org.globsframework.model.GlobList;
 import org.globsframework.model.Key;
 import org.globsframework.model.MutableGlob;
 import org.globsframework.model.impl.DefaultGlob;
-import org.globsframework.model.impl.ReadOnlyGlob;
 import org.globsframework.utils.exceptions.InvalidState;
 import org.globsframework.utils.exceptions.ItemAlreadyExists;
 import org.globsframework.utils.exceptions.ItemNotFound;

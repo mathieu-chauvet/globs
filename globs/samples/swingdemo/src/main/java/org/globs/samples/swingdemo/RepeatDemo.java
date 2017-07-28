@@ -14,8 +14,8 @@ import org.globsframework.model.format.Formats;
 import org.globsframework.model.format.utils.DefaultDescriptionService;
 import org.globsframework.model.utils.GlobFieldComparator;
 import org.globsframework.utils.Dates;
-import org.globsframework.utils.directory.DefaultDirectory;
-import org.globsframework.utils.directory.Directory;
+import org.globsframework.directory.DefaultDirectory;
+import org.globsframework.directory.Directory;
 
 import javax.swing.*;
 import java.util.Date;

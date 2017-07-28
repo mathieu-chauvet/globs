@@ -1,4 +1,4 @@
-package org.globsframework.metamodel.utils;
+package org.globsframework.metamodel.impl;
 
 import org.globsframework.metamodel.Field;
 import org.globsframework.metamodel.annotations.*;
@@ -7,6 +7,12 @@ import org.globsframework.metamodel.index.MultiFieldNotUniqueIndex;
 import org.globsframework.metamodel.index.MultiFieldUniqueIndex;
 import org.globsframework.metamodel.index.NotUniqueIndex;
 import org.globsframework.metamodel.index.UniqueIndex;
+import org.globsframework.metamodel.index.impl.DefaultMultiFieldNotUniqueIndex;
+import org.globsframework.metamodel.index.impl.DefaultMultiFieldUniqueIndex;
+import org.globsframework.metamodel.index.impl.DefaultNotUniqueIndex;
+import org.globsframework.metamodel.index.impl.DefaultUniqueIndex;
+import org.globsframework.metamodel.Annotations;
+import org.globsframework.metamodel.utils.MutableGlobType;
 import org.globsframework.model.Glob;
 import org.globsframework.model.Key;
 

@@ -1,4 +1,4 @@
-package org.globsframework.metamodel.utils;
+package org.globsframework.metamodel.index.impl;
 
 import org.globsframework.metamodel.index.MultiFieldIndexVisitor;
 import org.globsframework.metamodel.index.MultiFieldUniqueIndex;
@@ -7,10 +7,6 @@ public class DefaultMultiFieldUniqueIndex extends AbstractMultiFieldIndex implem
 
   public DefaultMultiFieldUniqueIndex(String name) {
     super(name);
-  }
-
-  public void visitIndex(MultifieldVisitor visitor) {
-    visitor.visitUnique(this);
   }
 
   public void visit(MultiFieldIndexVisitor multiFieldIndexVisitor) {

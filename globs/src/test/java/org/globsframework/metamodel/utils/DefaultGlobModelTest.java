@@ -5,6 +5,7 @@ import org.globsframework.metamodel.annotations.KeyField;
 import org.globsframework.metamodel.annotations.Required;
 import org.globsframework.metamodel.annotations.Target;
 import org.globsframework.metamodel.fields.IntegerField;
+import org.globsframework.metamodel.impl.DefaultGlobModel;
 import org.globsframework.metamodel.links.Link;
 import org.globsframework.utils.Strings;
 import org.globsframework.utils.TestUtils;

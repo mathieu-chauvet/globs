@@ -1,5 +1,7 @@
-package org.globsframework.metamodel;
+package org.globsframework.metamodel.utils;
 
+import org.globsframework.metamodel.GlobLinkModel;
+import org.globsframework.metamodel.GlobType;
 import org.globsframework.metamodel.links.Link;
 
 public class EmptyGlobLinkModel implements GlobLinkModel {

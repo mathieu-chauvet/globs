@@ -4,7 +4,6 @@ import org.globsframework.metamodel.fields.FieldValueVisitor;
 import org.globsframework.metamodel.fields.FieldVisitor;
 import org.globsframework.metamodel.properties.PropertyHolder;
 import org.globsframework.metamodel.type.DataType;
-import org.globsframework.metamodel.utils.Annotations;
 import org.globsframework.utils.exceptions.InvalidParameter;
 
 public interface Field extends PropertyHolder<Field>, Annotations {

@@ -3,6 +3,7 @@ package org.globsframework.metamodel.utils;
 import org.globsframework.metamodel.*;
 import org.globsframework.metamodel.annotations.KeyField;
 import org.globsframework.metamodel.fields.IntegerField;
+import org.globsframework.metamodel.impl.DefaultGlobModel;
 import org.globsframework.metamodel.properties.Property;
 import org.globsframework.utils.TestUtils;
 import org.globsframework.utils.exceptions.UnexpectedApplicationState;
@@ -57,7 +58,7 @@ public class DefaultGlobTypeTest {
       assertEquals(3, field.getProperty(property));
    }
 
-   private static class Type {
+   public static class Type {
       public static GlobType TYPE;
 
       @KeyField

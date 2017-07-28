@@ -9,8 +9,8 @@ import org.globsframework.model.format.DescriptionService;
 import org.globsframework.model.format.Formats;
 import org.globsframework.model.format.utils.DefaultDescriptionService;
 import org.globsframework.model.utils.GlobFieldComparator;
-import org.globsframework.utils.directory.DefaultDirectory;
-import org.globsframework.utils.directory.Directory;
+import org.globsframework.directory.DefaultDirectory;
+import org.globsframework.directory.Directory;
 import org.globsframework.gui.splits.IconLocator;
 import org.globsframework.gui.splits.color.ColorService;
 

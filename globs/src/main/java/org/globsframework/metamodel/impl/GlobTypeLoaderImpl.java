@@ -1,11 +1,16 @@
-package org.globsframework.metamodel.utils;
+package org.globsframework.metamodel.impl;
 
 import org.globsframework.metamodel.*;
 import org.globsframework.metamodel.annotations.*;
 import org.globsframework.metamodel.fields.*;
 import org.globsframework.metamodel.fields.impl.AbstractField;
 import org.globsframework.metamodel.index.*;
+import org.globsframework.metamodel.index.impl.DefaultMultiFieldNotUniqueIndex;
+import org.globsframework.metamodel.index.impl.DefaultMultiFieldUniqueIndex;
+import org.globsframework.metamodel.index.impl.DefaultNotUniqueIndex;
+import org.globsframework.metamodel.index.impl.DefaultUniqueIndex;
 import org.globsframework.metamodel.links.Link;
+import org.globsframework.metamodel.utils.MutableAnnotations;
 import org.globsframework.model.Glob;
 import org.globsframework.utils.Strings;
 import org.globsframework.utils.exceptions.InvalidParameter;

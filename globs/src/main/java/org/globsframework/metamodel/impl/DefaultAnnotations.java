@@ -1,5 +1,7 @@
-package org.globsframework.metamodel.utils;
+package org.globsframework.metamodel.impl;
 
+import org.globsframework.metamodel.Annotations;
+import org.globsframework.metamodel.utils.MutableAnnotations;
 import org.globsframework.model.Glob;
 import org.globsframework.model.Key;
 import org.globsframework.utils.exceptions.ItemNotFound;

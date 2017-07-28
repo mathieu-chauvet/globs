@@ -1,4 +1,4 @@
-package org.globsframework.metamodel.utils;
+package org.globsframework.metamodel.impl;
 
 import org.globsframework.metamodel.FieldInitializeProcessor;
 import org.globsframework.metamodel.FieldInitializeProcessorService;

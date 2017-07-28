@@ -1,6 +1,6 @@
 package org.globsframework.xml;
 
-import org.globsframework.metamodel.EmptyGlobLinkModel;
+import org.globsframework.metamodel.utils.EmptyGlobLinkModel;
 import org.globsframework.metamodel.Field;
 import org.globsframework.metamodel.GlobLinkModel;
 import org.globsframework.metamodel.links.Link;

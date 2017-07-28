@@ -1,8 +1,10 @@
-package org.globsframework.metamodel.utils;
+package org.globsframework.metamodel.impl;
 
 import org.globsframework.metamodel.*;
 import org.globsframework.metamodel.links.impl.DefaultMutableGlobLinkModel;
 import org.globsframework.metamodel.properties.Property;
+import org.globsframework.metamodel.utils.GlobTypeDependencies;
+import org.globsframework.metamodel.utils.IdProperty;
 import org.globsframework.model.GlobList;
 import org.globsframework.utils.exceptions.ItemNotFound;
 

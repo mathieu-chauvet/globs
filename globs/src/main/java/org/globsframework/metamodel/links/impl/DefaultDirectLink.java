@@ -5,7 +5,7 @@ import org.globsframework.metamodel.GlobType;
 import org.globsframework.metamodel.annotations.RequiredAnnotationType;
 import org.globsframework.metamodel.links.DirectLink;
 import org.globsframework.metamodel.links.FieldMappingFunction;
-import org.globsframework.metamodel.utils.Annotations;
+import org.globsframework.metamodel.Annotations;
 import org.globsframework.model.Glob;
 import org.globsframework.model.Key;
 import org.globsframework.model.KeyBuilder;

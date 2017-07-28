@@ -1,6 +1,6 @@
 package org.globsframework.metamodel;
 
-import org.globsframework.metamodel.utils.DefaultGlobTypeBuilder;
+import org.globsframework.metamodel.impl.DefaultGlobTypeBuilder;
 
 public class GlobTypeBuilderFactory {
 

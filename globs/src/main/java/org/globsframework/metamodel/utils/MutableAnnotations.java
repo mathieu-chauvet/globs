@@ -1,5 +1,6 @@
 package org.globsframework.metamodel.utils;
 
+import org.globsframework.metamodel.Annotations;
 import org.globsframework.model.Glob;
 
 public interface MutableAnnotations<T extends MutableAnnotations> extends Annotations {

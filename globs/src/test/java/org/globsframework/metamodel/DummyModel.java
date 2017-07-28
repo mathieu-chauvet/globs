@@ -1,7 +1,6 @@
 package org.globsframework.metamodel;
 
 import org.globsframework.metamodel.links.impl.DefaultMutableGlobLinkModel;
-import org.globsframework.metamodel.utils.DefaultGlobModel;
 
 public class DummyModel {
    private static GlobModel globModel;

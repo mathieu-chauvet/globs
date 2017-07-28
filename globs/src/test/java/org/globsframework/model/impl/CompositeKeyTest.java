@@ -3,7 +3,7 @@ package org.globsframework.model.impl;
 import org.globsframework.metamodel.GlobType;
 import org.globsframework.metamodel.annotations.KeyAnnotationType;
 import org.globsframework.metamodel.fields.IntegerField;
-import org.globsframework.metamodel.utils.DefaultGlobTypeBuilder;
+import org.globsframework.metamodel.impl.DefaultGlobTypeBuilder;
 import org.globsframework.metamodel.GlobTypeBuilder;
 import org.globsframework.model.Glob;
 import org.globsframework.model.Key;

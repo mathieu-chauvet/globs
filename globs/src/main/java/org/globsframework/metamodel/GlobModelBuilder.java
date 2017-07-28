@@ -1,6 +1,6 @@
 package org.globsframework.metamodel;
 
-import org.globsframework.metamodel.utils.DefaultGlobModel;
+import org.globsframework.metamodel.impl.DefaultGlobModel;
 
 import java.util.Arrays;
 

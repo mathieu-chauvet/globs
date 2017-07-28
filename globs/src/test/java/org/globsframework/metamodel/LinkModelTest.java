@@ -1,7 +1,7 @@
 package org.globsframework.metamodel;
 
 import org.globsframework.metamodel.links.impl.DefaultMutableGlobLinkModel;
-import org.globsframework.metamodel.utils.DefaultGlobModel;
+import org.globsframework.metamodel.impl.DefaultGlobModel;
 
 public class LinkModelTest {
 

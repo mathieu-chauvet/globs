@@ -1,7 +1,7 @@
 package org.globsframework.sqlstreams.drivers.jdbc;
 
 import org.globsframework.metamodel.*;
-import org.globsframework.metamodel.utils.DefaultGlobModel;
+import org.globsframework.metamodel.impl.DefaultGlobModel;
 import org.globsframework.model.Key;
 import org.globsframework.sqlstreams.*;
 import org.globsframework.sqlstreams.constraints.Constraint;
@@ -9,8 +9,8 @@ import org.globsframework.sqlstreams.constraints.Constraints;
 import org.globsframework.sqlstreams.utils.MultiCreateBuilder;
 import org.globsframework.streams.GlobStream;
 import org.globsframework.streams.accessors.Accessor;
-import org.globsframework.utils.directory.DefaultDirectory;
-import org.globsframework.utils.directory.Directory;
+import org.globsframework.directory.DefaultDirectory;
+import org.globsframework.directory.Directory;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;

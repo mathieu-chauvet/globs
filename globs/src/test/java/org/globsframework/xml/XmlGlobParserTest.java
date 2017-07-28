@@ -5,7 +5,6 @@ import org.globsframework.metamodel.annotations.KeyField;
 import org.globsframework.metamodel.annotations.Target;
 import org.globsframework.metamodel.fields.IntegerField;
 import org.globsframework.metamodel.links.Link;
-import org.globsframework.metamodel.utils.DefaultGlobModel;
 import org.globsframework.metamodel.GlobTypeLoader;
 import org.globsframework.metamodel.GlobTypeLoaderFactory;
 import org.globsframework.model.*;

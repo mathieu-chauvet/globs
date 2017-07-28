@@ -2,7 +2,6 @@ package org.globsframework.metamodel;
 
 import org.globsframework.metamodel.links.DirectLink;
 import org.globsframework.metamodel.links.Link;
-import org.globsframework.metamodel.utils.Annotations;
 import org.globsframework.metamodel.utils.MutableAnnotations;
 import org.globsframework.model.Glob;
 
