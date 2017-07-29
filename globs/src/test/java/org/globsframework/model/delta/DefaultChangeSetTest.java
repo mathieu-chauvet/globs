@@ -1,9 +1,6 @@
 package org.globsframework.model.delta;
 
-import org.globsframework.metamodel.DummyModel;
-import org.globsframework.metamodel.DummyObject;
-import org.globsframework.metamodel.DummyObject2;
-import org.globsframework.metamodel.DummyObjectWithLinks;
+import org.globsframework.metamodel.*;
 import org.globsframework.model.*;
 import org.globsframework.model.utils.DefaultChangeSetVisitor;
 import org.globsframework.utils.TestUtils;
@@ -337,9 +334,9 @@ public class DefaultChangeSetTest {
    @Test
    public void testClear() throws Exception {
       changeSet.processUpdate(key1, DummyObject.VALUE, 1.1, null);
-      changeSet.processDeletion(AbstractKey.create(DummyObject.TYPE, 10), FieldValues.EMPTY);
-      changeSet.processCreation(AbstractKey.create(DummyObject2.TYPE, 11), FieldValues.EMPTY);
-      changeSet.processCreation(AbstractKey.create(DummyObjectWithLinks.TYPE, 12), FieldValues.EMPTY);
+      changeSet.processDeletion(newKey(DummyObject.TYPE, 10), FieldValues.EMPTY);
+      changeSet.processCreation(newKey(DummyObject2.TYPE, 11), FieldValues.EMPTY);
+      changeSet.processCreation(newKey(DummyObjectWithLinks.TYPE, 12), FieldValues.EMPTY);
       changeSet.clear(Arrays.asList(DummyObject.TYPE, DummyObject2.TYPE));
       checker.assertChangesEqual(changeSet,
                                  "<create type='dummyObjectWithLinks' id='12'/>");

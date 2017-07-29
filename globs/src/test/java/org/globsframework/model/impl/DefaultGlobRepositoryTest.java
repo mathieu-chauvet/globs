@@ -101,8 +101,8 @@ public class DefaultGlobRepositoryTest extends DefaultGlobRepositoryTestCase {
       String xmlDescription = "<dummyObject id='1' name='name' value='1.1'/>";
       GlobRepository repository = checker.parse(xmlDescription);
 
-      assertTrue(repository.contains(AbstractKey.create(DummyObject.TYPE, 1)));
-      assertFalse(repository.contains(AbstractKey.create(DummyObject.TYPE, 2)));
+      assertTrue(repository.contains(KeyBuilder.newKey(DummyObject.TYPE, 1)));
+      assertFalse(repository.contains(KeyBuilder.newKey(DummyObject.TYPE, 2)));
 
       assertTrue(repository.contains(DummyObject.TYPE, GlobMatchers.fieldEquals(DummyObject.NAME, "name")));
       assertFalse(repository.contains(DummyObject.TYPE, GlobMatchers.fieldEquals(DummyObject.NAME, "other")));
@@ -167,8 +167,8 @@ public class DefaultGlobRepositoryTest extends DefaultGlobRepositoryTestCase {
             .set(DummyObjectWithCompositeKey.ID2, 2)
             .get());
 
-      Glob source0 = repository.get(AbstractKey.create(DummyObjectWithLinks.TYPE, 0));
-      Glob source1 = repository.get(AbstractKey.create(DummyObjectWithLinks.TYPE, 1));
+      Glob source0 = repository.get(KeyBuilder.newKey(DummyObjectWithLinks.TYPE, 0));
+      Glob source1 = repository.get(KeyBuilder.newKey(DummyObjectWithLinks.TYPE, 1));
       TestUtils.assertSetEquals(repository.findLinkedTo(target, DummyObjectWithLinks.COMPOSITE_LINK), source0, source1);
    }
 
@@ -224,11 +224,11 @@ public class DefaultGlobRepositoryTest extends DefaultGlobRepositoryTestCase {
    public void testFindOrCreate() throws Exception {
       initRepository();
 
-      Glob obj1 = repository.findOrCreate(AbstractKey.create(DummyObject.TYPE, 1),
+      Glob obj1 = repository.findOrCreate(KeyBuilder.newKey(DummyObject.TYPE, 1),
                                           value(DummyObject.NAME, "name"));
       checker.assertEquals(repository, "<dummyObject id='1' name='name'/>");
 
-      Glob newObj1 = repository.findOrCreate(AbstractKey.create(DummyObject.TYPE, 1),
+      Glob newObj1 = repository.findOrCreate(KeyBuilder.newKey(DummyObject.TYPE, 1),
                                              value(DummyObject.NAME, "newName-ignored"));
       assertNotNull(newObj1);
       checker.assertEquals(repository, "<dummyObject id='1' name='name'/>");
@@ -252,7 +252,7 @@ public class DefaultGlobRepositoryTest extends DefaultGlobRepositoryTestCase {
    public void testCreateWithFromKey() throws Exception {
       initRepository();
 
-      repository.create(AbstractKey.create(DummyObject.TYPE, 125),
+      repository.create(KeyBuilder.newKey(DummyObject.TYPE, 125),
                         value(DummyObject.NAME, "name"));
       checker.assertEquals(repository, "<dummyObject id='125' name='name'/>");
    }
@@ -703,9 +703,9 @@ public class DefaultGlobRepositoryTest extends DefaultGlobRepositoryTestCase {
       init(
          "<dummyObject id='1' name='value' />" +
          "<dummyObject id='2'/>");
-      Key key1 = AbstractKey.create(DummyObject.TYPE, 1);
+      Key key1 = KeyBuilder.newKey(DummyObject.TYPE, 1);
       Glob glob1 = repository.get(key1);
-      Key key2 = AbstractKey.create(DummyObject.TYPE, 2);
+      Key key2 = KeyBuilder.newKey(DummyObject.TYPE, 2);
       repository.startChangeSet();
       repository.deleteAll(DummyObject.TYPE);
       repository.create(key1, FieldValue.value(DummyObject.VALUE, 3.3));
@@ -716,7 +716,7 @@ public class DefaultGlobRepositoryTest extends DefaultGlobRepositoryTestCase {
 
    @Test
    public void testDeleteAndRecreateResetDefaultValue() throws Exception {
-      Key key = AbstractKey.create(DummyObjectWithDefaultValues.TYPE, 1);
+      Key key = KeyBuilder.newKey(DummyObjectWithDefaultValues.TYPE, 1);
       repository = new DefaultGlobRepository();
       Glob glob = repository.create(key, FieldValue.value(DummyObjectWithDefaultValues.LONG, 23L));
       repository.startChangeSet();

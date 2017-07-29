@@ -209,4 +209,7 @@ public class KeyBuilder {
     return new CompositeKey(type, getter);
   }
 
+  public static Key newKey(Field field1, Object value1, Field field2, Object value2) {
+    return new TwoFieldKey(field1, value1, field2, value2);
+  }
 }

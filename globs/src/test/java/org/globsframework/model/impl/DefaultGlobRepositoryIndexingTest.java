@@ -96,16 +96,16 @@ public class DefaultGlobRepositoryIndexingTest extends DefaultGlobRepositoryTest
    public void testUniqueIndexWithDeleteCreate() throws Exception {
       init("<dummyObjectIndex id='3' uniqueName='obj1' name='a'/>" +
            "<dummyObjectIndex id='4' uniqueName='obj3' name='b'/>");
-      Glob glob3 = repository.get(AbstractKey.create(DummyObjectIndex.TYPE, 4));
-      Glob glob4 = repository.get(AbstractKey.create(DummyObjectIndex.TYPE, 3));
+      Glob glob3 = repository.get(KeyBuilder.newKey(DummyObjectIndex.TYPE, 4));
+      Glob glob4 = repository.get(KeyBuilder.newKey(DummyObjectIndex.TYPE, 3));
       LocalGlobRepositoryBuilder builder = LocalGlobRepositoryBuilder.init(repository);
       builder.copy(DummyObjectIndex.TYPE);
       LocalGlobRepository localGlobRepository = builder.get();
       localGlobRepository.update(glob4.getKey(), DummyObjectIndex.NAME, "obj4");
-      localGlobRepository.create(AbstractKey.create(DummyObjectIndex.TYPE, 5),
+      localGlobRepository.create(KeyBuilder.newKey(DummyObjectIndex.TYPE, 5),
                                  FieldValue.value(DummyObjectIndex.NAME, "obj1"), FieldValue.value(DummyObjectIndex.UNIQUE_NAME, "a"));
       localGlobRepository.update(glob3.getKey(), DummyObjectIndex.NAME, "obj2");
-      localGlobRepository.create(AbstractKey.create(DummyObjectIndex.TYPE, 1),
+      localGlobRepository.create(KeyBuilder.newKey(DummyObjectIndex.TYPE, 1),
                                  FieldValue.value(DummyObjectIndex.NAME, "obj3"));
 
       localGlobRepository.commitChanges(true);
@@ -162,11 +162,11 @@ public class DefaultGlobRepositoryIndexingTest extends DefaultGlobRepositoryTest
    }
 
    private void delete(int id) {
-      repository.delete(AbstractKey.create(DummyObjectIndex.TYPE, id));
+      repository.delete(KeyBuilder.newKey(DummyObjectIndex.TYPE, id));
    }
 
    private void change(int id, int value1, int value2, String name) {
-      Key key = AbstractKey.create(DummyObjectIndex.TYPE, id);
+      Key key = KeyBuilder.newKey(DummyObjectIndex.TYPE, id);
       repository.startChangeSet();
       update(key, DummyObjectIndex.VALUE_2, value2);
       update(key, DummyObjectIndex.VALUE_1, value1);

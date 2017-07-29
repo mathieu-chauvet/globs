@@ -2,10 +2,7 @@ package org.globsframework.model.utils;
 
 import org.globsframework.metamodel.DummyObject;
 import org.globsframework.metamodel.DummyObject2;
-import org.globsframework.model.AbstractKey;
-import org.globsframework.model.DummyChangeSetListener;
-import org.globsframework.model.GlobChecker;
-import org.globsframework.model.GlobRepository;
+import org.globsframework.model.*;
 import org.globsframework.model.repository.LocalGlobRepository;
 import org.globsframework.model.repository.LocalGlobRepositoryBuilder;
 import org.globsframework.utils.exceptions.InvalidState;
@@ -35,9 +32,9 @@ public class LocalGlobRepositoryTest {
                    value(DummyObject.ID, 3),
                    value(DummyObject.NAME, "obj3"));
 
-      local.update(AbstractKey.create(DummyObject.TYPE, 1), DummyObject.NAME, "newName");
+      local.update(KeyBuilder.newKey(DummyObject.TYPE, 1), DummyObject.NAME, "newName");
 
-      local.delete(AbstractKey.create(DummyObject.TYPE, 2));
+      local.delete(KeyBuilder.newKey(DummyObject.TYPE, 2));
 
       checker.assertEquals(source,
                            "<dummyObject id='0' name='name'/>" +
@@ -105,7 +102,7 @@ public class LocalGlobRepositoryTest {
          "<dummyObject2 id='1'/>");
 
       LocalGlobRepository local = LocalGlobRepositoryBuilder.init(source).copy(DummyObject.TYPE)
-         .copy(source.get(AbstractKey.create(DummyObject2.TYPE, 1))).get();
+         .copy(source.get(KeyBuilder.newKey(DummyObject2.TYPE, 1))).get();
       checker.assertEquals(local,
                            "<dummyObject id='0' name='name'/>" +
                            "<dummyObject id='1' name='name' value='1.1'/>" +
@@ -116,11 +113,11 @@ public class LocalGlobRepositoryTest {
                    value(DummyObject.ID, 3),
                    value(DummyObject.NAME, "obj3"));
 
-      local.update(AbstractKey.create(DummyObject.TYPE, 1), DummyObject.NAME, "newName");
+      local.update(KeyBuilder.newKey(DummyObject.TYPE, 1), DummyObject.NAME, "newName");
 
-      local.delete(AbstractKey.create(DummyObject.TYPE, 2));
+      local.delete(KeyBuilder.newKey(DummyObject.TYPE, 2));
 
-      local.delete(AbstractKey.create(DummyObject2.TYPE, 1));
+      local.delete(KeyBuilder.newKey(DummyObject2.TYPE, 1));
 
       DummyChangeSetListener listener = new DummyChangeSetListener();
       local.addChangeListener(listener);
@@ -139,9 +136,9 @@ public class LocalGlobRepositoryTest {
                    value(DummyObject.ID, 3),
                    value(DummyObject.NAME, "obj3"));
 
-      local.update(AbstractKey.create(DummyObject.TYPE, 1), DummyObject.NAME, "newName");
+      local.update(KeyBuilder.newKey(DummyObject.TYPE, 1), DummyObject.NAME, "newName");
 
-      local.delete(AbstractKey.create(DummyObject.TYPE, 2));
+      local.delete(KeyBuilder.newKey(DummyObject.TYPE, 2));
 
       assertTrue(local.containsChanges());
       checker.assertChangesEqual(local.getCurrentChanges(),

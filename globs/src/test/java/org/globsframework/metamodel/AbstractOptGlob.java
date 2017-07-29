@@ -131,6 +131,22 @@ public abstract class AbstractOptGlob extends AbstractKey implements Glob, Mutab
     return this;
   }
 
+  public MutableGlob set(DoubleField field, double value) throws ItemNotFound {
+    return this;
+  }
+
+  public MutableGlob set(IntegerField field, int value) throws ItemNotFound {
+    return this;
+  }
+
+  public MutableGlob set(LongField field, long value) throws ItemNotFound {
+    return this;
+  }
+
+  public MutableGlob setValue(Field field, Object value) {
+    return this;
+  }
+
   public abstract MutableGlob setObject(Field field, Object value);
 
   public MutableGlob setValues(FieldValues values) {

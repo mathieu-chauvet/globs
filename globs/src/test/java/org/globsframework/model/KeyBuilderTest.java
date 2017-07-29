@@ -1,9 +1,7 @@
 package org.globsframework.model;
 
-import org.globsframework.metamodel.DummyObject;
-import org.globsframework.metamodel.DummyObject2;
-import org.globsframework.metamodel.DummyObjectWithCompositeKey;
-import org.globsframework.metamodel.Field;
+import org.globsframework.metamodel.*;
+
 import static org.globsframework.model.KeyBuilder.newKey;
 import static org.junit.Assert.*;
 
@@ -84,10 +82,10 @@ public class KeyBuilderTest  {
 
    @Test
    public void testEqualsAndHashCodeWithSingleFieldKey() throws Exception {
-    Key key1a = AbstractKey.create(DummyObject.TYPE, 1);
-    Key key1b = AbstractKey.create(DummyObject.TYPE, 1);
-    Key key2 = AbstractKey.create(DummyObject.TYPE, 2);
-    Key key1_obj2 = AbstractKey.create(DummyObject2.TYPE, 1);
+      Key key1a = newKey(DummyObject.TYPE, 1);
+      Key key1b = newKey(DummyObject.TYPE, 1);
+      Key key2 = newKey(DummyObject.TYPE, 2);
+      Key key1_obj2 = newKey(DummyObject2.TYPE, 1);
 
     assertEquals(key1a, key1a);
     assertEquals(key1a, key1b);

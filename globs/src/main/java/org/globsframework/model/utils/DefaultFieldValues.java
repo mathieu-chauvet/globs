@@ -2,6 +2,7 @@ package org.globsframework.model.utils;
 
 import org.globsframework.metamodel.Field;
 import org.globsframework.metamodel.fields.*;
+import org.globsframework.model.FieldSetter;
 import org.globsframework.model.FieldValue;
 import org.globsframework.model.FieldValues;
 import org.globsframework.model.MutableFieldValues;
@@ -95,6 +96,21 @@ public class DefaultFieldValues extends AbstractFieldValues implements MutableFi
   }
 
   public DefaultFieldValues set(BlobField field, byte[] value) {
+    setValue(field, value);
+    return this;
+  }
+
+  public FieldSetter set(DoubleField field, double value) throws ItemNotFound {
+    setValue(field, value);
+    return this;
+  }
+
+  public FieldSetter set(IntegerField field, int value) throws ItemNotFound {
+    setValue(field, value);
+    return this;
+  }
+
+  public FieldSetter set(LongField field, long value) throws ItemNotFound {
     setValue(field, value);
     return this;
   }

@@ -372,7 +372,7 @@ public class DefaultGlobRepository implements GlobRepository, IndexSource {
                                    key + "' is a key and cannot be changed");
       }
 
-      mutableGlob.setObject(field, newValue);
+      mutableGlob.setValue(field, newValue);
       IndexTables indexTables = indexManager.getAssociatedTable(field);
       if (indexTables != null) {
          indexTables.add(newValue, mutableGlob, field, previousValue);
@@ -800,7 +800,7 @@ public class DefaultGlobRepository implements GlobRepository, IndexSource {
          if (Utils.equal(previousValue, value)) {
             return;
          }
-         sourceGlob.setObject(sourceField, value);
+         sourceGlob.setValue(sourceField, value);
          hasChange = true;
          IndexTables indexTables = indexManager.getAssociatedTable(sourceField);
          if (indexTables != null) {
