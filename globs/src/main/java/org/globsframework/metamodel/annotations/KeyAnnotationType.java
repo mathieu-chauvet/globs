@@ -2,7 +2,7 @@ package org.globsframework.metamodel.annotations;
 
 import org.globsframework.metamodel.GlobType;
 import org.globsframework.metamodel.fields.IntegerField;
-import org.globsframework.metamodel.impl.DefaultFieldLoaderFactory;
+import org.globsframework.metamodel.impl.DefaultFieldFactory;
 import org.globsframework.metamodel.impl.DefaultGlobType;
 import org.globsframework.model.Glob;
 import org.globsframework.model.Key;
@@ -16,19 +16,14 @@ public class KeyAnnotationType {
    @InitUniqueKey
    public static Key UNIQUE_KEY;
 
-   @KeyIndex(-1)
    public static Glob UNINITIALIZED;
 
-   @KeyIndex(1)
    public static Glob ONE;
 
-   @KeyIndex(2)
    public static Glob TWO;
 
-   @KeyIndex(3)
    public static Glob THREE;
 
-   @KeyIndex(4)
    public static Glob FOUR;
 
    public static Glob create(int indexOfKeyField) {
@@ -48,9 +43,10 @@ public class KeyAnnotationType {
 
    static {
       DefaultGlobType globType = new DefaultGlobType("KeyAnnotation");
-      DefaultFieldLoaderFactory factory = new DefaultFieldLoaderFactory(globType);
+      DefaultFieldFactory factory = new DefaultFieldFactory(globType);
       TYPE = globType;
       INDEX = factory.addInteger("INDEX", false, 0, 0, null);
+      globType.completeInit();
       UNIQUE_KEY = KeyBuilder.newEmptyKey(TYPE);
       UNINITIALIZED = globType.instantiate().set(INDEX, -1);
       ONE = globType.instantiate().set(INDEX, 1);

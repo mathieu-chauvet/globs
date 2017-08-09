@@ -16,7 +16,7 @@ public class FieldInitializeProcessorServiceImpl implements FieldInitializeProce
       return fieldProcessor.get(field.getType());
    }
 
-   public <T> void add(Class<T> type, FieldInitializeProcessor<T> processor){
+   public <T> void add(Class<T> type, FieldInitializeProcessor<T> processor) throws ServiceAlreadyUsedException {
       if (getCalled) {
          throw new ServiceAlreadyUsedException();
       }

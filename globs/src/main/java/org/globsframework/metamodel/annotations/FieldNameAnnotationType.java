@@ -2,16 +2,12 @@ package org.globsframework.metamodel.annotations;
 
 import org.globsframework.metamodel.GlobType;
 import org.globsframework.metamodel.fields.StringField;
-import org.globsframework.metamodel.fields.impl.DefaultStringField;
-import org.globsframework.metamodel.impl.DefaultFieldLoaderFactory;
+import org.globsframework.metamodel.impl.DefaultFieldFactory;
 import org.globsframework.metamodel.impl.DefaultGlobType;
-import org.globsframework.model.Glob;
-import org.globsframework.model.Key;
-import org.globsframework.model.KeyBuilder;
-import org.globsframework.model.MutableGlob;
+import org.globsframework.model.*;
 
 public class FieldNameAnnotationType {
-   public static GlobType DESC;
+   public static GlobType TYPE;
 
    public static StringField NAME;
 
@@ -22,17 +18,17 @@ public class FieldNameAnnotationType {
    }
 
    public static MutableGlob create(String value) {
-      return DESC.instantiate().set(NAME, value);
+      return TYPE.instantiate().set(NAME, value);
    }
 
    static {
       DefaultGlobType globType = new DefaultGlobType("fieldNameAnnotation");
-      DefaultFieldLoaderFactory factory = new DefaultFieldLoaderFactory(globType);
-      DESC = globType;
-      DefaultStringField defaultStringField = factory.addString("name", false, 0, 0, null);
-      NAME = defaultStringField;
-      UNIQUE_KEY = KeyBuilder.newEmptyKey(DESC);
-      defaultStringField.addAnnotation(create("name"));
+      DefaultFieldFactory factory = new DefaultFieldFactory(globType);
+      TYPE = globType;
+      NAME = factory.addString("name", false, 0, 0, null);
+      globType.completeInit();
+      UNIQUE_KEY = KeyBuilder.newEmptyKey(TYPE);
+      NAME.addAnnotation(create("name"));
       globType.register(GlobCreateFromAnnotation.class, annotation -> create((FieldNameAnnotation)annotation));
    }
 }

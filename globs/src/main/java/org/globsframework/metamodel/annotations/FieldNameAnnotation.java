@@ -11,5 +11,5 @@ import java.lang.annotation.RetentionPolicy;
 public @interface FieldNameAnnotation {
    String value();
 
-   GlobType TYPE = FieldNameAnnotationType.DESC;
+   GlobType TYPE = FieldNameAnnotationType.TYPE;
 }

@@ -12,9 +12,9 @@ import org.globsframework.metamodel.Annotations;
 import org.globsframework.metamodel.utils.MutableAnnotations;
 import org.globsframework.metamodel.utils.MutableGlobType;
 import org.globsframework.model.Glob;
+import org.globsframework.model.GlobFactory;
+import org.globsframework.model.GlobFactoryService;
 import org.globsframework.model.Key;
-import org.globsframework.model.MutableGlob;
-import org.globsframework.model.impl.DefaultGlob;
 import org.globsframework.utils.exceptions.InvalidState;
 import org.globsframework.utils.exceptions.ItemAlreadyExists;
 import org.globsframework.utils.exceptions.ItemNotFound;
@@ -24,16 +24,17 @@ import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class DefaultGlobType implements MutableGlobType, MutableAnnotations, PropertyHolder<GlobType> {
-   private Map<String, Field> fieldsByName = new TreeMap<String, Field>();
    private Field[] fields;
    private Field[] keyFields = new Field[0];
+   private GlobFactory globFactory;
    private String name;
+   private Map<String, Field> fieldsByName = new TreeMap<String, Field>(); // TODO replace with hashMap?
    private Map<String, Index> indices = new HashMap<String, Index>(2, 1);
    private Map<String, MultiFieldIndex> multiFieldIndices = new HashMap<String, MultiFieldIndex>(2, 1);
    private Map<Class, Object> registered = new ConcurrentHashMap<>();
-   private static Object NULL_OBJECT = new Object();
    private final Map<Key, Glob> annotations = new HashMap<Key, Glob>();
    private Object properties[] = new Object[]{NULL_OBJECT, NULL_OBJECT};
+   private static Object NULL_OBJECT = new Object();
 
 
    public DefaultGlobType(String name) {
@@ -182,6 +183,7 @@ public class DefaultGlobType implements MutableGlobType, MutableAnnotations, Pro
             keyFieldCount++;
          }
       }
+      globFactory = GlobFactoryService.Builder.getBuilderFactory().get(this);
    }
 
    public void addIndex(Index index) {
@@ -200,8 +202,8 @@ public class DefaultGlobType implements MutableGlobType, MutableAnnotations, Pro
       return multiFieldIndices.values();
    }
 
-   public MutableGlob instantiate() {
-      return new DefaultGlob(this);
+   public GlobFactory getGlobFactory() {
+      return globFactory;
    }
 
    public Index getIndex(String name) {

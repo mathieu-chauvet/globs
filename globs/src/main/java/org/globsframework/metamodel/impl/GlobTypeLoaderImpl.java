@@ -26,7 +26,7 @@ import java.util.concurrent.ConcurrentHashMap;
 
 public class GlobTypeLoaderImpl implements GlobTypeLoader {
    private DefaultGlobType type;
-   private DefaultFieldLoaderFactory fieldFactory;
+   private DefaultFieldFactory fieldFactory;
    private String modelName;
    private Class<?> targetClass;
    private String name;
@@ -49,10 +49,8 @@ public class GlobTypeLoaderImpl implements GlobTypeLoader {
 //      return loader;
 //   }
 
-   public GlobTypeLoaderImpl() {
-   }
-
-   public GlobTypeLoaderImpl(Class<?> targetClass, String modelName, String name, FieldInitializeProcessorService fieldInitializeProcessorService) {
+   public GlobTypeLoaderImpl(Class<?> targetClass, String modelName, String name,
+                             FieldInitializeProcessorService fieldInitializeProcessorService) {
       this.modelName = modelName;
       this.fieldInitializeProcessorService = fieldInitializeProcessorService;
       this.targetClass = targetClass;
@@ -169,7 +167,7 @@ public class GlobTypeLoaderImpl implements GlobTypeLoader {
             type.addAnnotation(glob);
          }
       }
-      this.fieldFactory = new DefaultFieldLoaderFactory(type);
+      this.fieldFactory = new DefaultFieldFactory(type);
       GlobTypeLoaderImpl.setClassField(classField, type, targetClass);
    }
 

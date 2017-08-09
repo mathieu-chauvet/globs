@@ -10,5 +10,5 @@ import java.lang.annotation.RetentionPolicy;
 @java.lang.annotation.Target({ElementType.FIELD})
 public @interface DefaultBoolean {
   boolean value();
-   GlobType TYPE = DefaultBooleanAnnotationType.DESC;
+   GlobType TYPE = DefaultBooleanAnnotationType.TYPE;
 }

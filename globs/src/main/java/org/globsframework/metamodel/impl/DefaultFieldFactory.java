@@ -16,10 +16,10 @@ import org.globsframework.metamodel.utils.MutableGlobType;
 import org.globsframework.model.Glob;
 import org.globsframework.model.Key;
 
-public class DefaultFieldLoaderFactory {
+public class DefaultFieldFactory {
    private MutableGlobType type;
 
-   public DefaultFieldLoaderFactory(MutableGlobType type) {
+   public DefaultFieldFactory(MutableGlobType type) {
       this.type = type;
    }
 

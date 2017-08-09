@@ -1,6 +1,7 @@
 package org.globsframework.model.impl;
 
 import org.globsframework.metamodel.GlobType;
+import org.globsframework.metamodel.GlobTypeBuilderFactory;
 import org.globsframework.metamodel.annotations.KeyAnnotationType;
 import org.globsframework.metamodel.fields.IntegerField;
 import org.globsframework.metamodel.impl.DefaultGlobTypeBuilder;
@@ -15,7 +16,7 @@ public class CompositeKeyTest {
 
    @Test
    public void keyFieldNotAtBegin() throws Exception {
-      GlobTypeBuilder builder = new DefaultGlobTypeBuilder("CompositeKey");
+      GlobTypeBuilder builder = GlobTypeBuilderFactory.create("CompositeKey");
       builder.addStringField("field_1");
       IntegerField id1 = builder.declareIntegerField("id1", KeyAnnotationType.UNINITIALIZED);
       builder.addStringField("field_2");

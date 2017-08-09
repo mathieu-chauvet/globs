@@ -12,7 +12,7 @@ import org.globsframework.utils.exceptions.InvalidState;
 
 public class DefaultGlobTypeBuilder implements GlobTypeBuilder {
    private DefaultGlobType type;
-   private DefaultFieldLoaderFactory factory;
+   private DefaultFieldFactory factory;
    private int index;
    private int keyIndex;
    private Boolean isKeyFromGlob;
@@ -23,7 +23,7 @@ public class DefaultGlobTypeBuilder implements GlobTypeBuilder {
 
    public DefaultGlobTypeBuilder(String typeName) {
       type = new DefaultGlobType(typeName);
-      factory = new DefaultFieldLoaderFactory(type);
+      factory = new DefaultFieldFactory(type);
    }
 
    public GlobTypeBuilder addIntegerKey(String fieldName, Glob... globAnnotations) {

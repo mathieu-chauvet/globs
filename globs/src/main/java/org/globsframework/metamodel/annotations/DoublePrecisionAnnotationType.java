@@ -1,9 +1,7 @@
 package org.globsframework.metamodel.annotations;
 
-import org.globsframework.metamodel.GlobType;
+import org.globsframework.metamodel.*;
 import org.globsframework.metamodel.fields.IntegerField;
-import org.globsframework.metamodel.GlobTypeLoader;
-import org.globsframework.metamodel.GlobTypeLoaderFactory;
 import org.globsframework.model.Glob;
 import org.globsframework.model.Key;
 

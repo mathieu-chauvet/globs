@@ -18,7 +18,7 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
-abstract public class AbstractField implements Field, MutableAnnotations, PropertyHolder<Field> {
+abstract public class AbstractField implements Field {
    private final int index;
    private final boolean keyField;
    private final GlobType globType;
@@ -136,7 +136,7 @@ abstract public class AbstractField implements Field, MutableAnnotations, Proper
       return (D)value;
    }
 
-   public MutableAnnotations addAnnotation(Glob glob) {
+   public Field addAnnotation(Glob glob) {
       if (glob != null){
          annotations.put(glob.getKey(), glob);
       }
