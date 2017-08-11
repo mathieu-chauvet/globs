@@ -14,13 +14,15 @@ public class DefaultDoubleField extends AbstractField implements DoubleField {
       super(name, globType, Double.class, index, keyIndex, isKeyField, defaultValue, DataType.Double);
    }
 
-   public void visit(FieldVisitor visitor) throws Exception {
+   public <T extends FieldVisitor> T visit(T visitor) throws Exception {
       visitor.visitDouble(this);
+      return visitor;
    }
 
-   public void safeVisit(FieldVisitor visitor) {
+   public <T extends FieldVisitor>  T safeVisit(T visitor) {
       try {
          visitor.visitDouble(this);
+         return visitor;
       }
       catch (RuntimeException e) {
          throw new RuntimeException("On " + this, e);

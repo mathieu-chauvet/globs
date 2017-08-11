@@ -24,9 +24,9 @@ public interface Field extends PropertyHolder<Field>, MutableAnnotations<Field> 
 
   boolean isRequired();
 
-  void visit(FieldVisitor visitor) throws Exception;
+  <T extends FieldVisitor> T visit(T visitor) throws Exception;
 
-  void safeVisit(FieldVisitor visitor);
+  <T extends FieldVisitor> T safeVisit(T visitor);
 
   void safeVisit(FieldValueVisitor visitor, Object value);
 

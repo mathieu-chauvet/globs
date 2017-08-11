@@ -12,13 +12,15 @@ public class DefaultBooleanField extends AbstractField implements BooleanField {
       super(name, globType, Boolean.class, index, keyIndex, isKeyField, defaultValue, DataType.Boolean);
    }
 
-   public void visit(FieldVisitor visitor) throws Exception {
+   public <T extends FieldVisitor>  T visit(T visitor) throws Exception {
       visitor.visitBoolean(this);
+      return visitor;
    }
 
-   public void safeVisit(FieldVisitor visitor) {
+   public <T extends FieldVisitor>  T safeVisit(T visitor) {
       try {
          visitor.visitBoolean(this);
+         return visitor;
       }
       catch (RuntimeException e) {
          throw new RuntimeException("On " + this, e);

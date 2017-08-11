@@ -7,6 +7,7 @@ import org.globsframework.metamodel.fields.FieldVisitor;
 import org.globsframework.metamodel.type.DataType;
 import org.globsframework.utils.exceptions.UnexpectedApplicationState;
 
+import java.nio.file.FileVisitor;
 import java.util.Arrays;
 
 public class DefaultBlobField extends AbstractField implements BlobField {
@@ -15,13 +16,15 @@ public class DefaultBlobField extends AbstractField implements BlobField {
       super(name, globType, byte[].class, index, -1, false, null, DataType.Bytes);
    }
 
-   public void visit(FieldVisitor visitor) throws Exception {
+   public <T extends FieldVisitor> T visit(T visitor) throws Exception {
       visitor.visitBlob(this);
+      return visitor;
    }
 
-   public void safeVisit(FieldVisitor visitor) {
+   public <T extends FieldVisitor>  T safeVisit(T visitor) {
       try {
          visitor.visitBlob(this);
+         return visitor;
       }
       catch (RuntimeException e) {
          throw new RuntimeException("On " + this, e);

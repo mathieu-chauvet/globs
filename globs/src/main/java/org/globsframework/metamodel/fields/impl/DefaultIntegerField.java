@@ -12,13 +12,15 @@ public class DefaultIntegerField extends AbstractField implements IntegerField {
       super(name, globType, Integer.class, index, keyIndex, isKeyField, defaultValue, DataType.Integer);
    }
 
-   public void visit(FieldVisitor visitor) throws Exception {
+   public <T extends FieldVisitor> T visit(T visitor) throws Exception {
       visitor.visitInteger(this);
+      return visitor;
    }
 
-   public void safeVisit(FieldVisitor visitor) {
+   public <T extends FieldVisitor>  T safeVisit(T visitor) {
       try {
          visitor.visitInteger(this);
+         return visitor;
       }
       catch (RuntimeException e) {
          throw new RuntimeException("On " + this, e);

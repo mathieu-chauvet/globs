@@ -12,13 +12,15 @@ public class DefaultLongField extends AbstractField implements LongField {
       super(name, globType, Long.class, index, keyIndex, isKeyField, defaultValue, DataType.Long);
    }
 
-   public void visit(FieldVisitor visitor) throws Exception {
+   public <T extends FieldVisitor> T visit(T visitor) throws Exception {
       visitor.visitLong(this);
+      return visitor;
    }
 
-   public void safeVisit(FieldVisitor visitor) {
+   public <T extends FieldVisitor>  T safeVisit(T visitor) {
       try {
          visitor.visitLong(this);
+         return visitor;
       }
       catch (RuntimeException e) {
          throw new RuntimeException("On " + this, e);
