@@ -257,6 +257,16 @@ class DefaultDeltaGlob extends AbstractFieldValuesWithPrevious implements DeltaG
     }
   }
 
+  public void applyOnPrevious(FieldValues.Functor functor) throws Exception {
+    for (Field field : key.getGlobType().getFields()) {
+      final int index = field.getIndex();
+      Object value = previousValues[index];
+      if ((value != Unset.VALUE) && !field.isKeyField()) {
+        functor.process(field, value);
+      }
+    }
+  }
+
   public FieldValue[] toArray() {
     FieldValue[] fieldValues = new FieldValue[size()];
     int i = 0;

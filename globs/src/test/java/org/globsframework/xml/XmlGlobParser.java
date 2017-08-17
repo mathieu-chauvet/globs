@@ -57,7 +57,7 @@ public class XmlGlobParser {
          this.parent = parent;
       }
 
-      public XmlNode getSubNode(String childName, Attributes xmlAttrs) throws ExceptionHolder {
+      public XmlNode getSubNode(String childName, Attributes xmlAttrs, String uri, String fullName) throws ExceptionHolder {
          try {
             Glob glob = parse(childName, xmlAttrs);
             return new RootProxyNode(glob);

@@ -14,7 +14,7 @@ import org.globsframework.metamodel.GlobTypeLoaderFactory;
 import org.globsframework.model.ChangeSet;
 import org.globsframework.xml.XmlChangeSetParser;
 import org.globsframework.xml.XmlChangeSetVisitor;
-import org.globsframework.xml.XmlTestUtils;
+import org.globsframework.xml.tests.XmlTestUtils;
 import org.junit.Test;
 
 import java.io.StringReader;

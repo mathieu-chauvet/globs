@@ -1,4 +1,4 @@
-package org.globsframework.xml;
+package org.globsframework.xml.tests;
 
 import org.apache.xerces.parsers.SAXParser;
 import org.globsframework.saxstack.comparator.XmlComparator;

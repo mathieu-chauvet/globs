@@ -140,4 +140,16 @@ public abstract class AbstractFieldValuesWithPrevious implements FieldValuesWith
       throw new RuntimeException(e);
     }
   }
+
+  public void safeApplyOnPrevious(FieldValues.Functor functor) {
+     try {
+       applyOnPrevious(functor);
+     }
+     catch (RuntimeException e) {
+       throw e;
+     }
+     catch (Exception e) {
+       throw new RuntimeException(e);
+     }
+   }
 }

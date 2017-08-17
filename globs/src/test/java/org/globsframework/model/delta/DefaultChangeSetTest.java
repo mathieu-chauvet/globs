@@ -1,13 +1,16 @@
 package org.globsframework.model.delta;
 
-import org.globsframework.metamodel.*;
+import org.globsframework.metamodel.DummyModel;
+import org.globsframework.metamodel.DummyObject;
+import org.globsframework.metamodel.DummyObject2;
+import org.globsframework.metamodel.DummyObjectWithLinks;
 import org.globsframework.model.*;
 import org.globsframework.model.utils.DefaultChangeSetVisitor;
 import org.globsframework.utils.TestUtils;
 import org.globsframework.utils.exceptions.InvalidState;
 import org.globsframework.xml.XmlChangeSetParser;
 import org.globsframework.xml.XmlChangeSetWriter;
-import org.globsframework.xml.XmlTestUtils;
+import org.globsframework.xml.tests.XmlTestUtils;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -379,5 +382,23 @@ public class DefaultChangeSetTest {
       XmlChangeSetWriter.write(reverse, writer);
 
       XmlTestUtils.assertEquivalent(expected, writer.toString());
+   }
+
+
+   @Test
+   public void checkPrint() throws Exception {
+      MutableChangeSet changeSet = XmlChangeSetParser.parse(DummyModel.get(), new StringReader(
+         "<changes>" +
+         "  <create type='dummyObject' id='1' name='name1'/>" +
+         "  <update type='dummyObject' id='2' name='newName2' _name='name2'/>" +
+         "  <delete type='dummyObject' id='3' _name='name3'/>" +
+         "</changes>"
+      ));
+      assertEquals(
+         "delete : id='3' name='name3' value='' count='' present='' date='' password='' linkId='' link2Id=''\n" +
+         "update : id='2' name='newName2'\n" +
+         "                _name='name2'\n" +
+         "create : id='1' name='name1' value='' count='' present='' date='' password='' linkId='' link2Id=''\n",
+         changeSet.toString());
    }
 }

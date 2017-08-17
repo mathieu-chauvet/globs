@@ -1,4 +1,4 @@
-package org.globsframework.xml;
+package org.globsframework.xml.tests;
 
 import org.globsframework.metamodel.*;
 import org.globsframework.metamodel.annotations.KeyField;

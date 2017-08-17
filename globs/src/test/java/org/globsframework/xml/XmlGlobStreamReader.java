@@ -48,7 +48,7 @@ public class XmlGlobStreamReader {
     public RootProxyNode() {
     }
 
-    public XmlNode getSubNode(String childName, Attributes xmlAttrs) throws ExceptionHolder {
+    public XmlNode getSubNode(String childName, Attributes xmlAttrs, String uri, String fullName) throws ExceptionHolder {
       try {
         if (childName.equals("root")) {
           return this;

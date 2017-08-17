@@ -3,7 +3,7 @@ package org.globsframework.model;
 import org.globsframework.metamodel.DummyModel;
 import org.globsframework.metamodel.GlobModel;
 import org.globsframework.metamodel.GlobType;
-import org.globsframework.xml.XmlComparisonMode;
+import org.globsframework.xml.tests.XmlComparisonMode;
 
 public class GlobChecker {
   private GlobModel model;

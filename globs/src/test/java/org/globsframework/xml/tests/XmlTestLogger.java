@@ -1,4 +1,4 @@
-package org.globsframework.xml;
+package org.globsframework.xml.tests;
 
 import org.globsframework.saxstack.writer.RootXmlTag;
 import org.globsframework.saxstack.writer.XmlTag;

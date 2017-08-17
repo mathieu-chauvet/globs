@@ -4,9 +4,10 @@ import org.globsframework.metamodel.Field;
 import org.globsframework.metamodel.GlobType;
 import org.globsframework.model.*;
 import org.globsframework.model.utils.BreakException;
+import org.globsframework.model.utils.ChangeVisitor;
+import org.globsframework.utils.Strings;
 import org.globsframework.utils.collections.MapOfMaps;
 import org.globsframework.utils.exceptions.InvalidState;
-import org.globsframework.xml.XmlChangeSetWriter;
 
 import java.io.IOException;
 import java.io.StringWriter;
@@ -348,7 +349,7 @@ public class DefaultChangeSet implements MutableChangeSet {
   public String toString() {
     try {
       StringWriter writer = new StringWriter();
-      XmlChangeSetWriter.prettyWrite(this, writer);
+      visit(new PrintChangeVisitor(writer));
       return writer.toString();
     }
     catch (Exception e) {
@@ -369,5 +370,57 @@ public class DefaultChangeSet implements MutableChangeSet {
       result.deltaGlobsByKey.put(reverseDelta.getType(), reverseDelta.getKey(), reverseDelta);
     }
     return result;
+  }
+
+  private static class PrintChangeVisitor implements ChangeVisitor, FieldValues.Functor {
+    private final StringWriter writer;
+    private String prefix = "";
+
+    public PrintChangeVisitor(StringWriter writer) {
+      this.writer = writer;
+    }
+
+    public void complete() {
+
+    }
+
+    public void visitCreation(Key key, FieldValues values) throws Exception {
+      writer.write("create :");
+      key.safeApplyOnKeyField(this);
+      values.safeApply(this);
+      writer.write("\n");
+    }
+
+    public void visitUpdate(Key key, FieldValuesWithPrevious values) throws Exception {
+      int startOffSet = writer.getBuffer().length();
+      writer.write("update :");
+      key.safeApplyOnKeyField(this);
+      int endOffset = writer.getBuffer().length();
+      values.safeApply(this);
+      writer.append("\n");
+      for (int i = 0; i < endOffset - startOffSet; i++){
+        writer.write(" ");
+      }
+      prefix = "_";
+      values.applyOnPrevious(this);
+      writer.write("\n");
+      prefix = "";
+    }
+
+    public void visitDeletion(Key key, FieldValues previousValues) throws Exception {
+      writer.write("delete :");
+      key.safeApplyOnKeyField(this);
+      previousValues.safeApply(this);
+      writer.write("\n");
+    }
+
+    public void process(Field field, Object value) throws Exception {
+      writer.write(" ");
+      writer.write(prefix);
+      writer.write(field.getName());
+      writer.write("='");
+      writer.write(Strings.toString(value));
+      writer.write("'");
+    }
   }
 }

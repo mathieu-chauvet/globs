@@ -4,13 +4,15 @@ import org.globsframework.metamodel.GlobModel;
 import org.globsframework.metamodel.GlobType;
 import org.globsframework.utils.exceptions.InvalidParameter;
 import org.globsframework.xml.*;
-import static org.globsframework.xml.XmlTestUtils.assertEquivalent;
+import static org.globsframework.xml.tests.XmlTestUtils.assertEquivalent;
 
 import java.io.StringReader;
 import java.io.StringWriter;
 import java.util.List;
 
 import junit.framework.AssertionFailedError;
+import org.globsframework.xml.tests.XmlComparisonMode;
+import org.globsframework.xml.tests.XmlTestUtils;
 
 public class GlobTestUtils {
 

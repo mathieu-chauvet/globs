@@ -1,10 +1,10 @@
-package org.globsframework.xml;
+package org.globsframework.xml.tests;
 
-import junit.framework.TestCase;
 import org.globsframework.metamodel.DummyObject;
 import org.globsframework.model.FieldValuesBuilder;
 import static org.globsframework.model.KeyBuilder.newKey;
 import org.globsframework.model.delta.DefaultChangeSet;
+import org.globsframework.xml.XmlChangeSetWriter;
 import org.junit.Test;
 
 import java.io.StringWriter;

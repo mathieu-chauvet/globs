@@ -106,6 +106,7 @@
       <groupId>org.globsframework</groupId>
       <artifactId>saxstack</artifactId>
       <version>2.1</version>
+      <scope>test</scope>
     </dependency>
     <dependency>
       <groupId>xerces</groupId>

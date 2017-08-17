@@ -63,6 +63,16 @@ public class DefaultFieldValuesWithPrevious extends AbstractFieldValuesWithPrevi
     }
   }
 
+  public void applyOnPrevious(FieldValues.Functor functor) throws Exception {
+    for (Field field : type.getFields()) {
+      int index = field.getIndex();
+      if (previousValues[index] != Unset.VALUE) {
+        functor.process(field, previousValues[index]);
+      }
+    }
+  }
+
+
   public FieldValues getPreviousValues() {
     return new GlobArrayFieldValues(type, previousValues);
   }

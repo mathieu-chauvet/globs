@@ -48,6 +48,10 @@ public interface FieldValuesWithPrevious extends FieldValues {
 
    void safeApply(Functor functor);
 
+   void safeApplyOnPrevious(FieldValues.Functor functor);
+
+   void applyOnPrevious(FieldValues.Functor functor) throws Exception;
+
    FieldValues getPreviousValues();
 
    interface Functor {
