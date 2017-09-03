@@ -20,6 +20,7 @@ import org.globsframework.utils.exceptions.UnexpectedApplicationState;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Modifier;
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -33,22 +34,6 @@ public class GlobTypeLoaderImpl implements GlobTypeLoader {
    private FieldInitializeProcessorService fieldInitializeProcessorService;
    private Map<Class, Object> registered = new ConcurrentHashMap<>();
 
-
-//   private static GlobTypeLoader init(Class<?> targetClass) {
-//      return init(targetClass, null);
-//   }
-//
-//   private static GlobTypeLoader init(Class<?> targetClass, String name) {
-//      return init("Default", targetClass, name);
-//   }
-//
-//   private static GlobTypeLoader init(String modelName, Class<?> targetClass, String name) {
-//      GlobTypeLoader loader = new GlobTypeLoader(targetClass, modelName, name, GlobTypeLoaderFactory.getProcessorService());
-//      loader.run();
-//      loader.type.completeInit();
-//      return loader;
-//   }
-
    public GlobTypeLoaderImpl(Class<?> targetClass, String modelName, String name,
                              FieldInitializeProcessorService fieldInitializeProcessorService) {
       this.modelName = modelName;
@@ -61,7 +46,6 @@ public class GlobTypeLoaderImpl implements GlobTypeLoader {
       checkClassIsNotAlreadyInitialized(targetClass);
       processClass(targetClass);
       processFields(targetClass);
-//      processLink(targetClass);
       processIndex(targetClass);
       type.completeInit();
       for (Map.Entry<Class, Object> entry : registered.entrySet()) {
@@ -79,7 +63,7 @@ public class GlobTypeLoaderImpl implements GlobTypeLoader {
       for (java.lang.reflect.Field classField : targetClass.getFields()) {
          List<FieldInitializeProcessor> processor = fieldInitializeProcessorService.get(classField);
          if (processor != null && !processor.isEmpty()) {
-            DefaultAnnotations annotations = new DefaultAnnotations();
+            DefaultAnnotations<Field> annotations = new DefaultAnnotations<>();
             processFieldAnnotations(classField, annotations);
             annotations.addAnnotation(FieldNameAnnotationType.create(getFieldName(classField)));
             applyProcessor(targetClass, classField, processor, annotations);
@@ -99,7 +83,7 @@ public class GlobTypeLoaderImpl implements GlobTypeLoader {
    }
 
    private void applyProcessor(Class<?> targetClass, java.lang.reflect.Field classField, List<FieldInitializeProcessor> processor,
-                               DefaultAnnotations annotations) {
+                               DefaultAnnotations<Field> annotations) {
       for (FieldInitializeProcessor fieldInitializeProcessor : processor) {
          Object value = fieldInitializeProcessor.getValue(type, annotations, classField.getAnnotations());
          if (value instanceof MutableAnnotations) {
@@ -113,17 +97,6 @@ public class GlobTypeLoaderImpl implements GlobTypeLoader {
          }
       }
    }
-
-
-//   private void processLink(Class<?> targetClass) {
-//      for (java.lang.reflect.Field classField : targetClass.getFields()) {
-//         if (isGlobLink(classField)) {
-//            UnInitializedLink link = new UnInitializedLink("");
-//            processFieldAnnotations(classField, link);
-//            setClassField(classField, link, targetClass);
-//         }
-//      }
-//   }
 
    private void checkClassIsNotAlreadyInitialized(Class targetClass) {
       for (java.lang.reflect.Field classField : targetClass.getFields()) {
@@ -171,7 +144,7 @@ public class GlobTypeLoaderImpl implements GlobTypeLoader {
       GlobTypeLoaderImpl.setClassField(classField, type, targetClass);
    }
 
-   private void processFieldAnnotations(java.lang.reflect.Field field, MutableAnnotations annotations) {
+   private void processFieldAnnotations(java.lang.reflect.Field field, MutableAnnotations<Field> annotations) {
       for (Annotation annotation : field.getAnnotations()) {
          Glob globAnnotation = processAnnotation(annotation);
          if (globAnnotation != null) {

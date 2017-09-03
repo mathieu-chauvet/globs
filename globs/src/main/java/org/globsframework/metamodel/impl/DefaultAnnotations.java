@@ -10,29 +10,37 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
-public class DefaultAnnotations implements MutableAnnotations {
-    Map<Key, Glob> annotations = new HashMap<Key, Glob>();
+public class DefaultAnnotations<T extends MutableAnnotations> implements MutableAnnotations<T> {
+    volatile private Map<Key, Glob> annotations;
 
    public DefaultAnnotations() {
+      annotations = new HashMap<>();
    }
 
    public DefaultAnnotations(Glob[] annotations) {
+      this.annotations = new HashMap<>(annotations.length);
       for (Glob annotation : annotations) {
          addAnnotation(annotation);
       }
    }
 
    public DefaultAnnotations(Annotations annotations) {
-      for (Glob annotation : annotations.list()) {
+      Collection<Glob> globs = annotations.list();
+      this.annotations = new HashMap<>(globs.size());
+      for (Glob annotation : globs) {
          this.annotations.put(annotation.getKey(), annotation);
       }
    }
 
-   public MutableAnnotations addAnnotation(Glob glob) {
+   public T addAnnotation(Glob glob) {
        if (glob != null) {
-          annotations.put(glob.getKey(), glob);
+          synchronized (this) {
+             Map<Key, Glob> tmp = new HashMap<>(annotations);
+             tmp.put(glob.getKey(), glob);
+             annotations = tmp;
+          }
        }
-      return this;
+      return (T)this;
     }
 
     public boolean hasAnnotation(Key key) {

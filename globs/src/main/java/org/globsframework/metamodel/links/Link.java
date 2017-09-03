@@ -1,12 +1,14 @@
 package org.globsframework.metamodel.links;
 
 import org.globsframework.metamodel.Annotations;
+import org.globsframework.metamodel.Field;
 import org.globsframework.metamodel.GlobType;
+import org.globsframework.metamodel.utils.MutableAnnotations;
 import org.globsframework.model.Glob;
 import org.globsframework.model.Key;
 
 // introduce typeded link => containmentLink, 1->1, 1->N, M->N, ... hierarchical.
-public interface Link extends Annotations {
+public interface Link extends MutableAnnotations<Link> {
 
    GlobType getSourceType();
 

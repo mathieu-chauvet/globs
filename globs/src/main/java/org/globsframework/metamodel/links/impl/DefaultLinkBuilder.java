@@ -18,17 +18,17 @@ import java.util.Collection;
 import java.util.List;
 
 public abstract class DefaultLinkBuilder<T extends MutableGlobLinkModel.LinkBuilder> implements MutableGlobLinkModel.LinkBuilder<T>, MutableAnnotations<T> {
-   String modelName;
-   String name;
-   GlobType sourceType;
-   GlobType targetType;
-   List<Pair<Field, Field>> mappings = new ArrayList<>();
-   DefaultAnnotations annotations;
+   private final String modelName;
+   private final String name;
+   private final List<Pair<Field, Field>> mappings = new ArrayList<>();
+   private final DefaultAnnotations<T> annotations;
+   private GlobType sourceType;
+   private GlobType targetType;
 
    public DefaultLinkBuilder(String modelName, String name, Annotations annotations) {
       this.modelName = modelName;
       this.name = name;
-      this.annotations = new DefaultAnnotations(annotations);
+      this.annotations = new DefaultAnnotations<T>(annotations);
    }
 
    public String getModelName() {
@@ -49,15 +49,15 @@ public abstract class DefaultLinkBuilder<T extends MutableGlobLinkModel.LinkBuil
    }
 
    public Glob findAnnotation(Key key) {
-      return null;
+      return annotations.findAnnotation(key);
    }
 
    public Glob getAnnotation(Key key) {
-      return null;
+      return annotations.getAnnotation(key);
    }
 
    public boolean hasAnnotation(Key key) {
-      return false;
+      return annotations.hasAnnotation(key);
    }
 
    abstract T getT();

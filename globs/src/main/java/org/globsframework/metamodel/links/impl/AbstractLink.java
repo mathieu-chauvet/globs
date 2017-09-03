@@ -5,7 +5,7 @@ import org.globsframework.metamodel.links.Link;
 import org.globsframework.metamodel.Annotations;
 import org.globsframework.metamodel.impl.DefaultAnnotations;
 
-public abstract class AbstractLink extends DefaultAnnotations implements Link {
+public abstract class AbstractLink extends DefaultAnnotations<Link> implements Link {
    protected final String modelName;
    protected final String name;
 
