@@ -1,11 +1,11 @@
 package org.globsframework.model.globaccessor;
 
-import org.globsframework.model.Glob;
+import org.globsframework.model.MutableGlob;
 
 public interface GlobSetDoubleAccessor extends GlobSetAccessor {
 
-   void set(Glob glob, double value);
+   void set(MutableGlob glob, double value);
 
-   void set(Glob glob, Double value);
+   void set(MutableGlob glob, Double value);
 
 }

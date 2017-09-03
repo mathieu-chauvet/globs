@@ -5,6 +5,7 @@ import org.globsframework.metamodel.annotations.KeyField;
 import org.globsframework.metamodel.fields.IntegerField;
 import org.globsframework.metamodel.impl.DefaultGlobModel;
 import org.globsframework.metamodel.properties.Property;
+import org.globsframework.utils.Ref;
 import org.globsframework.utils.TestUtils;
 import org.globsframework.utils.exceptions.UnexpectedApplicationState;
 import org.junit.Test;
@@ -20,23 +21,24 @@ public class DefaultGlobTypeTest {
    public void testGlobTypeProperty() throws Exception {
       initGlobType();
 
-      Property<GlobType, Object> globTypeProperty = globModel.createGlobTypeProperty("globType info");
+      Property<GlobType, Ref<Integer>> globTypeProperty =
+         globModel.createGlobTypeProperty("globType info", value -> new Ref<Integer>());
       assertEquals("globType info", globTypeProperty.getName());
       assertEquals(0, globTypeProperty.getId());
 
-      globType.updateProperty(globTypeProperty, 3);
-      assertEquals(3, globType.getProperty(globTypeProperty));
+      globType.getProperty(globTypeProperty).set(3);
+      assertEquals(3, globType.getProperty(globTypeProperty).get().intValue());
 
-      globType.updateProperty(globTypeProperty, 4);
-      assertEquals(4, globType.getProperty(globTypeProperty));
+      globType.getProperty(globTypeProperty).set(4);
+      assertEquals(4, globType.getProperty(globTypeProperty).get().intValue());
 
-      Property<Field, Object> property = globModel.createFieldProperty("field info");
+      Property<Field, Integer> property = globModel.createFieldProperty("field info", value -> 0);
       assertEquals(0, property.getId());
       field.updateProperty(property, 2);
-      assertEquals(2, field.getProperty(property));
+      assertEquals(2, field.getProperty(property).intValue());
 
       field.updateProperty(property, 4);
-      assertEquals(4, field.getProperty(property));
+      assertEquals(4, field.getProperty(property).intValue());
       assertEquals("field info", property.getName());
    }
 
@@ -53,9 +55,10 @@ public class DefaultGlobTypeTest {
    @Test
    public void testFieldProperty() throws Exception {
       initGlobType();
-      Property<Field, Object> property = globModel.createFieldProperty("field property");
-      field.updateProperty(property, 3);
-      assertEquals(3, field.getProperty(property));
+      Property<Field, Ref<Integer>> property = globModel.createFieldProperty("field property",
+                                                                             value -> new Ref<Integer>());
+      field.getProperty(property).set(3);
+      assertEquals(3, field.getProperty(property).get().intValue());
    }
 
    public static class Type {

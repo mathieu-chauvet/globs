@@ -1,13 +1,11 @@
 package org.globsframework.metamodel.fields.impl;
 
+import org.globsframework.metamodel.Annotations;
 import org.globsframework.metamodel.Field;
 import org.globsframework.metamodel.GlobType;
 import org.globsframework.metamodel.annotations.RequiredAnnotationType;
-import org.globsframework.metamodel.properties.Property;
-import org.globsframework.metamodel.properties.PropertyHolder;
+import org.globsframework.metamodel.properties.impl.AbstractDelegatePropertyHolder;
 import org.globsframework.metamodel.type.DataType;
-import org.globsframework.metamodel.Annotations;
-import org.globsframework.metamodel.utils.MutableAnnotations;
 import org.globsframework.model.Glob;
 import org.globsframework.model.Key;
 import org.globsframework.utils.Utils;
@@ -18,18 +16,17 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
-abstract public class AbstractField implements Field {
+abstract public class AbstractField implements Field, AbstractDelegatePropertyHolder<Field> {
    private final int index;
-   private final boolean keyField;
+   private final int keyIndex;
    private final GlobType globType;
    private final Map<Key, Glob> annotations = new HashMap<Key, Glob>();
    private final String name;
    private final Class valueClass;
-   private final int keyIndex;
    private final Object defaultValue;
    private final DataType dataType;
-   private static Object NULL_OBJECT = new Object();
-   private volatile Object properties[] = new Object[]{NULL_OBJECT, NULL_OBJECT};
+   private volatile Object[] properties = new Object[]{NULL_OBJECT, NULL_OBJECT};
+   private final boolean keyField;
 
    protected AbstractField(String name, GlobType globType,
                            Class valueClass, int index, int keyIndex, boolean isKeyField,
@@ -104,46 +101,15 @@ abstract public class AbstractField implements Field {
       return Utils.equal(o1, o2);
    }
 
-   synchronized public <D> void updateProperty(Property<Field, D> key, D value) {
-      if (properties.length < key.getId()) {
-         Object[] tmp = properties;
-         properties = new Object[key.getId() + 2];
-         int i;
-         for (i = 0; i < tmp.length; i++) {
-            properties[i] = tmp[i];
-
-         }
-         for (; i < properties.length; i++) {
-            properties[i] = NULL_OBJECT;
-         }
-      }
-      properties[key.getId()] = value;
-   }
-
-   synchronized public <D> D getProperty(Property<Field, D> key) throws ItemNotFound {
-      Object value = properties[key.getId()];
-      if (value == NULL_OBJECT) {
-         throw new ItemNotFound("No property '" + key.getName() + "' on " + getName());
-      }
-      return (D)value;
-   }
-
-   synchronized public <D> D getProperty(Property<Field, D> key, D returnValueIfUnset) {
-      Object value = properties[key.getId()];
-      if (value == NULL_OBJECT) {
-         return returnValueIfUnset;
-      }
-      return (D)value;
-   }
 
    public Field addAnnotation(Glob glob) {
-      if (glob != null){
+      if (glob != null) {
          annotations.put(glob.getKey(), glob);
       }
       return this;
    }
 
-   public void addAll(Annotations annotations){
+   public void addAll(Annotations annotations) {
       for (Glob glob : annotations.list()) {
          this.addAnnotation(glob);
       }
@@ -169,6 +135,17 @@ abstract public class AbstractField implements Field {
       return annotations.values();
    }
 
+   final public Object[] getProperties() {
+      return properties;
+   }
+
+   final public void setProperties(Object[] properties) {
+      this.properties = properties;
+   }
+
+   final public Field getValueOwner() {
+      return this;
+   }
 
    public boolean equals(Object o) {
       if (this == o) {

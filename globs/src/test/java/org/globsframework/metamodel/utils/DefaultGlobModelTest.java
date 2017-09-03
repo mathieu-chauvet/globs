@@ -30,13 +30,14 @@ public class DefaultGlobModelTest {
 
    @Test
    public void testPropertyIdAllocationIsDelegatedToTheInnerModel() throws Exception {
-      assertEquals(0, inner.createFieldProperty("prop1").getId());
-      assertEquals(1, inner.createFieldProperty("prop2").getId());
-      assertEquals(2, model.createFieldProperty("prop3").getId());
 
-      assertEquals(0, inner.createGlobTypeProperty("prop1").getId());
-      assertEquals(1, inner.createGlobTypeProperty("prop2").getId());
-      assertEquals(2, model.createGlobTypeProperty("prop3").getId());
+      assertEquals(0, inner.createFieldProperty("prop1", null).getId());
+      assertEquals(1, inner.createFieldProperty("prop2", null).getId());
+      assertEquals(2, model.createFieldProperty("prop3", null).getId());
+
+      assertEquals(0, inner.createGlobTypeProperty("prop1", null).getId());
+      assertEquals(1, inner.createGlobTypeProperty("prop2", null).getId());
+      assertEquals(2, model.createGlobTypeProperty("prop3", null).getId());
    }
 
    public static class LargeLinkCycle1 {

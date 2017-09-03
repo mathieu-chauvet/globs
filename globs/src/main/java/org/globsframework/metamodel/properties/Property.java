@@ -5,4 +5,6 @@ public interface Property<T, D> {
   String getName();
 
   int getId();
+
+  D createValue(T value);
 }

@@ -3,20 +3,19 @@ package org.globsframework.metamodel.impl;
 import org.globsframework.metamodel.*;
 import org.globsframework.metamodel.links.impl.DefaultMutableGlobLinkModel;
 import org.globsframework.metamodel.properties.Property;
+import org.globsframework.metamodel.properties.impl.PropertiesBuilder;
 import org.globsframework.metamodel.utils.GlobTypeDependencies;
-import org.globsframework.metamodel.utils.IdProperty;
-import org.globsframework.model.GlobList;
 import org.globsframework.utils.exceptions.ItemNotFound;
 
 import java.util.*;
 
 public class DefaultGlobModel implements MutableGlobModel {
-   private Map<String, GlobType> typesByName = new HashMap<String, GlobType>();
-   private int objectTypeSpecificCount;
-   private int fieldSpecificCount;
+   private Map<String, GlobType> typesByName = new HashMap<>();
    private GlobModel innerModel;
    private GlobTypeDependencies dependencies;
-   DefaultMutableGlobLinkModel globLinkModel;
+   private DefaultMutableGlobLinkModel globLinkModel;
+   private PropertiesBuilder<GlobType> globTypePropertiesBuilder = new PropertiesBuilder<>();
+   private PropertiesBuilder<Field> fieldPropertiesBuilder = new PropertiesBuilder<>();
 
    public DefaultGlobModel(GlobType... types) {
       this(null, types);
@@ -55,24 +54,24 @@ public class DefaultGlobModel implements MutableGlobModel {
       return dependencies;
    }
 
-   public <T> Property<Field, T> createFieldProperty(String name) {
+   public <T> Property<Field, T> createFieldProperty(String name,
+                                                     final PropertiesBuilder.PropertyBuilder<Field, T> fieldValueBuilder) {
       if (innerModel != null) {
-         return innerModel.createFieldProperty(name);
+         return innerModel.createFieldProperty(name, fieldValueBuilder);
       }
-      return new IdProperty<Field, T>(name, fieldSpecificCount++) {
-      };
+      return fieldPropertiesBuilder.createProperty(name, fieldValueBuilder);
    }
 
    public GlobLinkModel getLinkModel() {
       return globLinkModel;
    }
 
-   public <T> Property<GlobType, T> createGlobTypeProperty(String name) {
+   public <T> Property<GlobType, T> createGlobTypeProperty(String name,
+                                                           final PropertiesBuilder.PropertyBuilder<GlobType, T> valueBuilder) {
       if (innerModel != null) {
-         return innerModel.createGlobTypeProperty(name);
+         return innerModel.createGlobTypeProperty(name, valueBuilder);
       }
-      return new IdProperty<GlobType, T>(name, objectTypeSpecificCount++) {
-      };
+      return globTypePropertiesBuilder.createProperty(name, valueBuilder);
    }
 
    private void add(GlobType... types) {

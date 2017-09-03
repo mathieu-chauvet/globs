@@ -8,7 +8,7 @@ import org.globsframework.utils.Ref;
 import java.util.Collection;
 
 public interface Annotations {
-   static Annotations EMPTY = new DefaultAnnotations();
+   Annotations EMPTY = new DefaultAnnotations();
 
    boolean hasAnnotation(Key key);
 

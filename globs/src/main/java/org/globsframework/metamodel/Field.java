@@ -8,39 +8,40 @@ import org.globsframework.metamodel.utils.MutableAnnotations;
 import org.globsframework.utils.exceptions.InvalidParameter;
 
 public interface Field extends PropertyHolder<Field>, MutableAnnotations<Field> {
-  String getName();
 
-  String getFullName();
+   String getName();
 
-  GlobType getGlobType();
+   String getFullName();
 
-  void checkValue(Object object) throws InvalidParameter;
+   GlobType getGlobType();
 
-  Class getValueClass();
+   void checkValue(Object object) throws InvalidParameter;
 
-  boolean isKeyField();
+   Class getValueClass();
 
-  Object getDefaultValue();
+   boolean isKeyField();
 
-  boolean isRequired();
+   Object getDefaultValue();
 
-  <T extends FieldVisitor> T visit(T visitor) throws Exception;
+   boolean isRequired();
 
-  <T extends FieldVisitor> T safeVisit(T visitor);
+   <T extends FieldVisitor> T visit(T visitor) throws Exception;
 
-  void safeVisit(FieldValueVisitor visitor, Object value);
+   <T extends FieldVisitor> T safeVisit(T visitor);
+
+   void safeVisit(FieldValueVisitor visitor, Object value);
 
    DataType getDataType();
 
-  /**
-   * Returns the index of the field within the containing GlobType. The order of fields
-   * within a GlobType is that of the declaration. This method is mainly used for optimization purposes.
-   */
-  int getIndex();
+   /**
+    * Returns the index of the field within the containing GlobType. The order of fields
+    * within a GlobType is that of the declaration. This method is mainly used for optimization purposes.
+    */
+   int getIndex();
 
-  int getKeyIndex();
+   int getKeyIndex();
 
-  boolean valueEqual(Object o1, Object o2);
+   boolean valueEqual(Object o1, Object o2);
 
-  Object normalize(Object value);
+   Object normalize(Object value);
 }

@@ -1,14 +1,13 @@
 package org.globsframework.metamodel.impl;
 
+import org.globsframework.metamodel.Annotations;
 import org.globsframework.metamodel.Field;
 import org.globsframework.metamodel.GlobType;
 import org.globsframework.metamodel.annotations.KeyAnnotationType;
 import org.globsframework.metamodel.fields.impl.AbstractField;
 import org.globsframework.metamodel.index.Index;
 import org.globsframework.metamodel.index.MultiFieldIndex;
-import org.globsframework.metamodel.properties.Property;
-import org.globsframework.metamodel.properties.PropertyHolder;
-import org.globsframework.metamodel.Annotations;
+import org.globsframework.metamodel.properties.impl.AbstractDelegatePropertyHolder;
 import org.globsframework.metamodel.utils.MutableAnnotations;
 import org.globsframework.metamodel.utils.MutableGlobType;
 import org.globsframework.model.Glob;
@@ -23,7 +22,8 @@ import org.globsframework.utils.exceptions.TooManyItems;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 
-public class DefaultGlobType implements MutableGlobType, MutableAnnotations, PropertyHolder<GlobType> {
+public class DefaultGlobType implements MutableGlobType, MutableAnnotations,
+                                        AbstractDelegatePropertyHolder<GlobType> {
    private Field[] fields;
    private Field[] keyFields = new Field[0];
    private GlobFactory globFactory;
@@ -33,8 +33,7 @@ public class DefaultGlobType implements MutableGlobType, MutableAnnotations, Pro
    private Map<String, MultiFieldIndex> multiFieldIndices = new HashMap<String, MultiFieldIndex>(2, 1);
    private Map<Class, Object> registered = new ConcurrentHashMap<>();
    private final Map<Key, Glob> annotations = new HashMap<Key, Glob>();
-   private Object properties[] = new Object[]{NULL_OBJECT, NULL_OBJECT};
-   private static Object NULL_OBJECT = new Object();
+   private volatile Object properties[] = new Object[]{NULL_OBJECT, NULL_OBJECT};
 
 
    public DefaultGlobType(String name) {
@@ -71,38 +70,6 @@ public class DefaultGlobType implements MutableGlobType, MutableAnnotations, Pro
 
    public String getName() {
       return name;
-   }
-
-   synchronized public <D> void updateProperty(Property<GlobType, D> key, D value) {
-      if (properties.length < key.getId()) {
-         Object[] tmp = properties;
-         properties = new Object[key.getId() + 2];
-         int i;
-         for (i = 0; i < tmp.length; i++) {
-            properties[i] = tmp[i];
-
-         }
-         for (; i < properties.length; i++) {
-            properties[i] = NULL_OBJECT;
-         }
-      }
-      properties[key.getId()] = value;
-   }
-
-   synchronized public <D> D getProperty(Property<GlobType, D> key) throws ItemNotFound {
-      Object value = properties[key.getId()];
-      if (value == NULL_OBJECT) {
-         throw new ItemNotFound("No property '" + key.getName() + "' on " + getName());
-      }
-      return (D)value;
-   }
-
-   synchronized public <D> D getProperty(Property<GlobType, D> key, D returnValueIfUnset) {
-      Object value = properties[key.getId()];
-      if (value == NULL_OBJECT) {
-         return returnValueIfUnset;
-      }
-      return (D)value;
    }
 
 
@@ -255,4 +222,15 @@ public class DefaultGlobType implements MutableGlobType, MutableAnnotations, Pro
       return annotations.values();
    }
 
+   final public Object[] getProperties() {
+      return properties;
+   }
+
+   final public void setProperties(Object[] properties) {
+      this.properties = properties;
+   }
+
+   final public GlobType getValueOwner() {
+      return this;
+   }
 }

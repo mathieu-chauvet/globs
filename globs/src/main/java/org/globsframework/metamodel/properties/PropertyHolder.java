@@ -1,14 +1,10 @@
 package org.globsframework.metamodel.properties;
 
-import org.globsframework.utils.exceptions.ItemNotFound;
-
 public interface PropertyHolder<T> {
 
-  String getName();
+   // get return te default value if no value was set via key.createValue
+   <D> D getProperty(Property<T, D> key);
 
-  <D> void updateProperty(Property<T, D> key, D value);
+   <D> void updateProperty(Property<T, D> key, D value);
 
-  <D> D getProperty(Property<T, D> key) throws ItemNotFound;
-
-  <D> D getProperty(Property<T, D> key, D returnValueIfUnset);
 }
