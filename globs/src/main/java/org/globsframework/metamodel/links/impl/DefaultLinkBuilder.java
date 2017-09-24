@@ -15,6 +15,7 @@ import org.globsframework.utils.exceptions.InvalidParameter;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 public abstract class DefaultLinkBuilder<T extends MutableGlobLinkModel.LinkBuilder> implements MutableGlobLinkModel.LinkBuilder<T>, MutableAnnotations<T> {
@@ -44,8 +45,8 @@ public abstract class DefaultLinkBuilder<T extends MutableGlobLinkModel.LinkBuil
       return getT();
    }
 
-   public Collection<Glob> list() {
-      return annotations.list();
+   public Collection<Glob> listAnnotations() {
+      return Collections.unmodifiableCollection(annotations.listAnnotations());
    }
 
    public Glob findAnnotation(Key key) {

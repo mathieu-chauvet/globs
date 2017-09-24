@@ -29,35 +29,35 @@ public class UnInitializedLink extends AbstractLink implements DirectSingleLink 
    }
 
    public GlobType getSourceType() {
-      throw new LinkNotInitialized(type.getName() + ":" + name);
+      throw new LinkNotInitialized(type.getName() + ":" + getName());
    }
 
    public GlobType getTargetType() {
-      throw new LinkNotInitialized(type.getName() + ":" + name);
+      throw new LinkNotInitialized(type.getName() + ":" + getName());
    }
 
    public boolean isRequired() {
-      throw new LinkNotInitialized(type.getName() + ":" + name);
+      throw new LinkNotInitialized(type.getName() + ":" + getName());
    }
 
    public <T extends FieldMappingFunction> T apply(T functor) {
-      throw new LinkNotInitialized(type.getName() + ":" + name);
+      throw new LinkNotInitialized(type.getName() + ":" + getName());
    }
 
    public boolean isContainment() {
-      throw new LinkNotInitialized(type.getName() + ":" + name);
+      throw new LinkNotInitialized(type.getName() + ":" + getName());
    }
 
    public Key getTargetKey(Glob source) {
-      throw new LinkNotInitialized(type.getName() + ":" + name);
+      throw new LinkNotInitialized(type.getName() + ":" + getName());
    }
 
    public Field getSourceField() {
-      throw new LinkNotInitialized(type.getName() + ":" + name);
+      throw new LinkNotInitialized(type.getName() + ":" + getName());
    }
 
    public Field getTargetField() {
-      throw new LinkNotInitialized(type.getName() + ":" + name);
+      throw new LinkNotInitialized(type.getName() + ":" + getName());
    }
 
    public static class LinkNotInitialized extends GlobsException {

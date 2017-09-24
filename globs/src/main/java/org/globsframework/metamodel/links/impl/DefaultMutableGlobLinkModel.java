@@ -16,16 +16,13 @@ import org.globsframework.model.Key;
 import org.globsframework.utils.collections.MapOfMaps;
 import org.globsframework.utils.exceptions.GlobsException;
 
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 public class DefaultMutableGlobLinkModel implements MutableGlobLinkModel {
    public static final Link[] EMPTY = new Link[0];
-   Map<GlobType, Link[]> links = new HashMap<>();
-   Map<GlobType, Link[]> inboundLinks = new HashMap<>();
-   MapOfMaps<GlobType, String, Link> outputLinkByName = new MapOfMaps<>();
+   private final Map<GlobType, Link[]> links = new HashMap<>();
+   private final Map<GlobType, Link[]> inboundLinks = new HashMap<>();
+   private final MapOfMaps<GlobType, String, Link> outputLinkByName = new MapOfMaps<>();
 
    public DefaultMutableGlobLinkModel(GlobModel model) {
       for (GlobType type : model) {
@@ -65,7 +62,7 @@ public class DefaultMutableGlobLinkModel implements MutableGlobLinkModel {
       Glob annotation = annotations.findAnnotation(FieldNameAnnotationType.UNIQUE_KEY);
       DirectLinkBuilder builder = getDirectLinkBuilder(linkModel != null ? linkModel.get(LinkModelNameAnnotationType.NAME) : null,
                                                        annotation != null ? annotation.get(FieldNameAnnotationType.NAME) : null);
-      for (Glob glob : annotations.list()) {
+      for (Glob glob : annotations.listAnnotations()) {
          builder.addAnnotation(glob);
       }
       return builder;
@@ -164,8 +161,8 @@ public class DefaultMutableGlobLinkModel implements MutableGlobLinkModel {
          return link.findAnnotation(key);
       }
 
-      public Collection<Glob> list() {
-         return link.list();
+      public Collection<Glob> listAnnotations() {
+         return Collections.unmodifiableCollection(link.listAnnotations());
       }
    }
 }

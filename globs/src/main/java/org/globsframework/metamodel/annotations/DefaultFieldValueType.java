@@ -6,6 +6,7 @@ import org.globsframework.model.Key;
 
 public class DefaultFieldValueType {
     public static GlobType TYPE;
+
     public static Key key;
 
     static {

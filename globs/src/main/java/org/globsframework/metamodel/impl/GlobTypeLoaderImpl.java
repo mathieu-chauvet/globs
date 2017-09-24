@@ -20,7 +20,6 @@ import org.globsframework.utils.exceptions.UnexpectedApplicationState;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Modifier;
-import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -87,7 +86,7 @@ public class GlobTypeLoaderImpl implements GlobTypeLoader {
       for (FieldInitializeProcessor fieldInitializeProcessor : processor) {
          Object value = fieldInitializeProcessor.getValue(type, annotations, classField.getAnnotations());
          if (value instanceof MutableAnnotations) {
-            for (Glob glob : annotations.list()) {
+            for (Glob glob : annotations.listAnnotations()) {
                ((MutableAnnotations)value).addAnnotation(glob);
             }
          }

@@ -3,6 +3,7 @@ package org.globsframework.metamodel.fields.impl;
 import org.globsframework.metamodel.Annotations;
 import org.globsframework.metamodel.Field;
 import org.globsframework.metamodel.GlobType;
+import org.globsframework.metamodel.annotations.KeyAnnotationType;
 import org.globsframework.metamodel.annotations.RequiredAnnotationType;
 import org.globsframework.metamodel.properties.impl.AbstractDelegatePropertyHolder;
 import org.globsframework.metamodel.type.DataType;
@@ -13,6 +14,7 @@ import org.globsframework.utils.exceptions.InvalidParameter;
 import org.globsframework.utils.exceptions.ItemNotFound;
 
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -105,12 +107,15 @@ abstract public class AbstractField implements Field, AbstractDelegatePropertyHo
    public Field addAnnotation(Glob glob) {
       if (glob != null) {
          annotations.put(glob.getKey(), glob);
+         if (glob.getType() == KeyAnnotationType.TYPE && !isKeyField()){
+            throw new RuntimeException("Key field can not be set after key creation.");
+         }
       }
       return this;
    }
 
    public void addAll(Annotations annotations) {
-      for (Glob glob : annotations.list()) {
+      for (Glob glob : annotations.listAnnotations()) {
          this.addAnnotation(glob);
       }
    }
@@ -131,8 +136,8 @@ abstract public class AbstractField implements Field, AbstractDelegatePropertyHo
       return annotations.get(key);
    }
 
-   public Collection<Glob> list() {
-      return annotations.values();
+   public Collection<Glob> listAnnotations() {
+      return Collections.unmodifiableCollection(annotations.values());
    }
 
    final public Object[] getProperties() {

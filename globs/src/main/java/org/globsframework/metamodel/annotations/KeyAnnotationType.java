@@ -18,6 +18,8 @@ public class KeyAnnotationType {
 
    public static Glob UNINITIALIZED;
 
+   public static Glob ZERO;
+
    public static Glob ONE;
 
    public static Glob TWO;
@@ -28,6 +30,8 @@ public class KeyAnnotationType {
 
    public static Glob create(int indexOfKeyField) {
       switch (indexOfKeyField) {
+         case 0 :
+            return ZERO;
          case 1:
             return ONE;
          case 2:
@@ -45,10 +49,11 @@ public class KeyAnnotationType {
       DefaultGlobType globType = new DefaultGlobType("KeyAnnotation");
       DefaultFieldFactory factory = new DefaultFieldFactory(globType);
       TYPE = globType;
-      INDEX = factory.addInteger("INDEX", false, 0, 0, null);
+      INDEX = factory.addInteger("index", false, 0, 0, null);
       globType.completeInit();
       UNIQUE_KEY = KeyBuilder.newEmptyKey(TYPE);
       UNINITIALIZED = globType.instantiate().set(INDEX, -1);
+      ZERO = globType.instantiate().set(INDEX, 0);
       ONE = globType.instantiate().set(INDEX, 1);
       TWO = globType.instantiate().set(INDEX, 2);
       THREE = globType.instantiate().set(INDEX, 3);

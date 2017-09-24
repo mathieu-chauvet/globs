@@ -4,9 +4,9 @@ import org.globsframework.metamodel.links.Link;
 
 public interface GlobLinkModel {
 
-   Link[] getLinks(GlobType globType);
+   Link[] getLinks(GlobType sourceType);
 
    Link getLink(GlobType type, String fieldName);
 
-   Link[] getInboundLinks(GlobType type);
+   Link[] getInboundLinks(GlobType targetType);
 }

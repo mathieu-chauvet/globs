@@ -6,8 +6,8 @@ import org.globsframework.metamodel.Annotations;
 import org.globsframework.metamodel.impl.DefaultAnnotations;
 
 public abstract class AbstractLink extends DefaultAnnotations<Link> implements Link {
-   protected final String modelName;
-   protected final String name;
+   private final String modelName;
+   private final String name;
 
    public AbstractLink(String modelName, String name, Annotations annotations) {
       super(annotations);

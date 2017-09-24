@@ -16,7 +16,7 @@ public interface Annotations {
 
    Glob findAnnotation(Key key);
 
-   Collection<Glob> list();
+   Collection<Glob> listAnnotations();
 
    default <T> T getValueOrDefault(Key key, Field field, T defaultValue) {
       Glob annotation = findAnnotation(key);

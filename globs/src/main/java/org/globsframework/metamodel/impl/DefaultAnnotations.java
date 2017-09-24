@@ -7,6 +7,7 @@ import org.globsframework.model.Key;
 import org.globsframework.utils.exceptions.ItemNotFound;
 
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -25,7 +26,7 @@ public class DefaultAnnotations<T extends MutableAnnotations> implements Mutable
    }
 
    public DefaultAnnotations(Annotations annotations) {
-      Collection<Glob> globs = annotations.list();
+      Collection<Glob> globs = annotations.listAnnotations();
       this.annotations = new HashMap<>(globs.size());
       for (Glob annotation : globs) {
          this.annotations.put(annotation.getKey(), annotation);
@@ -59,7 +60,7 @@ public class DefaultAnnotations<T extends MutableAnnotations> implements Mutable
         return annotations.get(key);
     }
 
-    public Collection<Glob> list() {
-        return annotations.values();
+    public Collection<Glob> listAnnotations() {
+        return Collections.unmodifiableCollection(annotations.values());
     }
 }

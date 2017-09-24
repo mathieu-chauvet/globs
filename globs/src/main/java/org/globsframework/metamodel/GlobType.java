@@ -44,6 +44,8 @@ public interface GlobType extends PropertyHolder<GlobType>, Annotations {
 
    <T> T getRegistered(Class<T> klass);
 
+   String describe();
+
    default MutableGlob instantiate() {
       return getGlobFactory().create();
    }

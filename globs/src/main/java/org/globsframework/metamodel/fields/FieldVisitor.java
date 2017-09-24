@@ -1,5 +1,7 @@
 package org.globsframework.metamodel.fields;
 
+import org.globsframework.metamodel.Field;
+
 public interface FieldVisitor {
     void visitInteger(IntegerField field) throws Exception;
 
@@ -33,6 +35,16 @@ public interface FieldVisitor {
 
        public void visitBlob(BlobField field) throws Exception {
         }
+
+        public void notManaged(Field field) throws Exception{
+        }
     }
+
+    class AbstractWithErrorVisitor extends AbstractFieldVisitor {
+      public void notManaged(Field field) throws Exception {
+        throw new RuntimeException(field.getFullName() + " of type " + field.getDataType() + " not managed.");
+      }
+    }
+
 }
 

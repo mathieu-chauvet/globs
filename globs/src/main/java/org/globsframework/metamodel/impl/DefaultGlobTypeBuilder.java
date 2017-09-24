@@ -10,6 +10,9 @@ import org.globsframework.metamodel.utils.MutableAnnotations;
 import org.globsframework.model.Glob;
 import org.globsframework.utils.exceptions.InvalidState;
 
+import java.util.Arrays;
+import java.util.Collection;
+
 public class DefaultGlobTypeBuilder implements GlobTypeBuilder {
    private DefaultGlobType type;
    private DefaultFieldFactory factory;
@@ -30,7 +33,7 @@ public class DefaultGlobTypeBuilder implements GlobTypeBuilder {
       return this;
    }
 
-   private MutableAnnotations adaptAnnotation(Glob[] annotations) {
+   private MutableAnnotations adaptAnnotation(Collection<Glob> annotations) {
       DefaultAnnotations defaultAnnotations = new DefaultAnnotations();
       for (Glob annotation : annotations) {
          defaultAnnotations.addAnnotation(annotation);
@@ -38,12 +41,17 @@ public class DefaultGlobTypeBuilder implements GlobTypeBuilder {
       return defaultAnnotations;
    }
 
-   public GlobTypeBuilder addStringField(String fieldName, Glob... globAnnotations) {
-      createStringField(fieldName, globAnnotations);
-      return this;
-   }
+  public GlobTypeBuilder addAnnotation(Glob annotation) {
+    type.addAnnotation(annotation);
+    return this;
+  }
 
-   private DefaultStringField createStringField(String fieldName, Glob[] globAnnotations) {
+  public GlobTypeBuilder addStringField(String fieldName, Collection<Glob> annotations) {
+    createStringField(fieldName, annotations);
+    return this;
+  }
+
+   private DefaultStringField createStringField(String fieldName, Collection<Glob> globAnnotations) {
       MutableAnnotations annotations = adaptAnnotation(globAnnotations);
       String defaultValue = annotations.getValueOrDefault(DefaultStringAnnotationType.UNIQUE_KEY,
                                                           DefaultStringAnnotationType.DEFAULT_VALUE, null);
@@ -57,12 +65,12 @@ public class DefaultGlobTypeBuilder implements GlobTypeBuilder {
       return field;
    }
 
-   public GlobTypeBuilder addIntegerField(String fieldName, Glob... globAnnotations) {
+   public GlobTypeBuilder addIntegerField(String fieldName, Collection<Glob> globAnnotations) {
       createIntegerField(fieldName, globAnnotations);
       return this;
    }
 
-   private DefaultIntegerField createIntegerField(String fieldName, Glob[] globAnnotations) {
+   private DefaultIntegerField createIntegerField(String fieldName, Collection<Glob> globAnnotations) {
       DefaultIntegerField field;
       MutableAnnotations annotations = adaptAnnotation(globAnnotations);
       Integer defaultValue = annotations.getValueOrDefault(DefaultIntegerAnnotationType.UNIQUE_KEY, DefaultIntegerAnnotationType.DEFAULT_VALUE, null);
@@ -76,12 +84,12 @@ public class DefaultGlobTypeBuilder implements GlobTypeBuilder {
       return field;
    }
 
-   public GlobTypeBuilder addDoubleField(String fieldName, Glob... globAnnotations) {
+   public GlobTypeBuilder addDoubleField(String fieldName, Collection<Glob> globAnnotations) {
       createDoubleField(fieldName, globAnnotations);
       return this;
    }
 
-   private DefaultDoubleField createDoubleField(String fieldName, Glob[] globAnnotations) {
+   private DefaultDoubleField createDoubleField(String fieldName, Collection<Glob> globAnnotations) {
       MutableAnnotations annotations = adaptAnnotation(globAnnotations);
       Double defaultValue = annotations.getValueOrDefault(DefaultDoubleAnnotationType.UNIQUE_KEY, DefaultDoubleAnnotationType.DEFAULT_VALUE, null);
       boolean isKey = annotations.hasAnnotation(KeyAnnotationType.UNIQUE_KEY);
@@ -94,12 +102,12 @@ public class DefaultGlobTypeBuilder implements GlobTypeBuilder {
       return doubleField;
    }
 
-   public GlobTypeBuilder addLongField(String fieldName, Glob... globAnnotations) {
+   public GlobTypeBuilder addLongField(String fieldName, Collection<Glob> globAnnotations) {
       createLongField(fieldName, globAnnotations);
       return this;
    }
 
-   private DefaultLongField createLongField(String fieldName, Glob[] globAnnotations) {
+   private DefaultLongField createLongField(String fieldName, Collection<Glob> globAnnotations) {
       MutableAnnotations annotations = adaptAnnotation(globAnnotations);
       Long defaultValue = annotations.getValueOrDefault(DefaultLongAnnotationType.UNIQUE_KEY,
                                                         DefaultLongAnnotationType.DEFAULT_VALUE, null);
@@ -113,12 +121,12 @@ public class DefaultGlobTypeBuilder implements GlobTypeBuilder {
       return longField;
    }
 
-   public GlobTypeBuilder addBooleanField(String fieldName, Glob... globAnnotations) {
+   public GlobTypeBuilder addBooleanField(String fieldName, Collection<Glob> globAnnotations) {
       createBooleanField(fieldName, globAnnotations);
       return this;
    }
 
-   private DefaultBooleanField createBooleanField(String fieldName, Glob[] globAnnotations) {
+   private DefaultBooleanField createBooleanField(String fieldName, Collection<Glob> globAnnotations) {
       MutableAnnotations annotations = adaptAnnotation(globAnnotations);
       Boolean defaultValue = annotations.getValueOrDefault(DefaultBooleanAnnotationType.UNIQUE_KEY,
                                                            DefaultBooleanAnnotationType.DEFAULT_VALUE, null);
@@ -159,12 +167,12 @@ public class DefaultGlobTypeBuilder implements GlobTypeBuilder {
       }
    }
 
-   public GlobTypeBuilder addBlobField(String fieldName, Glob... globAnnotations) {
+   public GlobTypeBuilder addBlobField(String fieldName, Collection<Glob> globAnnotations) {
       createBlobField(fieldName, globAnnotations);
       return this;
    }
 
-   private DefaultBlobField createBlobField(String fieldName, Glob[] globAnnotations) {
+   private DefaultBlobField createBlobField(String fieldName, Collection<Glob> globAnnotations) {
       Annotations annotations = adaptAnnotation(globAnnotations);
       DefaultBlobField field = factory.addBlob(fieldName, index);
       field.addAll(annotations);
@@ -172,27 +180,27 @@ public class DefaultGlobTypeBuilder implements GlobTypeBuilder {
       return field;
    }
 
-   public StringField declareStringField(String fieldName, Glob... globAnnotations) {
+   public StringField declareStringField(String fieldName, Collection<Glob> globAnnotations) {
       return createStringField(fieldName, globAnnotations);
    }
 
-   public IntegerField declareIntegerField(String fieldName, Glob... annotations) {
+   public IntegerField declareIntegerField(String fieldName, Collection<Glob> annotations) {
       return createIntegerField(fieldName, annotations);
    }
 
-   public DoubleField declareDoubleField(String fieldName, Glob... annotations) {
+   public DoubleField declareDoubleField(String fieldName, Collection<Glob> annotations) {
       return createDoubleField(fieldName, annotations);
    }
 
-   public BooleanField declareBooleanField(String fieldName, Glob... annotations) {
+   public BooleanField declareBooleanField(String fieldName, Collection<Glob> annotations) {
       return createBooleanField(fieldName, annotations);
    }
 
-   public LongField declareLongField(String fieldName, Glob... annotations) {
+   public LongField declareLongField(String fieldName, Collection<Glob> annotations) {
       return createLongField(fieldName, annotations);
    }
 
-   public BlobField declareBlobField(String fieldName, Glob... annotations) {
+   public BlobField declareBlobField(String fieldName, Collection<Glob> annotations) {
       return createBlobField(fieldName, annotations);
    }
 
@@ -204,4 +212,8 @@ public class DefaultGlobTypeBuilder implements GlobTypeBuilder {
       type.completeInit();
       return type;
    }
+
+  public boolean isKnown(String fieldName) {
+    return type.hasField(fieldName);
+  }
 }

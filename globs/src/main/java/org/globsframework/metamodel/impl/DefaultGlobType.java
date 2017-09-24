@@ -14,11 +14,13 @@ import org.globsframework.model.Glob;
 import org.globsframework.model.GlobFactory;
 import org.globsframework.model.GlobFactoryService;
 import org.globsframework.model.Key;
+import org.globsframework.model.format.GlobPrinter;
 import org.globsframework.utils.exceptions.InvalidState;
 import org.globsframework.utils.exceptions.ItemAlreadyExists;
 import org.globsframework.utils.exceptions.ItemNotFound;
 import org.globsframework.utils.exceptions.TooManyItems;
 
+import java.lang.annotation.Annotation;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -197,7 +199,7 @@ public class DefaultGlobType implements MutableGlobType, MutableAnnotations,
    }
 
    public void addAll(Annotations annotations) {
-      for (Glob glob : annotations.list()) {
+      for (Glob glob : annotations.listAnnotations()) {
          this.addAnnotation(glob);
       }
    }
@@ -218,8 +220,8 @@ public class DefaultGlobType implements MutableGlobType, MutableAnnotations,
       return annotations.get(key);
    }
 
-   public Collection<Glob> list() {
-      return annotations.values();
+   public Collection<Glob> listAnnotations() {
+      return Collections.unmodifiableCollection(annotations.values());
    }
 
    final public Object[] getProperties() {
@@ -233,4 +235,42 @@ public class DefaultGlobType implements MutableGlobType, MutableAnnotations,
    final public GlobType getValueOwner() {
       return this;
    }
+
+   public String describe() {
+      StringBuilder stringBuilder = new StringBuilder();
+      stringBuilder.append("'").append(name).append("' : ");
+      for (Field field : keyFields) {
+         stringBuilder.append("key : ").append(field.getName()).append(" (").append(field.getDataType()).append(") ");
+         printAnnotations(stringBuilder, field);
+         stringBuilder.append(", ");
+      }
+      for (Field field : fieldsByName.values()) {
+         if (!field.isKeyField()) {
+            stringBuilder.append(field.getName()).append(" (").append(field.getDataType()).append(") ");
+            printAnnotations(stringBuilder, field);
+            stringBuilder.append(", ");
+         }
+      }
+      return stringBuilder.toString();
+   }
+   private void printAnnotations(StringBuilder stringBuilder, Field field) {
+      Collection<Glob> annotations = field.listAnnotations();
+      if (!annotations.isEmpty()) {
+         stringBuilder.append('[');
+         List<String> toStrings = new ArrayList<>();
+         for (Glob annotation : annotations) {
+            toStrings.add(annotation.getType().getName() + ": " + GlobPrinter.toString(annotation));
+         }
+         Collections.sort(toStrings);
+         for (Iterator<String> iterator = toStrings.iterator(); iterator.hasNext(); ) {
+            stringBuilder.append(iterator.next());
+            if (iterator.hasNext()) {
+               stringBuilder.append(", ");
+            }
+         }
+         stringBuilder.append("]");
+      }
+   }
+
+
 }
