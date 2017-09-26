@@ -7,6 +7,7 @@ import org.globsframework.model.Glob;
 
 import javax.json.stream.JsonParser;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class JsonGlobTypeReader extends AbstractJsonReader {
@@ -45,12 +46,13 @@ public class JsonGlobTypeReader extends AbstractJsonReader {
       String type = jsonParser.getString();
       GlobTypeBuilder builder = GlobTypeBuilderFactory.create(type);
       nextAndCheck(JsonParser.Event.KEY_NAME);
-      check(jsonParser.getString(), ANNOTATIONS);
-      nextAndCheck(JsonParser.Event.START_ARRAY);
-      while (jsonParser.hasNext() && jsonParser.next() != JsonParser.Event.END_ARRAY) {
-        builder.addAnnotation(jsonGlobReader.readGlob());
+      if (jsonParser.getString().equals(ANNOTATIONS)) {
+        nextAndCheck(JsonParser.Event.START_ARRAY);
+        while (jsonParser.hasNext() && jsonParser.next() != JsonParser.Event.END_ARRAY) {
+          builder.addAnnotation(jsonGlobReader.readGlob());
+        }
+        nextAndCheck(JsonParser.Event.KEY_NAME);
       }
-      nextAndCheck(JsonParser.Event.KEY_NAME);
       check(jsonParser.getString(), FIELDS);
       nextAndCheck(JsonParser.Event.START_ARRAY);
       while (jsonParser.hasNext() && jsonParser.next() == JsonParser.Event.START_OBJECT) {
@@ -62,14 +64,18 @@ public class JsonGlobTypeReader extends AbstractJsonReader {
         check(jsonParser.getString(), FIELD_TYPE);
         nextAndCheck(JsonParser.Event.VALUE_STRING);
         String fieldType = jsonParser.getString();
-
-        nextAndCheck(JsonParser.Event.KEY_NAME);
-        check(jsonParser.getString(), ANNOTATIONS);
-        nextAndCheck(JsonParser.Event.START_ARRAY);
-        List<Glob> annotations = new ArrayList<>();
-        while (jsonParser.hasNext() && jsonParser.next() != JsonParser.Event.END_ARRAY) {
-          annotations.add(jsonGlobReader.readGlob());
+        JsonParser.Event event = jsonParser.next();
+        List<Glob> annotations = Collections.emptyList();
+        if (event == JsonParser.Event.KEY_NAME) {
+          check(jsonParser.getString(), ANNOTATIONS);
+          nextAndCheck(JsonParser.Event.START_ARRAY);
+          annotations = new ArrayList<>();
+          while (jsonParser.hasNext() && jsonParser.next() != JsonParser.Event.END_ARRAY) {
+            annotations.add(jsonGlobReader.readGlob());
+          }
+          nextAndCheck(JsonParser.Event.END_OBJECT);
         }
+
         switch (fieldType) {
           case INT_TYPE:
             builder.declareIntegerField(name, annotations);
@@ -87,8 +93,6 @@ public class JsonGlobTypeReader extends AbstractJsonReader {
             builder.declareLongField(name, annotations);
             break;
         }
-
-        nextAndCheck(JsonParser.Event.END_OBJECT);
       }
 
       //nextAndCheck(JsonParser.Event.END_OBJECT);

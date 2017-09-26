@@ -1,16 +1,15 @@
 package org.globsframework.json;
 
-import org.globsframework.metamodel.Annotations;
 import org.globsframework.metamodel.Field;
 import org.globsframework.metamodel.GlobType;
+import org.globsframework.metamodel.annotations.FieldNameAnnotationType;
 import org.globsframework.metamodel.fields.*;
 import org.globsframework.model.Glob;
 
 import javax.json.stream.JsonGenerator;
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Comparator;
-import java.util.List;
+import java.util.function.Consumer;
+import java.util.stream.Stream;
 
 public class JsonGlobTypeWriter {
   final GlobTypeToJsonName globTypeToJsonName;
@@ -27,32 +26,68 @@ public class JsonGlobTypeWriter {
   }
 
   public void write(GlobType type) {
-      jsonGenerator.writeStartObject();
-      jsonGenerator.write(JsonGlobTypeReader.VERSION, 1);
-      jsonGenerator.write(JsonGlobTypeReader.NAME, globTypeToJsonName.getName(type));
-      writeAnnotations(jsonGenerator, jsonGlobWriter, type);
+    jsonGenerator.writeStartObject();
+    jsonGenerator.write(JsonGlobTypeReader.VERSION, 1);
+    jsonGenerator.write(JsonGlobTypeReader.NAME, globTypeToJsonName.getName(type));
+    writeAnnotations(jsonGenerator, jsonGlobWriter, type.listAnnotations().stream());
 
-      jsonGenerator.writeStartArray(JsonGlobTypeReader.FIELDS);
-      for (Field field : type.getFields()) {
-        jsonGenerator.writeStartObject();
-        jsonGenerator.write(JsonGlobTypeReader.FIELD_NAME, field.getName());
-        field.safeVisit(fieldType);
-        writeAnnotations(jsonGenerator, jsonGlobWriter, field);
-        jsonGenerator.writeEnd(); // field
-      }
+    jsonGenerator.writeStartArray(JsonGlobTypeReader.FIELDS);
+    for (Field field : type.getFields()) {
+      jsonGenerator.writeStartObject();
+      jsonGenerator.write(JsonGlobTypeReader.FIELD_NAME, field.getName());
+      field.safeVisit(fieldType);
+      writeAnnotations(jsonGenerator, jsonGlobWriter,
+                       field.listAnnotations().stream()
+                         .filter(glob -> glob.getType() != FieldNameAnnotationType.TYPE ||
+                                         !glob.get(FieldNameAnnotationType.NAME).equals(field.getName())));
+      jsonGenerator.writeEnd(); // field
+    }
     jsonGenerator.writeEnd(); //fields
     jsonGenerator.writeEnd(); //type
   }
 
-  private void writeAnnotations(JsonGenerator generator, JsonGlobWriter jsonGlobWriter, Annotations annotations) {
-    generator.writeStartArray(JsonGlobTypeReader.ANNOTATIONS);
+  private void writeAnnotations(JsonGenerator generator, JsonGlobWriter jsonGlobWriter, Stream<Glob> annotations) {
     //order for test
-    List<Glob> fieldGlobs = new ArrayList<>(annotations.listAnnotations());
-    fieldGlobs.sort(Comparator.comparing(g -> g.getType().getName()));
-    for (Glob glob : fieldGlobs) {
-      jsonGlobWriter.write(glob);
+    CallAtFirstAndEnd<Glob> action = new CallAtFirstAndEnd<>(
+      () -> generator.writeStartArray(JsonGlobTypeReader.ANNOTATIONS),
+      generator::writeEnd,
+      jsonGlobWriter::write);
+
+    annotations.sorted(Comparator.comparing(g -> g.getType().getName())).forEach(action);
+
+    action.end();
+    // annotations
+  }
+
+  interface Functor {
+    void call();
+  }
+
+  static class CallAtFirstAndEnd<T> implements Consumer<T> {
+    boolean firstCall = true;
+    final Functor first;
+    final Functor end;
+    final Consumer<T> consumer;
+
+    public CallAtFirstAndEnd(Functor first, Functor end, Consumer<T> consumer) {
+      this.first = first;
+      this.end = end;
+      this.consumer = consumer;
     }
-    generator.writeEnd(); // annotations
+
+    void end() {
+      if (!firstCall) {
+        end.call();
+      }
+    }
+
+    public void accept(T t) {
+      if (firstCall) {
+        first.call();
+        firstCall = false;
+      }
+      consumer.accept(t);
+    }
   }
 
   private static class JsonWriterFieldVisitor implements FieldVisitor {

@@ -14,7 +14,6 @@ public class JsonGlobTypeWriterTest {
                                         "{" +
                                         "  'version':1," +
                                         "  'name':'jsonGlobType'," +
-                                        "  'annotations':[]," +
                                         "  'fields':[" +
                                         "   {" +
                                         "    'name':'id'," +
@@ -25,51 +24,21 @@ public class JsonGlobTypeWriterTest {
                                         "       'type':'KeyAnnotation'," +
                                         "       'fields':" +
                                         "         {'index':0}" +
-                                        "      }," +
-                                        "      {" +
-                                        "       'version':1," +
-                                        "       'type':'fieldNameAnnotation'," +
-                                        "       'fields':" +
-                                        "         {'name':'id'}" +
                                         "      }]" +
                                         "   }," +
                                         "   {" +
                                         "    'name':'name'," +
-                                        "    'type':'string'," +
-                                        "    'annotations':" +
-                                        "     [" +
-                                        "       {" +
-                                        "        'version':1," +
-                                        "        'type':'fieldNameAnnotation'," +
-                                        "        'fields': {'name':'name'}" +
-                                        "       }" +
-                                        "     ]}," +
+                                        "    'type':'string'" +
+                                        "    }," +
                                         "  {" +
                                         "   'name':'count'," +
-                                        "   'type':'int'," +
-                                        "   'annotations':" +
-                                        "     [{" +
-                                        "       'version':1," +
-                                        "       'type':'fieldNameAnnotation'," +
-                                        "       'fields':{'name':'count'}}]" +
+                                        "   'type':'int'" +
                                         "  }," +
                                         "  {'name':'value'," +
-                                        "   'type':'double'," +
-                                        "   'annotations':" +
-                                        "      [{" +
-                                        "        'version':1," +
-                                        "        'type':'fieldNameAnnotation'," +
-                                        "        'fields':{'name':'value'}}" +
-                                        "      ]" +
+                                        "   'type':'double'" +
                                         "  }," +
                                         "  {'name':'isPresent'," +
-                                        "   'type':'boolean'," +
-                                        "   'annotations':" +
-                                        "       [{" +
-                                        "         'version':1," +
-                                        "         'type':'fieldNameAnnotation'," +
-                                        "         'fields':{'name':'isPresent'}}" +
-                                        "       ]" +
+                                        "   'type':'boolean'" +
                                         "   }" +
                                         "  ]" +
                                         "}";
