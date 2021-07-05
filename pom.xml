@@ -136,11 +136,12 @@
 
   <dependencies>
 
+    <!-- https://mvnrepository.com/artifact/org.uispec4j/uispec4j -->
     <dependency>
-      <groupId>org.uispec4j</groupId>
-      <artifactId>uispec4j</artifactId>
-      <version>2.3-SNAPSHOT</version>
-      <scope>test</scope>
+        <groupId>org.uispec4j</groupId>
+        <artifactId>uispec4j</artifactId>
+        <version>2.4</version>
+        <scope>test</scope>
     </dependency>
     <dependency>
       <groupId>junit</groupId>
@@ -160,9 +161,9 @@
       <scope>test</scope>
     </dependency>
     <dependency>
-      <groupId>org</groupId>
+      <groupId>org.mathieuchauvet</groupId>
       <artifactId>saxstack</artifactId>
-      <version>2.0</version>
+      <version>0.0.6-RELEASE</version>
     </dependency>
     <dependency>
       <groupId>com.jidesoft</groupId>
